@@ -3,7 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
-import '../../../data.dart';
+import '../../theme.dart';
 import 'opacity_slider_thumb.dart';
 import 'opacity_slider_track.dart';
 
@@ -23,7 +23,8 @@ class OpacitySlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
 
     return FutureBuilder<ui.Image>(
       future: getGridImage(),
@@ -56,12 +57,15 @@ class OpacitySlider extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 8),
                     padding: EdgeInsets.all(8),
-                    color: Colors.white,
+                    decoration: BoxDecoration(
+                      color: theme.inputDecorationTheme.fillColor,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                     width: 60,
                     child: Text(
                       '${(opacity * 100).toInt()}%',
                       textAlign: TextAlign.center,
-                      style: textTheme.subtitle1,
+                      style: textTheme.bodyText1,
                     ),
                   )
                 ],
@@ -76,11 +80,11 @@ class OpacitySlider extends StatelessWidget {
 
 ui.Image _gridImage;
 
-FutureOr<ui.Image> getGridImage() {
+Future<ui.Image> getGridImage() {
   if (_gridImage != null) return Future.value(_gridImage);
-  Completer<ui.Image> completer = new Completer<ui.Image>();
+  final completer = Completer<ui.Image>();
   AssetImage('packages/paco/assets/grid.png')
-      .resolve(new ImageConfiguration())
+      .resolve(ImageConfiguration())
       .addListener(ImageStreamListener((ImageInfo info, bool _) {
     _gridImage = info.image;
     completer.complete(_gridImage);

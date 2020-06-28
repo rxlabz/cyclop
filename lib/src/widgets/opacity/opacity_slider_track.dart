@@ -54,26 +54,9 @@ class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
     final Radius trackRadius = Radius.circular(trackRect.height / 2);
     final Radius activeTrackRadius = Radius.circular(trackRect.height / 2 + 1);
 
-    // Assign the track segment paints, which are leading: active and
-    // trailing: inactive.
-    final ColorTween activeTrackColorTween = ColorTween(
-        begin: sliderTheme.disabledActiveTrackColor,
-        end: sliderTheme.activeTrackColor);
-    final ColorTween inactiveTrackColorTween = ColorTween(
-        begin: sliderTheme.disabledInactiveTrackColor,
-        end: sliderTheme.inactiveTrackColor);
-
-    final Paint activePaint = Paint()..color = Colors.transparent
-        /*activeTrackColorTween.evaluate(enableAnimation)*/
-        /*..shader = ui.Gradient.linear(
-        Offset.zero,
-        Offset(trackRect.width, 0),
-        [selectedColor.withOpacity(0), selectedColor.withOpacity(1)],
-      )*/
-        ;
+    final Paint activePaint = Paint()..color = Colors.transparent;
 
     final Paint inactivePaint = Paint()
-      /*..color = inactiveTrackColorTween.evaluate(enableAnimation)*/
       ..shader = ui.Gradient.linear(
           Offset.zero,
           Offset(trackRect.width, 0),

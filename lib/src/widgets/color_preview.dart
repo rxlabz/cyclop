@@ -7,12 +7,10 @@ class ColorPreview extends StatelessWidget {
   const ColorPreview({Key key, @required this.selectedColor}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(color: selectedColor, width: 96, height: 48),
-        ColorSelector(color: selectedColor, withAlpha: true),
-      ],
-    );
-  }
+  Widget build(BuildContext context) => Row(
+        children: [
+          Container(color: selectedColor, width: 96, height: 48),
+          ColorSelector(color: selectedColor, withAlpha: true),
+        ],
+      );
 }

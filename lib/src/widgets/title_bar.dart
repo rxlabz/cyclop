@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../data.dart';
+import '../theme.dart';
 
 class MainTitle extends StatelessWidget {
   final VoidCallback onClose;
@@ -23,8 +23,9 @@ class MainTitle extends StatelessWidget {
               style: textTheme.subtitle2,
             ),
           ),
-          if (onClose != null)
-            IconButton(icon: Icon(Icons.close), onPressed: onClose)
+          onClose != null
+              ? IconButton(icon: Icon(Icons.close), onPressed: onClose)
+              : SizedBox(height: 48)
         ],
       ),
     );

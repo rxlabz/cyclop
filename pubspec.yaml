@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   image: ^2.1.13
+  quiver: any
 
 dev_dependencies:
   flutter_test:

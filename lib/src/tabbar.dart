@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:paco/data.dart';
+import 'package:paco/src/theme.dart';
+import 'package:quiver/iterables.dart';
 
 class Tabs extends StatefulWidget {
   final int selectedIndex;
 
   final ValueChanged<int> onIndexChanged;
 
+  final List<String> labels;
+
+  final List<Widget> views;
+
   const Tabs({
+    @required this.labels,
+    @required this.views,
     @required this.onIndexChanged,
     this.selectedIndex = 0,
     Key key,
@@ -41,6 +48,15 @@ class _TabsState extends State<Tabs> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
+    return Column(
+      children: [
+        _buildTabs(theme, size),
+        Expanded(child: widget.views[selectedIndex])
+      ],
+    );
+  }
+
+  Container _buildTabs(ThemeData theme, Size size) {
     return Container(
       margin: const EdgeInsets.only(left: 8, right: 8, bottom: 14),
       constraints: BoxConstraints.expand(height: 42),
@@ -69,38 +85,7 @@ class _TabsState extends State<Tabs> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
-              children: [
-                Flexible(
-                  flex: 1,
-                  child: FlatButton(
-                    child: Text('Material'),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    onPressed: () => _onSelectionChanged(0),
-                  ),
-                ),
-                Flexible(
-                  flex: 1,
-                  child: FlatButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text('Sliders'),
-                    onPressed: () => _onSelectionChanged(1),
-                  ),
-                ),
-                Flexible(
-                  flex: 1,
-                  child: FlatButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text('Library'),
-                    onPressed: () => _onSelectionChanged(2),
-                  ),
-                ),
-              ],
+              children: enumerate(widget.labels).map(_buildTab).toList(),
             )
           ],
         ),
@@ -108,7 +93,17 @@ class _TabsState extends State<Tabs> {
     );
   }
 
-  void _onSelectionChanged(int newIndex) {
-    setState(() => selectedIndex = newIndex);
-  }
+  void _onSelectionChanged(int newIndex) =>
+      setState(() => selectedIndex = newIndex);
+
+  Flexible _buildTab(IndexedValue<String> label) => Flexible(
+        flex: 1,
+        child: FlatButton(
+          child: Text(label.value),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          onPressed: () => _onSelectionChanged(label.index),
+        ),
+      );
 }

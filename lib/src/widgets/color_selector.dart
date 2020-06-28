@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../extensions.dart';
+import '../utils.dart';
 
 class ColorSelector extends StatelessWidget {
   final Color color;
@@ -19,8 +19,6 @@ class ColorSelector extends StatelessWidget {
     this.onEyePick,
   }) : super(key: key);
 
-  //final style = TextStyle(fontSize: 12, color: Colors.black);
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,7 +31,9 @@ class ColorSelector extends StatelessWidget {
           HexColorField(
             color: color,
             withAlpha: withAlpha,
-            onColorChanged: onColorChanged,
+            onColorChanged: (value) {
+              onColorChanged(value);
+            },
           ),
           IconButton(icon: Icon(Icons.colorize), onPressed: onEyePick),
         ],
@@ -61,6 +61,8 @@ class HexColorField extends StatefulWidget {
 }
 
 class _HexColorFieldState extends State<HexColorField> {
+  static const _width = 106.0;
+
   Color color;
 
   TextEditingController _controller;
@@ -69,26 +71,27 @@ class _HexColorFieldState extends State<HexColorField> {
 
   @override
   void initState() {
-    prefix = '#${widget.withAlpha ? '' : 'FF'}';
-
-    color = widget.color ?? Colors.black;
-    String stringValue = color.value.toRadixString(16).padLeft(8, '0');
-    if (!widget.withAlpha) stringValue = stringValue.replaceRange(0, 2, '');
-
-    _controller = TextEditingController(text: stringValue);
-
     super.initState();
+    prefix = '#${widget.withAlpha ? '' : 'ff'}';
+
+    String colorValue = _initColorValue();
+    _controller = TextEditingController(text: colorValue);
   }
 
   @override
   void didUpdateWidget(HexColorField oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.color != widget.color) {
-      color = widget.color;
-      String stringValue = color.value.toRadixString(16).padLeft(8, '0');
-      if (!widget.withAlpha) stringValue = stringValue.replaceRange(0, 2, '');
-      _controller.text = stringValue;
+      String colorValue = _initColorValue();
+      _controller.text = colorValue;
     }
+  }
+
+  String _initColorValue() {
+    color = widget.color;
+    var stringValue = color.value.toRadixString(16).padLeft(8, '0');
+    if (!widget.withAlpha) stringValue = stringValue.replaceRange(0, 2, '');
+    return stringValue;
   }
 
   @override
@@ -99,38 +102,26 @@ class _HexColorFieldState extends State<HexColorField> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(8)),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Text(prefix, style: textTheme.bodyText1),
-          SizedBox(
-            width: 80,
-            child: TextField(
-              controller: _controller,
-              textAlign: TextAlign.center,
-              style: textTheme.bodyText1,
-              maxLines: 1,
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp('[A-Fa-f0-9]')),
-              ],
-              maxLength: widget.withAlpha ? 8 : 6,
-              onChanged: (newValue) => widget.onColorChanged(newValue.toColor())
-              /*setState(() => color = newValue.toColor())*/,
-              decoration: InputDecoration(
-                isDense: true,
-                filled: false,
-                border: InputBorder.none,
-                counterText: '',
-              ),
-            ),
+      child: SizedBox(
+        width: _width,
+        child: TextField(
+          controller: _controller,
+          style: textTheme.bodyText1.copyWith(fontSize: 15),
+          maxLines: 1,
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[A-Fa-f0-9]')),
+          ],
+          maxLength: widget.withAlpha ? 8 : 6,
+          onSubmitted: (value) => widget.onColorChanged(value.toColor()),
+          decoration: InputDecoration(
+            prefixText: prefix,
+            counterText: '',
           ),
-        ],
+        ),
       ),
     );
   }

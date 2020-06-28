@@ -1,14 +1,15 @@
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
-import 'package:paco/data.dart';
 import 'package:paco/src/selectors/grid_color_selector.dart';
 import 'package:paco/src/tabbar.dart';
 import 'package:paco/src/widgets/opacity/opacity_slider.dart';
+import 'package:paco/src/theme.dart';
 
-import 'widgets/color_preview.dart';
 import 'widgets/color_selector.dart';
 import 'widgets/title_bar.dart';
+
+const pickerWidth = 316.0;
+
+const pickerHeight = 510.0;
 
 class ColorPickerConfig {
   final bool enableOpacity;
@@ -18,7 +19,7 @@ class ColorPickerConfig {
   final bool enableEyePicker;
 
   ColorPickerConfig({
-    this.enableOpacity = false,
+    this.enableOpacity = true,
     this.enableFavorites = false,
     this.enableEyePicker = true,
   });
@@ -35,9 +36,11 @@ class ColorPicker extends StatelessWidget {
 
   final ValueChanged<Color> onColorSelected;
 
-  final VoidCallback onEyePick;
+  final VoidCallback onEyeDropper;
 
   final ValueChanged<List<Color>> onFavoritesUpdate;
+
+  final VoidCallback onClose;
 
   const ColorPicker({
     Key key,
@@ -47,7 +50,8 @@ class ColorPicker extends StatelessWidget {
     this.favorites = const [],
     this.darkMode = false,
     this.onFavoritesUpdate,
-    this.onEyePick,
+    this.onEyeDropper,
+    this.onClose,
   }) : super(key: key);
 
   @override
@@ -58,40 +62,48 @@ class ColorPicker extends StatelessWidget {
         builder: (context) {
           final theme = Theme.of(context);
           return Container(
-            constraints: BoxConstraints.tight(Size(300, 510)),
-            color: theme.dialogTheme.backgroundColor,
+            constraints: BoxConstraints.tight(Size(pickerWidth, pickerHeight)),
+            decoration: BoxDecoration(
+              color: theme.scaffoldBackgroundColor,
+              borderRadius: BorderRadius.circular(defaultRadius),
+              boxShadow: largeDarkShadowBox,
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                MainTitle(onClose: _close),
-                Tabs(onIndexChanged: (int value) {}),
-                GridColorSelector(
-                  selectedColor: selectedColor,
-                  onColorSelected: onColorSelected,
-                ),
-                /*Image.asset('packages/paco/assets/grid.png'),*/
-                RepaintBoundary(
-                  child: OpacitySlider(
-                    selectedColor: selectedColor,
-                    opacity: selectedColor.opacity,
-                    onChange: _onOpacityChange,
+                MainTitle(onClose: onClose),
+                Expanded(
+                  child: Tabs(
+                    onIndexChanged: (int value) {},
+                    labels: ['Material', 'Sliders', 'Library'],
+                    views: [
+                      GridColorSelector(
+                        selectedColor: selectedColor,
+                        onColorSelected: onColorSelected,
+                      ),
+                      Text('Sliders'),
+                      Text('Library'),
+                    ],
                   ),
                 ),
-                _defaultDivider,
+                if (config.enableOpacity)
+                  RepaintBoundary(
+                    child: OpacitySlider(
+                      selectedColor: selectedColor,
+                      opacity: selectedColor.opacity,
+                      onChange: _onOpacityChange,
+                    ),
+                  ),
+                defaultDivider,
                 ColorSelector(
                   color: selectedColor,
-                  withAlpha: true,
+                  withAlpha: config.enableOpacity,
                   thumbWidth: 96,
                   onColorChanged: onColorSelected,
-                  onEyePick: onEyePick,
+                  onEyePick: onEyeDropper,
                 ),
-                /*ColorPreview(selectedColor: selectedColor),*/
-                _defaultDivider,
-                /*_ActionBar(
-                  onColorSelected: ()=>onColorSelected ,
-                  onCancel: ,
-                ),*/
+                /*defaultDivider,*/
               ],
             ),
           );
@@ -102,49 +114,4 @@ class ColorPicker extends StatelessWidget {
 
   void _onOpacityChange(double value) =>
       onColorSelected(selectedColor.withOpacity(value));
-
-  void _close() {
-    print('ColorPicker._close...');
-  }
 }
-/*
-
-class _ActionBar extends StatelessWidget {
-  final VoidCallback onCancel;
-
-  final VoidCallback onColorSelected;
-
-  const _ActionBar({
-    Key key,
-    @required this.onCancel,
-    @required this.onColorSelected,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        FlatButton.icon(
-          onPressed: onCancel,
-          icon: Icon(Icons.close),
-          label: Text('Cancel'),
-        ),
-        FlatButton.icon(
-          textTheme: ButtonTextTheme.accent,
-          onPressed: onColorSelected,
-          icon: Icon(Icons.check),
-          label: Text('Save'),
-        ),
-      ],
-    );
-  }
-}
-*/
-
-const _defaultDivider = Divider(
-  color: Color(0xff999999),
-  indent: 8,
-  height: 10,
-  endIndent: 8,
-);
