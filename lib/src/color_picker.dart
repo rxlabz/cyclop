@@ -6,6 +6,10 @@ import 'package:paco/src/selectors/grid_color_selector.dart';
 import 'package:paco/src/tabbar.dart';
 import 'package:paco/src/widgets/opacity/opacity_slider.dart';
 
+import 'widgets/color_preview.dart';
+import 'widgets/color_selector.dart';
+import 'widgets/title_bar.dart';
+
 class ColorPickerConfig {
   final bool enableOpacity;
 
@@ -31,6 +35,8 @@ class ColorPicker extends StatelessWidget {
 
   final ValueChanged<Color> onColorSelected;
 
+  final VoidCallback onEyePick;
+
   final ValueChanged<List<Color>> onFavoritesUpdate;
 
   const ColorPicker({
@@ -41,6 +47,7 @@ class ColorPicker extends StatelessWidget {
     this.favorites = const [],
     this.darkMode = false,
     this.onFavoritesUpdate,
+    this.onEyePick,
   }) : super(key: key);
 
   @override
@@ -57,20 +64,34 @@ class ColorPicker extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                MainTitle(onEyePicker: () {}),
+                MainTitle(onClose: _close),
                 Tabs(onIndexChanged: (int value) {}),
                 GridColorSelector(
                   selectedColor: selectedColor,
                   onColorSelected: onColorSelected,
                 ),
                 /*Image.asset('packages/paco/assets/grid.png'),*/
-                OpacitySlider(
-                  selectedColor: selectedColor,
-                  opacity: selectedColor.opacity,
-                  onChange: _onOpacityChange,
+                RepaintBoundary(
+                  child: OpacitySlider(
+                    selectedColor: selectedColor,
+                    opacity: selectedColor.opacity,
+                    onChange: _onOpacityChange,
+                  ),
                 ),
-                Text('preview'),
-                Text('actionBar'),
+                _defaultDivider,
+                ColorSelector(
+                  color: selectedColor,
+                  withAlpha: true,
+                  thumbWidth: 96,
+                  onColorChanged: onColorSelected,
+                  onEyePick: onEyePick,
+                ),
+                /*ColorPreview(selectedColor: selectedColor),*/
+                _defaultDivider,
+                /*_ActionBar(
+                  onColorSelected: ()=>onColorSelected ,
+                  onCancel: ,
+                ),*/
               ],
             ),
           );
@@ -81,36 +102,49 @@ class ColorPicker extends StatelessWidget {
 
   void _onOpacityChange(double value) =>
       onColorSelected(selectedColor.withOpacity(value));
+
+  void _close() {
+    print('ColorPicker._close...');
+  }
 }
+/*
 
-class MainTitle extends StatelessWidget {
-  final VoidCallback onEyePicker;
+class _ActionBar extends StatelessWidget {
+  final VoidCallback onCancel;
 
-  const MainTitle({Key key, this.onEyePicker}) : super(key: key);
+  final VoidCallback onColorSelected;
+
+  const _ActionBar({
+    Key key,
+    @required this.onCancel,
+    @required this.onColorSelected,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Text(
-              Labels.mainTitle,
-              style: textTheme.subtitle2,
-            ),
-          ),
-          if (onEyePicker != null)
-            IconButton(
-              icon: Icon(Icons.colorize),
-              onPressed: onEyePicker,
-            )
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        FlatButton.icon(
+          onPressed: onCancel,
+          icon: Icon(Icons.close),
+          label: Text('Cancel'),
+        ),
+        FlatButton.icon(
+          textTheme: ButtonTextTheme.accent,
+          onPressed: onColorSelected,
+          icon: Icon(Icons.check),
+          label: Text('Save'),
+        ),
+      ],
     );
   }
 }
+*/
+
+const _defaultDivider = Divider(
+  color: Color(0xff999999),
+  indent: 8,
+  height: 10,
+  endIndent: 8,
+);

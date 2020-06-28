@@ -5,7 +5,10 @@ class GridColorSelector extends StatelessWidget {
 
   final ValueChanged<Color> onColorSelected;
 
-  const GridColorSelector({Key key, this.selectedColor, this.onColorSelected})
+  final VoidCallback onEyePick;
+
+  const GridColorSelector(
+      {Key key, this.selectedColor, this.onColorSelected, this.onEyePick})
       : super(key: key);
 
   @override
@@ -30,7 +33,10 @@ class GridColorSelector extends StatelessWidget {
           onTap: () => onColorSelected(color),
           child: Container(
             color: Colors.white,
-            padding: EdgeInsets.all(selectedColor.value == color.value ? 3 : 0),
+            padding: EdgeInsets.all(
+                selectedColor.withOpacity(1).value == color.withOpacity(1).value
+                    ? 3
+                    : 0),
             child: Container(color: color, width: 20, height: 20),
           ),
         ),

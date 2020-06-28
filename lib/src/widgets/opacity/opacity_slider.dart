@@ -26,47 +26,51 @@ class OpacitySlider extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return FutureBuilder<ui.Image>(
-        future: getGridImage(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) return SizedBox();
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 14.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(Labels.opacity, style: textTheme.subtitle2),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                      child: Theme(
-                        data: opacitySliderTheme(selectedColor),
-                        child: Slider(
-                          value: opacity,
-                          min: 0,
-                          max: 1,
-                          divisions: 100,
-                          onChanged: onChange,
-                        ),
+      future: getGridImage(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return SizedBox();
+        return Padding(
+          padding: const EdgeInsets.only(top: 14.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(Labels.opacity, style: textTheme.subtitle2),
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: Theme(
+                      data: opacitySliderTheme(selectedColor),
+                      child: Slider(
+                        value: opacity,
+                        min: 0,
+                        max: 1,
+                        divisions: 100,
+                        onChanged: onChange,
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 8),
-                      padding: EdgeInsets.all(8),
-                      color: Colors.white,
-                      width: 60,
-                      child: Text(
-                        '${(opacity * 100).toInt()}%',
-                        textAlign: TextAlign.center,
-                        style: textTheme.subtitle1,
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          );
-        });
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 8),
+                    padding: EdgeInsets.all(8),
+                    color: Colors.white,
+                    width: 60,
+                    child: Text(
+                      '${(opacity * 100).toInt()}%',
+                      textAlign: TextAlign.center,
+                      style: textTheme.subtitle1,
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
 
@@ -91,16 +95,3 @@ ThemeData opacitySliderTheme(Color color) => ThemeData.light().copyWith(
           trackShape: OpacitySliderTrack(color, gridImage: _gridImage),
           thumbShape: OpacitySliderThumbShape(color)),
     );
-
-final lightTheme = ThemeData.light().copyWith(
-  backgroundColor: Color(0xffe9e9e9),
-  toggleableActiveColor: Colors.white,
-  dialogTheme: ThemeData.light().dialogTheme.copyWith(
-        backgroundColor: Color(0xfff6f6f6),
-      ),
-  /*sliderTheme: SliderThemeData(
-    trackHeight: 24,
-    thumbColor: Colors.white,
-    trackShape: OpacitySliderTrack(ThemeData.light().primaryColor),
-  ),*/
-);

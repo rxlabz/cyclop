@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -94,58 +93,34 @@ class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
         break;
     }
 
-    print('thumbCenter $thumbCenter');
-
     final thumbRadius = 14;
 
-    context.canvas.drawRRect(
-      RRect.fromLTRBAndCorners(
-        trackRect.left - thumbRadius,
-        (textDirection == TextDirection.ltr)
-            ? trackRect.top - (additionalActiveTrackHeight / 2)
-            : trackRect.top,
-        thumbCenter.dx + thumbRadius,
-        (textDirection == TextDirection.ltr)
-            ? trackRect.bottom + (additionalActiveTrackHeight / 2)
-            : trackRect.bottom,
-        topLeft: (textDirection == TextDirection.ltr)
-            ? activeTrackRadius
-            : trackRadius,
-        bottomLeft: (textDirection == TextDirection.ltr)
-            ? activeTrackRadius
-            : trackRadius,
-        topRight: (textDirection == TextDirection.ltr)
-            ? activeTrackRadius
-            : trackRadius,
-        bottomRight: (textDirection == TextDirection.ltr)
-            ? activeTrackRadius
-            : trackRadius,
-      ),
-      leftTrackPaint,
+    final shapeRect = RRect.fromLTRBAndCorners(
+      trackRect.left - thumbRadius,
+      (textDirection == TextDirection.ltr)
+          ? trackRect.top - (additionalActiveTrackHeight / 2)
+          : trackRect.top,
+      trackRect.right + thumbRadius,
+      (textDirection == TextDirection.ltr)
+          ? trackRect.bottom + (additionalActiveTrackHeight / 2)
+          : trackRect.bottom,
+      topLeft: (textDirection == TextDirection.ltr)
+          ? activeTrackRadius
+          : trackRadius,
+      bottomLeft: (textDirection == TextDirection.ltr)
+          ? activeTrackRadius
+          : trackRadius,
+      topRight: (textDirection == TextDirection.ltr)
+          ? activeTrackRadius
+          : trackRadius,
+      bottomRight: (textDirection == TextDirection.ltr)
+          ? activeTrackRadius
+          : trackRadius,
     );
+
+    context.canvas.drawRRect(shapeRect, leftTrackPaint);
     context.canvas.drawRRect(
-      RRect.fromLTRBAndCorners(
-        trackRect.left - thumbRadius,
-        (textDirection == TextDirection.rtl)
-            ? trackRect.top - (additionalActiveTrackHeight / 2)
-            : trackRect.top - (additionalActiveTrackHeight / 2),
-        trackRect.right + thumbRadius,
-        (textDirection == TextDirection.rtl)
-            ? trackRect.bottom + (additionalActiveTrackHeight / 2)
-            : trackRect.bottom + (additionalActiveTrackHeight / 2),
-        topLeft: (textDirection == TextDirection.ltr)
-            ? activeTrackRadius
-            : trackRadius,
-        bottomLeft: (textDirection == TextDirection.ltr)
-            ? activeTrackRadius
-            : trackRadius,
-        topRight: (textDirection == TextDirection.rtl)
-            ? activeTrackRadius
-            : trackRadius,
-        bottomRight: (textDirection == TextDirection.rtl)
-            ? activeTrackRadius
-            : trackRadius,
-      ),
+      shapeRect,
       Paint()
         ..shader = ImageShader(
           gridImage,
@@ -155,30 +130,6 @@ class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
         ),
     );
 
-    context.canvas.drawRRect(
-      RRect.fromLTRBAndCorners(
-        trackRect.left - thumbRadius,
-        (textDirection == TextDirection.rtl)
-            ? trackRect.top - (additionalActiveTrackHeight / 2)
-            : trackRect.top - (additionalActiveTrackHeight / 2),
-        trackRect.right + thumbRadius,
-        (textDirection == TextDirection.rtl)
-            ? trackRect.bottom + (additionalActiveTrackHeight / 2)
-            : trackRect.bottom + (additionalActiveTrackHeight / 2),
-        topLeft: (textDirection == TextDirection.ltr)
-            ? activeTrackRadius
-            : trackRadius,
-        bottomLeft: (textDirection == TextDirection.ltr)
-            ? activeTrackRadius
-            : trackRadius,
-        topRight: (textDirection == TextDirection.rtl)
-            ? activeTrackRadius
-            : trackRadius,
-        bottomRight: (textDirection == TextDirection.rtl)
-            ? activeTrackRadius
-            : trackRadius,
-      ),
-      rightTrackPaint,
-    );
+    context.canvas.drawRRect(shapeRect, rightTrackPaint);
   }
 }

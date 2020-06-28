@@ -73,7 +73,7 @@ class _TabsState extends State<Tabs> {
                 Flexible(
                   flex: 1,
                   child: FlatButton(
-                    child: Text('Grid'),
+                    child: Text('Material'),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -86,7 +86,7 @@ class _TabsState extends State<Tabs> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Text('Material'),
+                    child: Text('Sliders'),
                     onPressed: () => _onSelectionChanged(1),
                   ),
                 ),
@@ -96,7 +96,7 @@ class _TabsState extends State<Tabs> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Text('Sliders'),
+                    child: Text('Library'),
                     onPressed: () => _onSelectionChanged(2),
                   ),
                 ),
