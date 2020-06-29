@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
@@ -5,6 +6,8 @@ import '../theme.dart';
 import '../utils.dart';
 
 typedef ChannelValueGetter = double Function(Color value);
+
+typedef ValueLabelGetter = String Function(Color value);
 
 class ChannelSliders extends StatefulWidget {
   final Color selectedColor;
@@ -28,15 +31,35 @@ class _ChannelSlidersState extends State<ChannelSliders> {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final body = textTheme.bodyText1;
     return Column(
       children: [
-        DropdownButton<bool>(
-          value: HSLMode,
-          items: [
-            DropdownMenuItem(value: true, child: Text('HSL')),
-            DropdownMenuItem(value: false, child: Text('RGB'))
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Radio<bool>(
+              visualDensity: VisualDensity.compact,
+              value: true,
+              groupValue: HSLMode,
+              onChanged: (bool value) => setState(() => HSLMode = value),
+            ),
+            GestureDetector(
+              child: Text('HSL', style: body),
+              onTap: () => setState(() => HSLMode = true),
+            ),
+            SizedBox(width: 70),
+            Radio<bool>(
+              visualDensity: VisualDensity.compact,
+              value: false,
+              groupValue: HSLMode,
+              onChanged: (bool value) => setState(() => HSLMode = value),
+            ),
+            GestureDetector(
+              child: Text('RGB', style: body),
+              onTap: () => setState(() => HSLMode = false),
+            ),
           ],
-          onChanged: (value) => setState(() => HSLMode = value),
         ),
         HSLMode ? _buildHSLSliders() : _buildRGBSliders(),
       ],
@@ -50,7 +73,8 @@ class _ChannelSlidersState extends State<ChannelSliders> {
           label: Labels.hue,
           selectedColor: color,
           colors: getHueGradientColors(),
-          channelValueGetter: (color) => color.hue / 360,
+          channelValueGetter: (color) => max(1, color.hue) / 360,
+          labelGetter: (color) => '${color.hue.toInt()}',
           onChange: (value) => widget.onChange(color.withHue(value * 360)),
         ),
         ChannelSlider(
@@ -58,6 +82,7 @@ class _ChannelSlidersState extends State<ChannelSliders> {
           selectedColor: color,
           colors: [color.withSaturation(0), color.withSaturation(1)],
           channelValueGetter: (color) => color.saturation,
+          labelGetter: (color) => '${color.saturation.toStringAsFixed(3)}',
           onChange: (value) => widget.onChange(color.withSaturation(value)),
         ),
         ChannelSlider(
@@ -65,6 +90,7 @@ class _ChannelSlidersState extends State<ChannelSliders> {
           selectedColor: color,
           colors: [color.withLightness(0), color, color.withLightness(1)],
           channelValueGetter: (color) => color.lightness,
+          labelGetter: (color) => '${color.lightness.toStringAsFixed(3)}',
           onChange: (value) => widget.onChange(color.withLightness(value)),
         ),
       ],
@@ -79,6 +105,7 @@ class _ChannelSlidersState extends State<ChannelSliders> {
           selectedColor: color,
           colors: [color.withRed(0), color.withRed(255)],
           channelValueGetter: (color) => color.red / 255,
+          labelGetter: (color) => '${color.red}',
           onChange: (value) =>
               widget.onChange(color.withRed((value * 255).toInt())),
         ),
@@ -87,6 +114,7 @@ class _ChannelSlidersState extends State<ChannelSliders> {
           selectedColor: color,
           colors: [color.withGreen(0), color.withGreen(255)],
           channelValueGetter: (color) => color.green / 255,
+          labelGetter: (color) => '${color.green}',
           onChange: (value) =>
               widget.onChange(color.withGreen((value * 255).toInt())),
         ),
@@ -95,6 +123,7 @@ class _ChannelSlidersState extends State<ChannelSliders> {
           selectedColor: color,
           colors: [color.withBlue(0), color.withBlue(255)],
           channelValueGetter: (color) => color.blue / 255,
+          labelGetter: (color) => '${color.blue}',
           onChange: (value) =>
               widget.onChange(color.withBlue((value * 255).toInt())),
         ),
@@ -113,6 +142,7 @@ class ChannelSlider extends StatelessWidget {
   final ValueChanged<double> onChange;
 
   final ChannelValueGetter channelValueGetter;
+  final ValueLabelGetter labelGetter;
 
   const ChannelSlider({
     Key key,
@@ -121,6 +151,7 @@ class ChannelSlider extends StatelessWidget {
     @required this.channelValueGetter,
     @required this.onChange,
     @required this.label,
+    @required this.labelGetter,
   }) : super(key: key);
 
   double get channelValue => channelValueGetter(selectedColor);
@@ -131,7 +162,7 @@ class ChannelSlider extends StatelessWidget {
     final textTheme = theme.textTheme;
 
     return Padding(
-      padding: const EdgeInsets.only(top: 14.0),
+      padding: const EdgeInsets.only(top: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -163,7 +194,7 @@ class ChannelSlider extends StatelessWidget {
                 ),
                 width: 60,
                 child: Text(
-                  '${(channelValue * 100).toInt()}%',
+                  labelGetter != null ? labelGetter(selectedColor) : '/',
                   textAlign: TextAlign.center,
                   style: textTheme.bodyText1,
                 ),
