@@ -76,7 +76,7 @@ class _TabsState extends State<Tabs> {
                 width: 86,
                 height: size.height,
                 decoration: BoxDecoration(
-                  color: theme.toggleableActiveColor /*Colors.white*/,
+                  color: theme.cardColor,
                   borderRadius: BorderRadius.circular(8),
                   boxShadow: defaultShadowBox,
                 ),

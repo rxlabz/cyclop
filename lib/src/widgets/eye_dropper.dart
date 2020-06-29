@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:paco/src/utils.dart';
 import 'dart:ui' as ui;
 
 import 'package:quiver/iterables.dart';
@@ -10,22 +11,30 @@ const _gridSize = 100.0;
 
 class EyeDropOverlay extends StatelessWidget {
   final Offset cursorPosition;
+  final bool touchable;
 
   final Color color;
   final List<Color> colors;
 
   final ValueChanged<Color> onTap;
 
-  const EyeDropOverlay(
-      {Key key, this.cursorPosition, this.color, this.onTap, this.colors})
-      : super(key: key);
+  const EyeDropOverlay({
+    Key key,
+    this.cursorPosition,
+    this.color,
+    this.onTap,
+    this.colors,
+    this.touchable,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return cursorPosition != null
         ? Positioned(
             left: cursorPosition.dx - (_gridSize / 2),
-            top: cursorPosition.dy - (_gridSize / 2),
+            top: cursorPosition.dy -
+                (_gridSize / 2) -
+                (touchable ? _gridSize / 2 : 0),
             width: _gridSize,
             height: _gridSize,
             child: _buildZoom(),
@@ -33,9 +42,9 @@ class EyeDropOverlay extends StatelessWidget {
         : SizedBox();
   }
 
-  GestureDetector _buildZoom() {
-    return GestureDetector(
-      onTap: () => onTap(colors[12]),
+  Widget _buildZoom() {
+    return IgnorePointer(
+      ignoring: true,
       child: Container(
         foregroundDecoration: BoxDecoration(
           shape: BoxShape.circle,

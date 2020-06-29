@@ -1,11 +1,21 @@
+import 'dart:math';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import '../theme.dart';
 import '../color_picker.dart';
+import '../utils.dart';
 import 'eye_dropper_layer.dart';
+
+const _buttonSize = 48.0;
 
 class ColorButton extends StatefulWidget {
   final Color color;
+  final double size;
+  final BoxShape boxShape;
 
   final ValueChanged<Color> onColorChanged;
 
@@ -16,6 +26,8 @@ class ColorButton extends StatefulWidget {
     @required this.color,
     @required this.onColorChanged,
     this.darkMode = false,
+    this.size = _buttonSize,
+    this.boxShape = BoxShape.circle,
   }) : super(key: key);
 
   @override
@@ -26,6 +38,9 @@ class _ColorButtonState extends State<ColorButton> {
   OverlayEntry pickerOverlay;
 
   Color color;
+
+  // hide the palette dureting eyedropping
+  bool hidden = false;
 
   @override
   void initState() {
@@ -44,10 +59,10 @@ class _ColorButtonState extends State<ColorButton> {
     return GestureDetector(
       onTapDown: (details) => colorPick(context, details),
       child: Container(
-        width: 48,
-        height: 48,
+        width: widget.size,
+        height: widget.size,
         decoration: BoxDecoration(
-          shape: BoxShape.circle,
+          shape: widget.boxShape,
           color: widget.color,
           border: Border.all(width: 4, color: Colors.white),
           boxShadow: darkShadowBox,
@@ -61,39 +76,62 @@ class _ColorButtonState extends State<ColorButton> {
     widget.onColorChanged(selectedColor);
   }
 
-  Future<Color> showPaco(BuildContext context, Offset offset) {
+  Future<Color> showPaco(BuildContext rootContext, Offset offset) async {
     if (pickerOverlay != null) return Future.value(widget.color);
 
-    pickerOverlay = _buildPickerOverlay(offset, context);
+    pickerOverlay = _buildPickerOverlay(offset, rootContext);
 
-    Overlay.of(context).insert(pickerOverlay);
+    Overlay.of(rootContext).insert(pickerOverlay);
 
     return Future.value(widget.color);
   }
 
   OverlayEntry _buildPickerOverlay(Offset offset, BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final left = offset.dx < (size.width - pickerWidth)
+        ? offset.dx + _buttonSize
+        : offset.dx - pickerWidth - _buttonSize;
+    final top = offset.dy - pickerHeight / 2 > 0
+        ? min(offset.dy - pickerHeight / 2, size.height - pickerHeight - 50)
+        : 50.0;
+
     return OverlayEntry(
       maintainState: true,
       builder: (c) => Positioned(
-        left: offset.dx + 60,
-        top: offset.dy - 250,
-        child: Material(
-          borderRadius: BorderRadius.circular(8),
-          child: ColorPicker(
-            darkMode: widget.darkMode,
-            config: ColorPickerConfig(),
-            selectedColor: color,
-            onClose: () {
-              pickerOverlay.remove();
-              pickerOverlay = null;
-            },
-            onColorSelected: (c) {
-              color = c;
-              pickerOverlay.markNeedsBuild();
-              widget.onColorChanged(c);
-            },
-            onEyeDropper: () =>
-                EyeDropperLayer.of(context).capture(context, _onEyePick),
+        left: isPhoneScreen ? (size.width - pickerWidth) / 2 : left,
+        top: isPhoneScreen ? (size.height - pickerHeight) / 2 : top,
+        child: IgnorePointer(
+          ignoring: hidden,
+          child: Opacity(
+            opacity: hidden ? 0 : 1,
+            child: Material(
+              borderRadius: BorderRadius.circular(8),
+              child: ColorPicker(
+                darkMode: widget.darkMode,
+                config: ColorPickerConfig(),
+                selectedColor: color,
+                onClose: () {
+                  pickerOverlay.remove();
+                  pickerOverlay = null;
+                },
+                onColorSelected: (c) {
+                  color = c ?? color;
+                  pickerOverlay.markNeedsBuild();
+                  widget.onColorChanged(c ?? color);
+                },
+                onEyeDropper: () {
+                  hidden = true;
+                  try {
+                    EyeDropperLayer.of(context).capture(context, (value) {
+                      hidden = false;
+                      _onEyePick(value);
+                    });
+                  } catch (err) {
+                    print('ERROR !!! _buildPickerOverlay $err');
+                  }
+                },
+              ),
+            ),
           ),
         ),
       ),
@@ -102,7 +140,7 @@ class _ColorButtonState extends State<ColorButton> {
 
   void _onEyePick(Color value) {
     color = value;
-    pickerOverlay.markNeedsBuild();
+    pickerOverlay?.markNeedsBuild();
     widget.onColorChanged(value);
   }
 }

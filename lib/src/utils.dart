@@ -5,6 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image/image.dart' as img;
 
+bool get isPhoneScreen => !(screenSize.shortestSide >= 600);
+/*bool get isTouchable => Platform.isIOS || Platform.isAndroid;*/
+
+Size screenSize = ui.window.physicalSize / ui.window.devicePixelRatio;
+
 extension Chroma on String {
   Color toColor({bool argb = false}) {
     final colorString =

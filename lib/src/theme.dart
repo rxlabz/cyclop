@@ -16,7 +16,7 @@ const defaultRadius = 8.0;
 final lightTheme = ThemeData.light().copyWith(
     scaffoldBackgroundColor: Color(0xfff0f0f0),
     backgroundColor: Color(0xffdadada),
-    toggleableActiveColor: Colors.white,
+    toggleableActiveColor: Colors.cyan,
     inputDecorationTheme: ThemeData.light().inputDecorationTheme.copyWith(
           isDense: true,
           fillColor: Colors.white,
@@ -34,7 +34,7 @@ final lightTheme = ThemeData.light().copyWith(
 
 final darkTheme = ThemeData.dark().copyWith(
   backgroundColor: Colors.grey.shade700,
-  toggleableActiveColor: Colors.grey.shade800,
+  toggleableActiveColor: Colors.cyan,
   textSelectionColor: Colors.cyan.shade700,
   dialogTheme: ThemeData.light().dialogTheme.copyWith(
         backgroundColor: Colors.grey.shade800,

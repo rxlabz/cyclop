@@ -21,7 +21,9 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   Color color1 = Colors.black;
-  Color color2 = Colors.black;
+  Color color2 = Colors.cyan;
+  Color color3 = Colors.yellow;
+  Color color4 = Colors.pink;
   Color backgroundColor = Colors.white;
 
   @override
@@ -37,7 +39,7 @@ class _MainScreenState extends State<MainScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ColorPicker(
+                    /*ColorPicker(
                       darkMode: true,
                       config: ColorPickerConfig(enableOpacity: false),
                       selectedColor: backgroundColor,
@@ -46,33 +48,57 @@ class _MainScreenState extends State<MainScreen> {
                       onEyeDropper: () => EyeDropperLayer.of(context).capture(
                           context,
                           (value) => setState(() => backgroundColor = value)),
-                    ),
+                    ),*/
                     Expanded(
-                      child: Center(
-                        child: ColorButton(
-                          darkMode: true,
-                          key: Key('c1'),
-                          color: color1,
-                          onColorChanged: (value) => setState(
-                            () => color1 = value,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ColorButton(
+                            darkMode: true,
+                            key: Key('c1'),
+                            color: color1,
+                            onColorChanged: (value) => setState(
+                              () => color1 = value,
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: ColorButton(
-                        key: Key('c2'),
-                        color: color2,
-                        onColorChanged: (value) => setState(
-                          () => color2 = value,
-                        ),
+                          ColorButton(
+                            darkMode: true,
+                            key: Key('c2'),
+                            color: color2,
+                            boxShape: BoxShape.rectangle,
+                            onColorChanged: (value) => setState(
+                              () => color2 = value,
+                            ),
+                          ),
+                          ColorButton(
+                            darkMode: true,
+                            key: Key('c3'),
+                            color: color3,
+                            onColorChanged: (value) => setState(
+                              () => color3 = value,
+                            ),
+                          )
+                        ],
                       ),
                     ),
                     Expanded(
                       child: Container(
                         child: Center(child: Image.asset('images/girafe.png')),
                       ),
-                    )
+                    ),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: ColorButton(
+                          key: Key('c4'),
+                          color: color4,
+                          size: 32,
+                          onColorChanged: (value) => setState(
+                            () => color4 = value,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

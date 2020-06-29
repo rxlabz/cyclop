@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paco/src/selectors/grid_color_selector.dart';
 import 'package:paco/src/selectors/hsl_selector.dart';
+import 'package:paco/src/selectors/user_swatch_selector.dart';
 import 'package:paco/src/tabbar.dart';
 import 'package:paco/src/widgets/opacity/opacity_slider.dart';
 import 'package:paco/src/theme.dart';
@@ -10,7 +11,7 @@ import 'widgets/title_bar.dart';
 
 const pickerWidth = 316.0;
 
-const pickerHeight = 510.0;
+const pickerHeight = 520.0;
 
 class ColorPickerConfig {
   final bool enableOpacity;
@@ -87,7 +88,7 @@ class ColorPicker extends StatelessWidget {
                         selectedColor: selectedColor,
                         onChange: onColorSelected,
                       ),
-                      Text('Library'),
+                      SwatchLibrary(),
                     ],
                   ),
                 ),
