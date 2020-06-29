@@ -4,9 +4,16 @@ import 'package:quiver/collection.dart';
 class SwatchLibrary extends StatefulWidget {
   final Set<Color> colors;
   final Color currentColor;
+  final ValueChanged<Set<Color>> onSwatchesUpdate;
+  final ValueChanged<Color> onColorSelected;
 
-  const SwatchLibrary({Key key, this.colors, this.currentColor})
-      : super(key: key);
+  const SwatchLibrary({
+    Key key,
+    this.colors,
+    this.currentColor,
+    this.onSwatchesUpdate,
+    this.onColorSelected,
+  }) : super(key: key);
 
   @override
   _SwatchLibraryState createState() => _SwatchLibraryState();
@@ -33,14 +40,20 @@ class _SwatchLibraryState extends State<SwatchLibrary> {
   Widget build(BuildContext context) => GridView.count(
         crossAxisCount: 8,
         children: [
-          ...colors.map(_colorToSwatch),
+          ...widget.colors.map(_colorToSwatch),
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: () => setState(() => colors.add(widget.currentColor)),
+            onPressed: () {
+              setState(() => colors.add(widget.currentColor));
+              final newSwatches = widget.colors..add(widget.currentColor);
+              widget.onSwatchesUpdate(newSwatches);
+            },
           )
         ],
       );
 
-  Widget _colorToSwatch(Color color) =>
-      Container(width: 30, height: 30, color: color);
+  Widget _colorToSwatch(Color color) => GestureDetector(
+        onTap: () => widget.onColorSelected(color),
+        child: Container(width: 30, height: 30, color: color),
+      );
 }

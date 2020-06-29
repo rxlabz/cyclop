@@ -16,8 +16,12 @@ class ColorButton extends StatefulWidget {
   final Color color;
   final double size;
   final BoxShape boxShape;
+  final ColorPickerConfig config;
+  final Set<Color> swatches;
 
   final ValueChanged<Color> onColorChanged;
+
+  final ValueChanged<Set<Color>> onSwatchesChanged;
 
   final bool darkMode;
 
@@ -25,9 +29,12 @@ class ColorButton extends StatefulWidget {
     Key key,
     @required this.color,
     @required this.onColorChanged,
+    this.config = const ColorPickerConfig(),
     this.darkMode = false,
     this.size = _buttonSize,
     this.boxShape = BoxShape.circle,
+    this.swatches = const {},
+    this.onSwatchesChanged,
   }) : super(key: key);
 
   @override
@@ -108,8 +115,9 @@ class _ColorButtonState extends State<ColorButton> {
               borderRadius: BorderRadius.circular(8),
               child: ColorPicker(
                 darkMode: widget.darkMode,
-                config: ColorPickerConfig(),
+                config: widget.config,
                 selectedColor: color,
+                swatches: widget.swatches,
                 onClose: () {
                   pickerOverlay.remove();
                   pickerOverlay = null;
@@ -119,6 +127,7 @@ class _ColorButtonState extends State<ColorButton> {
                   pickerOverlay.markNeedsBuild();
                   widget.onColorChanged(c ?? color);
                 },
+                onSwatchesUpdate: widget.onSwatchesChanged,
                 onEyeDropper: () {
                   hidden = true;
                   try {

@@ -1,8 +1,7 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:paco/src/utils.dart';
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:quiver/iterables.dart';
 
 const _cellSize = 20;

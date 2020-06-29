@@ -1,7 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import '../utils.dart';
 import 'hex_textfield.dart';
 
 class ColorSelector extends StatelessWidget {
@@ -36,7 +35,8 @@ class ColorSelector extends StatelessWidget {
               onColorChanged(value);
             },
           ),
-          IconButton(icon: Icon(Icons.colorize), onPressed: onEyePick),
+          if (!kIsWeb && onEyePick != null)
+            IconButton(icon: Icon(Icons.colorize), onPressed: onEyePick),
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
@@ -7,10 +8,20 @@ class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
 
   final ui.Image gridImage;
 
-  const OpacitySliderTrack(
+  final Paint gridPaint;
+
+  OpacitySliderTrack(
     this.selectedColor, {
     @required this.gridImage,
-  });
+  }) : gridPaint =
+            Paint() /* kIsWeb ? Paint() : Paint()
+          ..shader = ImageShader(
+            gridImage,
+            TileMode.repeated,
+            TileMode.repeated,
+            Matrix4.identity().storage,
+          )*/
+  ;
 
   @override
   void paint(
@@ -102,16 +113,7 @@ class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
     );
 
     context.canvas.drawRRect(shapeRect, leftTrackPaint);
-    context.canvas.drawRRect(
-      shapeRect,
-      Paint()
-        ..shader = ImageShader(
-          gridImage,
-          TileMode.repeated,
-          TileMode.repeated,
-          Matrix4.identity().storage,
-        ),
-    );
+    context.canvas.drawRRect(shapeRect, gridPaint);
 
     context.canvas.drawRRect(shapeRect, rightTrackPaint);
   }

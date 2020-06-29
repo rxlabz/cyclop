@@ -1,14 +1,25 @@
-# paco
+# Paco
 
-a flutter color picker
+![paco logo](assets/paco.png)
 
-## Getting Started
+A flutter color palette with an eyedropper ( on mobile & desktop )
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+| Light theme | Dark theme |
+| --- | --- |
+| ![paco light](assets/paco_light.png) | ![paco dark](assets/paco_dark.png) |
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+
+## Eyedropper
+
+Select a color from your Flutter mobile or desktop screen.
+
+![paco eye dropper](assets/paco_eyedropper.png) 
+
+
+## Customisable
+
+- disable opacity slider
+- disable eye dropping 
+- disable swatch library
+- Circle or Square color buttons
+

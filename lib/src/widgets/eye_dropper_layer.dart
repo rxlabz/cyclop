@@ -40,6 +40,7 @@ class EyeDropperLayer extends InheritedWidget {
             child: Listener(
               onPointerMove: (details) => _onHover(
                   details.position, details.kind == PointerDeviceKind.touch),
+              // ignore: deprecated_member_use
               onPointerHover: (details) => _onHover(
                   details.position, details.kind == PointerDeviceKind.touch),
               onPointerUp: (details) => _onPointerUp(details.position),

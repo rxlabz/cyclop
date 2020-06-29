@@ -20,7 +20,7 @@ class ColorPickerConfig {
 
   final bool enableEyePicker;
 
-  ColorPickerConfig({
+  const ColorPickerConfig({
     this.enableOpacity = true,
     this.enableFavorites = false,
     this.enableEyePicker = true,
@@ -30,7 +30,7 @@ class ColorPickerConfig {
 class ColorPicker extends StatelessWidget {
   final Color selectedColor;
 
-  final List<Color> favorites;
+  final Set<Color> swatches;
 
   final bool darkMode;
 
@@ -40,7 +40,7 @@ class ColorPicker extends StatelessWidget {
 
   final VoidCallback onEyeDropper;
 
-  final ValueChanged<List<Color>> onFavoritesUpdate;
+  final ValueChanged<Set<Color>> onSwatchesUpdate;
 
   final VoidCallback onClose;
 
@@ -49,9 +49,9 @@ class ColorPicker extends StatelessWidget {
     @required this.onColorSelected,
     @required this.selectedColor,
     @required this.config,
-    this.favorites = const [],
+    this.swatches = const {},
     this.darkMode = false,
-    this.onFavoritesUpdate,
+    this.onSwatchesUpdate,
     this.onEyeDropper,
     this.onClose,
   }) : super(key: key);
@@ -88,7 +88,12 @@ class ColorPicker extends StatelessWidget {
                         selectedColor: selectedColor,
                         onChange: onColorSelected,
                       ),
-                      SwatchLibrary(),
+                      SwatchLibrary(
+                        colors: swatches,
+                        currentColor: selectedColor,
+                        onSwatchesUpdate: onSwatchesUpdate,
+                        onColorSelected: onColorSelected,
+                      ),
                     ],
                   ),
                 ),
@@ -106,7 +111,7 @@ class ColorPicker extends StatelessWidget {
                   withAlpha: config.enableOpacity,
                   thumbWidth: 96,
                   onColorChanged: onColorSelected,
-                  onEyePick: onEyeDropper,
+                  onEyePick: config.enableEyePicker ? onEyeDropper : null,
                 ),
                 /*defaultDivider,*/
               ],

@@ -46,7 +46,7 @@ extension Utils on Color {
       HSLColor.fromColor(this).withLightness(value).toColor();
 }
 
-List<Color> getHueGradientColors({int steps: 36}) =>
+List<Color> getHueGradientColors({int steps = 36}) =>
     List.generate(steps, (value) => value).map<Color>((v) {
       final hsl = HSLColor.fromAHSL(1, v * (360 / steps), 0.67, 0.50);
       final rgb = hsl.toColor();
