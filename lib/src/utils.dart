@@ -24,7 +24,29 @@ extension Utils on Color {
                   ((index + (skipFirst ? 1 : 0)) /
                       (stepCount - (skipFirst ? -1 : 1))))
               .toColor());
+
+  double get hue => HSLColor.fromColor(this).hue;
+
+  double get saturation => HSLColor.fromColor(this).saturation;
+
+  double get lightness => HSLColor.fromColor(this).lightness;
+
+  Color withHue(double value) =>
+      HSLColor.fromColor(this).withHue(value).toColor();
+
+  Color withSaturation(double value) =>
+      HSLColor.fromColor(this).withSaturation(value).toColor();
+
+  Color withLightness(double value) =>
+      HSLColor.fromColor(this).withLightness(value).toColor();
 }
+
+List<Color> getHueGradientColors({int steps: 36}) =>
+    List.generate(steps, (value) => value).map<Color>((v) {
+      final hsl = HSLColor.fromAHSL(1, v * (360 / steps), 0.67, 0.50);
+      final rgb = hsl.toColor();
+      return rgb.withOpacity(1);
+    }).toList();
 
 const samplingGridSize = 5;
 

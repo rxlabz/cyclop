@@ -44,7 +44,7 @@ class OpacitySlider extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Theme(
-                      data: opacitySliderTheme(selectedColor),
+                      data: _opacitySliderTheme(selectedColor),
                       child: Slider(
                         value: opacity,
                         min: 0,
@@ -92,10 +92,11 @@ Future<ui.Image> getGridImage() {
   return completer.future;
 }
 
-ThemeData opacitySliderTheme(Color color) => ThemeData.light().copyWith(
+ThemeData _opacitySliderTheme(Color color) => ThemeData.light().copyWith(
       sliderTheme: SliderThemeData(
-          trackHeight: 24,
-          thumbColor: Colors.white,
-          trackShape: OpacitySliderTrack(color, gridImage: _gridImage),
-          thumbShape: OpacitySliderThumbShape(color)),
+        trackHeight: 24,
+        thumbColor: Colors.white,
+        trackShape: OpacitySliderTrack(color, gridImage: _gridImage),
+        thumbShape: OpacitySliderThumbShape(color),
+      ),
     );

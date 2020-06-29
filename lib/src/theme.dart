@@ -3,6 +3,12 @@ import 'package:flutter/material.dart';
 class Labels {
   static const String mainTitle = 'Colors';
   static const String opacity = 'Opacity';
+  static const String red = 'Red';
+  static const String green = 'Green';
+  static const String blue = 'Blue';
+  static const String hue = 'Hue';
+  static const String saturation = 'Saturation';
+  static const String light = 'Lightness';
 }
 
 const defaultRadius = 8.0;
