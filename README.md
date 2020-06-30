@@ -29,11 +29,11 @@ To use the eyedropper ( Flutter mobile & desktop ) you need to wrap the app in t
             child: ColorButton(
               key: Key('c1'),
               color: color1,
-              config: ColorPickerConfig(enableLibrary: false),
+              config: ColorPickerConfig(enableEyePicker = true),
               boxShape: BoxShape.rectangle, // default : circle
               size: 32,
               swatches: swatches,
-              onColorChanged: (value) => setState(() => color4 = value),
+              onColorChanged: (value) => setState(() => color1 = value),
             ),
           ),
         ),
@@ -61,7 +61,7 @@ ColorButton(
   boxShape: BoxShape.rectangle, // default : circle
   size: 32,
   swatches: swatches,
-  onColorChanged: (value) => setState( () => color4 = value ),
+  onColorChanged: (value) => setState( () => color1 = value ),
  );
 
 ColorButton(
@@ -70,7 +70,7 @@ ColorButton(
   config: ColorPickerConfig(enableEyePicker: false),
   size: 64,
   swatches: swatches,
-  onColorChanged: (value) => setState( () => color4 = value ),
+  onColorChanged: (value) => setState( () => color2 = value ),
   onSwatchesChanged: (newSwatches) => setState(() => swatches = newSwatches),
  );
 ```
