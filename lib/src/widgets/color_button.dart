@@ -131,7 +131,7 @@ class _ColorButtonState extends State<ColorButton> {
                 onEyeDropper: () {
                   hidden = true;
                   try {
-                    EyeDropperLayer.of(context).capture(context, (value) {
+                    EyeDrop.of(context).capture(context, (value) {
                       hidden = false;
                       _onEyePick(value);
                     });

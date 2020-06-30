@@ -16,13 +16,13 @@ const pickerHeight = 520.0;
 class ColorPickerConfig {
   final bool enableOpacity;
 
-  final bool enableFavorites;
+  final bool enableLibrary;
 
   final bool enableEyePicker;
 
   const ColorPickerConfig({
     this.enableOpacity = true,
-    this.enableFavorites = false,
+    this.enableLibrary = true,
     this.enableEyePicker = true,
   });
 }
@@ -78,7 +78,11 @@ class ColorPicker extends StatelessWidget {
                 Expanded(
                   child: Tabs(
                     onIndexChanged: (int value) {},
-                    labels: ['Material', 'Sliders', 'Library'],
+                    labels: [
+                      'Material',
+                      'Sliders',
+                      if (config.enableLibrary) 'Library'
+                    ],
                     views: [
                       GridColorSelector(
                         selectedColor: selectedColor,
@@ -88,12 +92,13 @@ class ColorPicker extends StatelessWidget {
                         selectedColor: selectedColor,
                         onChange: onColorSelected,
                       ),
-                      SwatchLibrary(
-                        colors: swatches,
-                        currentColor: selectedColor,
-                        onSwatchesUpdate: onSwatchesUpdate,
-                        onColorSelected: onColorSelected,
-                      ),
+                      if (config.enableLibrary)
+                        SwatchLibrary(
+                          colors: swatches,
+                          currentColor: selectedColor,
+                          onSwatchesUpdate: onSwatchesUpdate,
+                          onColorSelected: onColorSelected,
+                        ),
                     ],
                   ),
                 ),

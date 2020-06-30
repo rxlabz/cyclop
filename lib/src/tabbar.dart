@@ -31,7 +31,9 @@ class _TabsState extends State<Tabs> {
       case 0:
         return Alignment.topLeft;
       case 1:
-        return Alignment.topCenter;
+        return widget.labels.length == 2
+            ? Alignment.topRight
+            : Alignment.topCenter;
       case 2:
         return Alignment.topRight;
     }

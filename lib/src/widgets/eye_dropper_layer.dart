@@ -30,10 +30,10 @@ class _EyeDropperModel {
   _EyeDropperModel();
 }
 
-class EyeDropperLayer extends InheritedWidget {
+class EyeDrop extends InheritedWidget {
   static _EyeDropperModel data = _EyeDropperModel();
 
-  EyeDropperLayer({Widget child, bool touchable})
+  EyeDrop({Widget child, bool touchable})
       : super(
           child: RepaintBoundary(
             key: captureKey,
@@ -49,8 +49,8 @@ class EyeDropperLayer extends InheritedWidget {
           ),
         );
 
-  static EyeDropperLayer of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<EyeDropperLayer>();
+  static EyeDrop of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<EyeDrop>();
   }
 
   static void _onPointerUp(Offset position) {
@@ -108,7 +108,7 @@ class EyeDropperLayer extends InheritedWidget {
   }
 
   @override
-  bool updateShouldNotify(EyeDropperLayer oldWidget) {
+  bool updateShouldNotify(EyeDrop oldWidget) {
     return true;
   }
 }
