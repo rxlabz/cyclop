@@ -95,7 +95,7 @@ class _ColorButtonState extends State<ColorButton> {
 
   OverlayEntry _buildPickerOverlay(Offset offset, BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final left = offset.dx < (size.width - pickerWidth)
+    final left = offset.dx + pickerWidth < size.width - 30
         ? offset.dx + _buttonSize
         : offset.dx - pickerWidth - _buttonSize;
     final top = offset.dy - pickerHeight / 2 > 0

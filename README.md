@@ -1,6 +1,6 @@
 # Paco
 
-![paco logo](assets/paco.png)
+![paco logo](assets/paco_banner.png)
 
 A flutter color palette with an eyedropper ( on mobile & desktop )
 

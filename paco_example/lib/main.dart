@@ -8,11 +8,7 @@ void main() async {
 
 class App extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: MainScreen(),
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp(home: MainScreen());
 }
 
 class MainScreen extends StatefulWidget {
@@ -26,7 +22,7 @@ class _MainScreenState extends State<MainScreen> {
   Color color3 = Colors.yellow;
   Color color4 = Colors.pink;
   Color backgroundColor = Colors.white;
-  Set<Color> swatches = {Colors.cyan, Colors.amber};
+  Set<Color> swatches = Colors.primaries.map((e) => Color(e.value)).toSet();
 
   @override
   Widget build(BuildContext context) {

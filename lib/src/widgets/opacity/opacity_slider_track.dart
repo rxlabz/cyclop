@@ -13,15 +13,13 @@ class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
   OpacitySliderTrack(
     this.selectedColor, {
     @required this.gridImage,
-  }) : gridPaint =
-            Paint() /* kIsWeb ? Paint() : Paint()
+  }) : gridPaint = Paint()
           ..shader = ImageShader(
             gridImage,
             TileMode.repeated,
             TileMode.repeated,
             Matrix4.identity().storage,
-          )*/
-  ;
+          );
 
   @override
   void paint(
