@@ -8,25 +8,25 @@ A flutter color palette with an eyedropper ( on mobile & desktop )
 
 | Desktop & tablet  |  Mobile|
 | --- | --- |
-| ![Cyclop desktop eyedropper](assets/cyclop.gif) | ![Cyclop onmobile](assets/pacomob.gif) |
+| ![Cyclop desktop eyedropper](https://github.com/rxlabz/cyclop/raw/master/assets/cyclop.gif) | ![Cyclop onmobile](https://github.com/rxlabz/cyclop/raw/master/assets/pacomob.gif) |
 
 
 | Material | HSL | RVB | Custom |
 | --- | --- | --- | --- |
-| ![Cyclop material](assets/cyclop_material.png) | ![Cyclop hsl](assets/cyclop_hsl.png) | ![Cyclop hsl](assets/cyclop_rvb.png) | ![Cyclop hsl](assets/cyclop_custom.png) |
+| ![Cyclop material](https://github.com/rxlabz/cyclop/raw/master/assets/cyclop_material.png) | ![Cyclop hsl](https://github.com/rxlabz/cyclop/raw/master/assets/cyclop_hsl.png) | ![Cyclop hsl](https://github.com/rxlabz/cyclop/raw/master/assets/cyclop_rvb.png) | ![Cyclop hsl](https://github.com/rxlabz/cyclop/raw/master/assets/cyclop_custom.png) |
 
 
 
 | Light theme | Dark theme |
 | --- | --- |
-| ![Cyclop light](assets/cyclop_hsl.png) | ![Cyclop dark](assets/cyclop_dark.png) |
+| ![Cyclop light](https://github.com/rxlabz/cyclop/raw/master/assets/cyclop_hsl.png) | ![Cyclop dark](https://github.com/rxlabz/cyclop/raw/master/assets/cyclop_dark.png) |
 
 
 ### Eyedropper
 
 Select a color from your Flutter mobile or desktop screen.
 
-![Cyclop eye dropper](assets/paco_eyedropper.png) 
+![Cyclop eye dropper](https://github.com/rxlabz/cyclop/raw/master/assets/paco_eyedropper.png) 
 
 To use the eyedropper ( Flutter mobile & desktop ) you need to wrap the app in the EyeDrop widget.
 
