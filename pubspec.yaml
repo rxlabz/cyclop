@@ -1,6 +1,6 @@
 name: cyclop
 description: a flutter colorpicker with an eyedropper
-version: 0.2.1
+version: 0.2.1+1
 homepage: https://github.com/rxlabz/cyclop
 
 environment:
