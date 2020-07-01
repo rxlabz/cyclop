@@ -83,7 +83,7 @@ ui.Image _gridImage;
 Future<ui.Image> getGridImage() {
   if (_gridImage != null) return Future.value(_gridImage);
   final completer = Completer<ui.Image>();
-  AssetImage('packages/paco/assets/grid.png')
+  AssetImage('packages/cyclop/assets/grid.png')
       .resolve(ImageConfiguration())
       .addListener(ImageStreamListener((ImageInfo info, bool _) {
     _gridImage = info.image;

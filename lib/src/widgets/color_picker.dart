@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:paco/src/selectors/grid_color_selector.dart';
-import 'package:paco/src/widgets/channels/hsl_selector.dart';
-import 'package:paco/src/selectors/user_swatch_selector.dart';
-import 'package:paco/src/widgets/tabbar.dart';
-import 'package:paco/src/widgets/opacity/opacity_slider.dart';
-import 'package:paco/src/theme.dart';
 
+import 'selectors/channels/hsl_selector.dart';
+import 'selectors/grid_color_selector.dart';
+import 'selectors/user_swatch_selector.dart';
+import '../theme.dart';
+import '../widgets/opacity/opacity_slider.dart';
+import '../widgets/tabbar.dart';
 import 'picker/color_selector.dart';
 import 'picker/title_bar.dart';
 

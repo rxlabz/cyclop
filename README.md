@@ -1,6 +1,6 @@
-# Paco
+# Cyclop
 
-![paco logo](assets/paco_banner.png)
+![Cyclop logo](assets/cyclop_banner.png)
 
 A flutter color palette with an eyedropper ( on mobile & desktop )
 
@@ -8,11 +8,11 @@ A flutter color palette with an eyedropper ( on mobile & desktop )
 
 | Mobile | Desktop & tablet |
 | --- | --- |
-| ![paco onmobile](assets/pacomob.gif) | ![paco desktop eyedropper](assets/paco_eyedropper.gif) |
+| ![Cyclop onmobile](assets/pacomob.gif) | ![Cyclop desktop eyedropper](assets/paco_eyedropper.gif) |
 
 | Light theme | Dark theme |
 | --- | --- |
-| ![paco light](assets/paco_light.png) | ![paco dark](assets/paco_dark.png) |
+| ![Cyclop light](assets/paco_light.png) | ![Cyclop dark](assets/paco_dark.png) |
 
 
 
@@ -20,7 +20,7 @@ A flutter color palette with an eyedropper ( on mobile & desktop )
 
 Select a color from your Flutter mobile or desktop screen.
 
-![paco eye dropper](assets/paco_eyedropper.png) 
+![Cyclop eye dropper](assets/paco_eyedropper.png) 
 
 To use the eyedropper ( Flutter mobile & desktop ) you need to wrap the app in the EyeDrop widget.
 

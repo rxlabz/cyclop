@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:paco/src/theme.dart';
 import 'package:quiver/iterables.dart';
+
+import '../theme.dart';
 
 class Tabs extends StatefulWidget {
   final int selectedIndex;

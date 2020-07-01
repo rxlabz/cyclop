@@ -20,30 +20,30 @@ extension Chroma on String {
 extension Utils on Color {
   HSLColor get hsl => HSLColor.fromColor(this);
 
+  double get hue => hsl.hue;
+
+  double get saturation => hsl.saturation;
+
+  double get lightness => hsl.lightness;
+
+  Color withHue(double value) => hsl.withHue(value).toColor();
+
+  Color withSaturation(double value) =>
+      HSLColor.fromAHSL(opacity, hue, value, lightness).toColor();
+
+  Color withLightness(double value) => hsl.withLightness(value).toColor();
+
   List<Color> getShades(int stepCount, {bool skipFirst = true}) =>
       List.generate(
-          stepCount,
-          (index) => hsl
+        stepCount,
+        (index) {
+          return hsl
               .withLightness(1 -
                   ((index + (skipFirst ? 1 : 0)) /
                       (stepCount - (skipFirst ? -1 : 1))))
-              .toColor());
-
-  double get hue => HSLColor.fromColor(this).hue;
-
-  double get saturation => HSLColor.fromColor(this).saturation;
-
-  double get lightness => HSLColor.fromColor(this).lightness;
-
-  Color withHue(double value) =>
-      HSLColor.fromColor(this).withHue(value).toColor();
-
-  Color withSaturation(double value) {
-    return HSLColor.fromAHSL(opacity, hue, value, lightness).toColor();
-  }
-
-  Color withLightness(double value) =>
-      HSLColor.fromColor(this).withLightness(value).toColor();
+              .toColor();
+        },
+      );
 }
 
 List<Color> getHueGradientColors({double saturation, int steps = 36}) =>
@@ -58,6 +58,14 @@ List<Color> getHueGradientColors({double saturation, int steps = 36}) =>
 
 const samplingGridSize = 5;
 
+List<Color> getPixelColors(img.Image image, Offset offset) => List.generate(
+      samplingGridSize * samplingGridSize,
+      (index) => getPixelColor(
+        image,
+        offset + _offsetFromIndex(index, samplingGridSize),
+      ),
+    );
+
 Color getPixelColor(img.Image image, Offset offset) => (offset.dx >= 0 &&
         offset.dy >= 0 &&
         offset.dx < image.width &&
@@ -65,12 +73,10 @@ Color getPixelColor(img.Image image, Offset offset) => (offset.dx >= 0 &&
     ? ABGR2Color(image.getPixel(offset.dx.toInt(), offset.dy.toInt()))
     : Color(0);
 
-List<Color> getPixelColors(img.Image image, Offset offset) => List.generate(
-    25, (index) => getPixelColor(image, offset + _offsetFromIndex(index, 5)));
-
 ui.Offset _offsetFromIndex(int index, int numColumns) => Offset(
-    (index % numColumns).toDouble(),
-    ((index ~/ numColumns) % numColumns).toDouble());
+      (index % numColumns).toDouble(),
+      ((index ~/ numColumns) % numColumns).toDouble(),
+    );
 
 Color ABGR2Color(int value) {
   final a = (value >> 24) & 0xFF;

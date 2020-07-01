@@ -8,7 +8,7 @@ import 'package:flutter/rendering.dart';
 import '../theme.dart';
 import 'color_picker.dart';
 import '../utils.dart';
-import 'eye_dropper_layer.dart';
+import 'eyedrop/eye_dropper_layer.dart';
 
 const _buttonSize = 48.0;
 
@@ -148,8 +148,9 @@ class _ColorButtonState extends State<ColorButton> {
   }
 
   void _onEyePick(Color value) {
+    print('_ColorButtonState._onEyePick... ');
     color = value;
-    pickerOverlay?.markNeedsBuild();
     widget.onColorChanged(value);
+    pickerOverlay?.markNeedsBuild();
   }
 }
