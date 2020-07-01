@@ -23,7 +23,7 @@ class EyeDropOverlay extends StatelessWidget {
     this.color,
     this.onTap,
     this.colors,
-    this.touchable,
+    this.touchable = false,
   }) : super(key: key);
 
   @override

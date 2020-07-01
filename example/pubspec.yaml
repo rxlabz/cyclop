@@ -16,8 +16,6 @@ dependencies:
   cyclop:
     path: ../
 
-  image: ^2.1.13
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
