@@ -12,7 +12,7 @@ A flutter color palette with an eyedropper ( on mobile & desktop )
 
 
 | Material | HSL | RVB | Custom |
-| --- | --- |
+| --- | --- | --- | --- |
 | ![Cyclop material](assets/cyclop_material.png) | ![Cyclop hsl](assets/cyclop_hsl.png) | ![Cyclop hsl](assets/cyclop_rvb.png) | ![Cyclop hsl](assets/cyclop_custom.png) |
 
 
