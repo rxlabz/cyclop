@@ -6,7 +6,7 @@ A flutter color palette with an eyedropper ( on mobile & desktop )
 
 ## [Demo](https://rxlabz.github.io/paco/)
 
-| Mobile | Desktop & tablet |
+| Desktop & tablet  |  Mobile|
 | --- | --- |
 | ![Cyclop desktop eyedropper](assets/cyclop.gif) | ![Cyclop onmobile](assets/pacomob.gif) |
 

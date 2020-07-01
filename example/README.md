@@ -1,6 +1,6 @@
-# paco_example
+# Cyclop example
 
-A new Flutter project.
+A Cyclop colorpicker example app ( mac, mobile, web)
 
 ## Getting Started
 
