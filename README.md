@@ -4,7 +4,7 @@
 
 A flutter color palette with an eyedropper ( on mobile & desktop )
 
-## [Demo](https://rxlabz.github.io/paco/)
+## [Demo](https://rxlabz.github.io/cyclop/)
 
 | Desktop & tablet  |  Mobile|
 | --- | --- |
