@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:paco/src/selectors/grid_color_selector.dart';
-import 'package:paco/src/selectors/hsl_selector.dart';
+import 'package:paco/src/widgets/channels/hsl_selector.dart';
 import 'package:paco/src/selectors/user_swatch_selector.dart';
-import 'package:paco/src/tabbar.dart';
+import 'package:paco/src/widgets/tabbar.dart';
 import 'package:paco/src/widgets/opacity/opacity_slider.dart';
 import 'package:paco/src/theme.dart';
 
-import 'widgets/color_selector.dart';
-import 'widgets/title_bar.dart';
+import 'picker/color_selector.dart';
+import 'picker/title_bar.dart';
 
 const pickerWidth = 316.0;
 

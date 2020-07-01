@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import '../theme.dart';
-import '../color_picker.dart';
+import 'color_picker.dart';
 import '../utils.dart';
 import 'eye_dropper_layer.dart';
 

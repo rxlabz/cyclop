@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../utils.dart';
+import '../../utils.dart';
 
 class HexColorField extends StatefulWidget {
   final bool withAlpha;

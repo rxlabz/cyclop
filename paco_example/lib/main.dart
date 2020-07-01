@@ -58,16 +58,20 @@ class _MainScreenState extends State<MainScreen> {
             child: Center(
               child: Column(
                 children: [
-                  ColorButton(
-                    darkMode: true,
-                    key: Key('c1'),
-                    color: backgroundColor,
-                    swatches: swatches,
-                    onColorChanged: (value) => setState(
-                      () => backgroundColor = value,
+                  Expanded(
+                    child: Center(
+                      child: ColorButton(
+                        darkMode: true,
+                        key: Key('c1'),
+                        color: backgroundColor,
+                        swatches: swatches,
+                        onColorChanged: (value) => setState(
+                          () => backgroundColor = value,
+                        ),
+                        onSwatchesChanged: (newSwatches) =>
+                            setState(() => swatches = newSwatches),
+                      ),
                     ),
-                    onSwatchesChanged: (newSwatches) =>
-                        setState(() => swatches = newSwatches),
                   ),
                   if (!kIsWeb) Center(child: Image.asset('images/img.png')),
                 ],

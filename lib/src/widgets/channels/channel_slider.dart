@@ -1,7 +1,8 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import '../selectors/hsl_selector.dart';
+
+import 'hsl_selector.dart';
 
 class ChannelSlider extends StatelessWidget {
   final Color selectedColor;
@@ -13,6 +14,7 @@ class ChannelSlider extends StatelessWidget {
   final ValueChanged<double> onChange;
 
   final ChannelValueGetter channelValueGetter;
+
   final ValueLabelGetter labelGetter;
 
   const ChannelSlider({

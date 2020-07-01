@@ -1,11 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
-import '../theme.dart';
-import '../utils.dart';
-import '../widgets/channels/hsl_sliders.dart';
-import '../widgets/channel_slider.dart';
+import '../../theme.dart';
+import 'channel_slider.dart';
+import 'hsl_sliders.dart';
 
 typedef ChannelValueGetter = double Function(Color value);
 

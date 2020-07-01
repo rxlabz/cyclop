@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme.dart';
+import '../../theme.dart';
 
 class MainTitle extends StatelessWidget {
   final VoidCallback onClose;

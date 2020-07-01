@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:paco/src/widgets/color_selector.dart';
+
+import 'color_selector.dart';
 
 class ColorPreview extends StatelessWidget {
   final Color selectedColor;

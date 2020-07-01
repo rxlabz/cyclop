@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../channel_slider.dart';
+import 'channel_slider.dart';
 import '../../utils.dart';
 import '../../theme.dart';
 
