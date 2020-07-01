@@ -1,3 +1,7 @@
+## [0.2.1] 01/07/2020
+
+- fix compatibility with Flutter stable channel
+
 ## [0.2.0] 01/07/2020
 
 - rename to Cyclop

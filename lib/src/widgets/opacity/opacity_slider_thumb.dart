@@ -12,8 +12,8 @@ class OpacitySliderThumbShape extends RoundSliderThumbShape {
   }) : super(
           enabledThumbRadius: enabledThumbRadius,
           disabledThumbRadius: disabledThumbRadius,
-          elevation: elevation,
-          pressedElevation: pressedElevation,
+          /*elevation: elevation,
+          pressedElevation: pressedElevation,*/
         );
 
   final Color selectedColor;
@@ -56,12 +56,13 @@ class OpacitySliderThumbShape extends RoundSliderThumbShape {
     final color = colorTween.evaluate(enableAnimation);
     final radius = radiusTween.evaluate(enableAnimation);
 
-    final elevationTween = Tween<double>(
+    /*final elevationTween = Tween<double>(
       begin: elevation,
       end: pressedElevation,
     );
 
     final evaluatedElevation = elevationTween.evaluate(activationAnimation);
+    */
 
     final path = Path()
       ..addArc(
@@ -69,7 +70,7 @@ class OpacitySliderThumbShape extends RoundSliderThumbShape {
         0,
         pi * 2,
       );
-    canvas.drawShadow(path, Colors.black, evaluatedElevation, true);
+    canvas.drawShadow(path, Colors.black, 1.0 /*evaluatedElevation*/, true);
 
     canvas.drawCircle(center, radius, Paint()..color = color);
     canvas.drawCircle(center, radius - 2, Paint()..color = selectedColor);

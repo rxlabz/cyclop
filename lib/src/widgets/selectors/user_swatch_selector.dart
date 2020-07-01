@@ -1,4 +1,3 @@
-import 'package:cyclop/src/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:quiver/collection.dart';
 
@@ -47,8 +46,6 @@ class _SwatchLibraryState extends State<SwatchLibrary> {
       children: [
         ...widget.colors.map(_colorToSwatch),
         Container(
-          /*margin: const EdgeInsets.all(4),*/
-          /*padding: const EdgeInsets.all(4),*/
           decoration: BoxDecoration(
             color: theme.cardColor,
             borderRadius: BorderRadius.circular(4),
@@ -84,11 +81,10 @@ class _SwatchLibraryState extends State<SwatchLibrary> {
           decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.circular(4),
-            /*boxShadow: color == widget.currentColor ? defaultShadowBox : [],*/
           ),
           foregroundDecoration: BoxDecoration(
             border: color == widget.currentColor
-                ? Border.all(color: Colors.white /*grey.shade600*/, width: 3)
+                ? Border.all(color: Colors.white, width: 3)
                 : null,
             borderRadius: BorderRadius.circular(4),
           ),
