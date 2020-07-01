@@ -1,6 +1,6 @@
 # Cyclop
 
-![Cyclop logo](assets/cyclop_banner.png)
+![Cyclop logo](https://github.com/rxlabz/paco/raw/master/assets/cyclop_banner.png)
 
 A flutter color palette with an eyedropper ( on mobile & desktop )
 
@@ -8,12 +8,18 @@ A flutter color palette with an eyedropper ( on mobile & desktop )
 
 | Mobile | Desktop & tablet |
 | --- | --- |
-| ![Cyclop onmobile](assets/pacomob.gif) | ![Cyclop desktop eyedropper](assets/paco_eyedropper.gif) |
+| ![Cyclop desktop eyedropper](assets/cyclop.gif) | ![Cyclop onmobile](assets/pacomob.gif) |
+
+
+| Material | HSL | RVB | Custom |
+| --- | --- |
+| ![Cyclop material](assets/cyclop_material.png) | ![Cyclop hsl](assets/cyclop_hsl.png) | ![Cyclop hsl](assets/cyclop_rvb.png) | ![Cyclop hsl](assets/cyclop_custom.png) |
+
+
 
 | Light theme | Dark theme |
 | --- | --- |
-| ![Cyclop light](assets/paco_light.png) | ![Cyclop dark](assets/paco_dark.png) |
-
+| ![Cyclop light](assets/cyclop_hsl.png) | ![Cyclop dark](assets/cyclop_dark.png) |
 
 
 ### Eyedropper
