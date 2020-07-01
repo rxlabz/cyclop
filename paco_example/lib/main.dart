@@ -8,7 +8,10 @@ void main() async {
 
 class App extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => MaterialApp(home: MainScreen());
+  Widget build(BuildContext context) => MaterialApp(
+        home: MainScreen(),
+        debugShowCheckedModeBanner: false,
+      );
 }
 
 class MainScreen extends StatefulWidget {
@@ -17,10 +20,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  Color color1 = Colors.black;
-  Color color2 = Colors.cyan;
-  Color color3 = Colors.yellow;
-  Color color4 = Colors.pink;
+  Color appbarColor = Colors.blueGrey;
   Color backgroundColor = Colors.white;
   Set<Color> swatches = Colors.primaries.map((e) => Color(e.value)).toSet();
 
@@ -30,69 +30,44 @@ class _MainScreenState extends State<MainScreen> {
       child: Builder(
         builder: (context) => Scaffold(
           backgroundColor: backgroundColor,
+          appBar: AppBar(
+            title: Text('Paco DEMO'),
+            backgroundColor: appbarColor,
+            actions: [
+              Center(
+                child: ColorButton(
+                  darkMode: true,
+                  key: Key('c2'),
+                  color: appbarColor,
+                  boxShape: BoxShape.rectangle,
+                  swatches: swatches,
+                  size: 32,
+                  config: ColorPickerConfig(
+                      enableOpacity: false, enableLibrary: false),
+                  onColorChanged: (value) => setState(
+                    () => appbarColor = value,
+                  ),
+                  onSwatchesChanged: (newSwatches) =>
+                      setState(() => swatches = newSwatches),
+                ),
+              )
+            ],
+          ),
           body: Container(
             padding: const EdgeInsets.all(12),
             child: Center(
               child: Column(
                 children: [
-                  Expanded(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ColorButton(
-                          darkMode: true,
-                          key: Key('c1'),
-                          color: color1,
-                          swatches: swatches,
-                          onColorChanged: (value) => setState(
-                            () => color1 = value,
-                          ),
-                          onSwatchesChanged: (newSwatches) =>
-                              setState(() => swatches = newSwatches),
-                        ),
-                        ColorButton(
-                          darkMode: true,
-                          key: Key('c2'),
-                          color: color2,
-                          boxShape: BoxShape.rectangle,
-                          swatches: swatches,
-                          config: ColorPickerConfig(
-                              enableOpacity: false, enableLibrary: false),
-                          onColorChanged: (value) => setState(
-                            () => color2 = value,
-                          ),
-                          onSwatchesChanged: (newSwatches) =>
-                              setState(() => swatches = newSwatches),
-                        ),
-                        ColorButton(
-                          darkMode: true,
-                          key: Key('c3'),
-                          color: color3,
-                          swatches: swatches,
-                          onColorChanged: (value) => setState(
-                            () => color3 = value,
-                          ),
-                          onSwatchesChanged: (newSwatches) =>
-                              setState(() => swatches = newSwatches),
-                        ),
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: ColorButton(
-                            key: Key('c4'),
-                            color: color4,
-                            config: ColorPickerConfig(enableEyePicker: false),
-                            size: 32,
-                            swatches: swatches,
-                            onColorChanged: (value) => setState(
-                              () => color4 = value,
-                            ),
-                            onSwatchesChanged: (newSwatches) =>
-                                setState(() => swatches = newSwatches),
-                          ),
-                        ),
-                      ],
+                  ColorButton(
+                    darkMode: true,
+                    key: Key('c1'),
+                    color: backgroundColor,
+                    swatches: swatches,
+                    onColorChanged: (value) => setState(
+                      () => backgroundColor = value,
                     ),
+                    onSwatchesChanged: (newSwatches) =>
+                        setState(() => swatches = newSwatches),
                   ),
                   if (!kIsWeb) Center(child: Image.asset('images/img.png')),
                 ],

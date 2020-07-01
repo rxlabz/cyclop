@@ -4,11 +4,17 @@
 
 A flutter color palette with an eyedropper ( on mobile & desktop )
 
+## [Demo](https://rxlabz.github.io/paco/)
+
+| Mobile | Desktop & tablet |
+| --- | --- |
+| ![paco onmobile](assets/pacomob.gif) | ![paco desktop eyedropper](assets/paco_eyedropper.gif) |
+
 | Light theme | Dark theme |
 | --- | --- |
 | ![paco light](assets/paco_light.png) | ![paco dark](assets/paco_dark.png) |
 
-- [example](https://rxlabz.github.io/paco/#/) / [source](https://github.com/rxlabz/paco/blob/master/paco_example/lib/main.dart)
+
 
 ### Eyedropper
 

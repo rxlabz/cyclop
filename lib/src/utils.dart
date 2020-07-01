@@ -6,7 +6,6 @@ import 'package:flutter/rendering.dart';
 import 'package:image/image.dart' as img;
 
 bool get isPhoneScreen => !(screenSize.shortestSide >= 600);
-/*bool get isTouchable => Platform.isIOS || Platform.isAndroid;*/
 
 Size screenSize = ui.window.physicalSize / ui.window.devicePixelRatio;
 
@@ -39,19 +38,23 @@ extension Utils on Color {
   Color withHue(double value) =>
       HSLColor.fromColor(this).withHue(value).toColor();
 
-  Color withSaturation(double value) =>
-      HSLColor.fromColor(this).withSaturation(value).toColor();
+  Color withSaturation(double value) {
+    return HSLColor.fromAHSL(opacity, hue, value, lightness).toColor();
+  }
 
   Color withLightness(double value) =>
       HSLColor.fromColor(this).withLightness(value).toColor();
 }
 
-List<Color> getHueGradientColors({int steps = 36}) =>
-    List.generate(steps, (value) => value).map<Color>((v) {
-      final hsl = HSLColor.fromAHSL(1, v * (360 / steps), 0.67, 0.50);
-      final rgb = hsl.toColor();
-      return rgb.withOpacity(1);
-    }).toList();
+List<Color> getHueGradientColors({double saturation, int steps = 36}) =>
+    List.generate(steps, (value) => value)
+        .map<Color>((v) {
+          final hsl = HSLColor.fromAHSL(1, v * (360 / steps), 0.67, 0.50);
+          final rgb = hsl.toColor();
+          return rgb.withOpacity(1);
+        })
+        .map((c) => saturation != null ? c.withSaturation(saturation) : c)
+        .toList();
 
 const samplingGridSize = 5;
 
