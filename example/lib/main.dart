@@ -109,10 +109,11 @@ class _MainScreenState extends State<MainScreen> {
                   setState(() => swatches = newSwatches),
             ),
           ),
-          EyedropperButton(
-            icon: Icons.colorize,
-            onColor: (value) => setState(() => backgroundColor = value),
-          ),
+          if (!kIsWeb)
+            EyedropperButton(
+              icon: Icons.colorize,
+              onColor: (value) => setState(() => backgroundColor = value),
+            ),
         ],
       ),
     );
