@@ -15,6 +15,7 @@ const _buttonSize = 48.0;
 class ColorButton extends StatefulWidget {
   final Color color;
   final double size;
+  final BoxDecoration decoration;
   final BoxShape boxShape;
   final ColorPickerConfig config;
   final Set<Color> swatches;
@@ -32,10 +33,12 @@ class ColorButton extends StatefulWidget {
     this.config = const ColorPickerConfig(),
     this.darkMode = false,
     this.size = _buttonSize,
+    this.decoration,
     this.boxShape = BoxShape.circle,
     this.swatches = const {},
     this.onSwatchesChanged,
-  }) : super(key: key);
+  })  : assert(boxShape != null || decoration != null),
+        super(key: key);
 
   @override
   _ColorButtonState createState() => _ColorButtonState();
@@ -62,28 +65,28 @@ class _ColorButtonState extends State<ColorButton> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapDown: (details) => colorPick(context, details),
-      child: Container(
-        width: widget.size,
-        height: widget.size,
-        decoration: BoxDecoration(
-          shape: widget.boxShape,
-          color: widget.color,
-          border: Border.all(width: 4, color: Colors.white),
-          boxShadow: darkShadowBox,
+  Widget build(BuildContext context) => GestureDetector(
+        onTapDown: (details) => _colorPick(context, details),
+        child: Container(
+          width: widget.size,
+          height: widget.size,
+          decoration: widget.decoration ??
+              BoxDecoration(
+                shape: widget.boxShape,
+                color: widget.color,
+                border: Border.all(width: 4, color: Colors.white),
+                boxShadow: darkShadowBox,
+              ),
         ),
-      ),
-    );
-  }
+      );
 
-  void colorPick(BuildContext context, TapDownDetails details) async {
-    final selectedColor = await showPaco(context, details.globalPosition);
+  void _colorPick(BuildContext context, TapDownDetails details) async {
+    final selectedColor =
+        await showColorPicker(context, details.globalPosition);
     widget.onColorChanged(selectedColor);
   }
 
-  Future<Color> showPaco(BuildContext rootContext, Offset offset) async {
+  Future<Color> showColorPicker(BuildContext rootContext, Offset offset) async {
     if (pickerOverlay != null) return Future.value(widget.color);
 
     pickerOverlay = _buildPickerOverlay(offset, rootContext);
@@ -148,7 +151,6 @@ class _ColorButtonState extends State<ColorButton> {
   }
 
   void _onEyePick(Color value) {
-    print('_ColorButtonState._onEyePick... ');
     color = value;
     widget.onColorChanged(value);
     pickerOverlay?.markNeedsBuild();

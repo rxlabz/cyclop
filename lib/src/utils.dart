@@ -7,7 +7,7 @@ import 'package:image/image.dart' as img;
 
 bool get isPhoneScreen => !(screenSize.shortestSide >= 600);
 
-Size screenSize = ui.window.physicalSize / ui.window.devicePixelRatio;
+Size get screenSize => ui.window.physicalSize / ui.window.devicePixelRatio;
 
 extension Chroma on String {
   Color toColor({bool argb = false}) {

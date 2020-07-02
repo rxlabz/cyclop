@@ -74,7 +74,10 @@ class _HexColorFieldState extends State<HexColorField> {
           style: textTheme.bodyText1.copyWith(fontSize: 15),
           maxLines: 1,
           inputFormatters: [
+            // TODO wait for 1.20.1 in stable
+            // ignore: deprecated_member_use
             WhitelistingTextInputFormatter(RegExp('[A-Fa-f0-9]')),
+            //FilteringTextInputFormatter.allow(RegExp('[A-Fa-f0-9]')),
           ],
           maxLength: widget.withAlpha ? 8 : 6,
           onSubmitted: (value) => widget.onColorChanged(value.toColor()),
