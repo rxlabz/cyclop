@@ -1,3 +1,9 @@
+## [0.2.2] 01/07/2020
+
+- Add a EyeDropperButton to use EyeDropper outside the colorpicker
+- ColorButton : add a decoration optional constructor arguments
+- MIT licence
+
 ## [0.2.1] 01/07/2020
 
 - fix compatibility with Flutter stable channel

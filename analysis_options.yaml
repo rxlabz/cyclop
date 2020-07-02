@@ -16,6 +16,7 @@ linter:
     always_require_non_null_named_parameters: true
     annotate_overrides: true
     avoid_empty_else: true
+    avoid_empty_statement: true
     avoid_init_to_null: true
     avoid_null_checks_in_equality_operators: true
     avoid_relative_lib_imports: true
