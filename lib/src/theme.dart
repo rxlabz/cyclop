@@ -55,25 +55,13 @@ const shadowColor = Color(0x44333333);
 const darkShadowColor = Color(0x99333333);
 
 final defaultShadowBox = [
-  BoxShadow(
-    blurRadius: 3,
-    spreadRadius: 1,
-    color: shadowColor,
-  )
+  BoxShadow(blurRadius: 3, spreadRadius: 1, color: shadowColor)
 ];
 
 final darkShadowBox = [
-  BoxShadow(
-    blurRadius: 3,
-    spreadRadius: 1,
-    color: darkShadowColor,
-  )
+  BoxShadow(blurRadius: 3, spreadRadius: 1, color: darkShadowColor)
 ];
 
 final largeDarkShadowBox = [
-  BoxShadow(
-    blurRadius: 10,
-    spreadRadius: 5,
-    color: shadowColor,
-  )
+  BoxShadow(blurRadius: 10, spreadRadius: 5, color: shadowColor)
 ];

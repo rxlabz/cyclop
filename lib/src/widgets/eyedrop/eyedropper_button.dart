@@ -11,9 +11,13 @@ class EyedropperButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.colorize),
-      onPressed: () => _onEyeDropperRequest(context),
+    return Container(
+      decoration: BoxDecoration(color: Colors.white24, shape: BoxShape.circle),
+      child: IconButton(
+        icon: Icon(Icons.colorize),
+        color: Colors.blueGrey,
+        onPressed: () => _onEyeDropperRequest(context),
+      ),
     );
   }
 

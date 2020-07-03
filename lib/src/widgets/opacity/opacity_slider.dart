@@ -31,7 +31,7 @@ class OpacitySlider extends StatelessWidget {
       builder: (context, snapshot) {
         if (!snapshot.hasData) return SizedBox();
         return Padding(
-          padding: const EdgeInsets.only(top: 14.0),
+          padding: const EdgeInsets.only(top: 4.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

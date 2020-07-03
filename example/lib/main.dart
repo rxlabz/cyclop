@@ -22,16 +22,30 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   Color appbarColor = Colors.blueGrey;
+
   Color backgroundColor = Colors.grey.shade200;
+
   Set<Color> swatches = Colors.primaries.map((e) => Color(e.value)).toSet();
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+
+    final bodyTextColor =
+        ThemeData.estimateBrightnessForColor(backgroundColor) == Brightness.dark
+            ? Colors.white70
+            : Colors.black87;
+
+    final appbarTextColor =
+        ThemeData.estimateBrightnessForColor(appbarColor) == Brightness.dark
+            ? Colors.white70
+            : Colors.black87;
+
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: Text('Cyclop Demo'),
+        title: Text('Cyclop Demo',
+            style: textTheme.headline6.copyWith(color: appbarTextColor)),
         backgroundColor: appbarColor,
         actions: [
           Padding(
@@ -63,7 +77,7 @@ class _MainScreenState extends State<MainScreen> {
             children: [
               Text(
                 'Select the background & appbar colors',
-                style: textTheme.headline6,
+                style: textTheme.headline6.copyWith(color: bodyTextColor),
               ),
               _buildButtons(),
               if (!kIsWeb) Center(child: Image.asset('images/img.png')),

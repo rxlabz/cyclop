@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -44,7 +45,7 @@ class ColorButton extends StatefulWidget {
   _ColorButtonState createState() => _ColorButtonState();
 }
 
-class _ColorButtonState extends State<ColorButton> {
+class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
   OverlayEntry pickerOverlay;
 
   Color color;
@@ -52,16 +53,29 @@ class _ColorButtonState extends State<ColorButton> {
   // hide the palette dureting eyedropping
   bool hidden = false;
 
+  bool keyboardOn = false;
+
+  double bottom = 30;
+
+  Rect rect;
+
   @override
   void initState() {
     super.initState();
     color = widget.color;
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void didUpdateWidget(ColorButton oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.color != widget.color) color = widget.color;
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   @override
@@ -107,52 +121,80 @@ class _ColorButtonState extends State<ColorButton> {
 
     return OverlayEntry(
       maintainState: true,
-      builder: (c) => Positioned(
-        left: isPhoneScreen ? (size.width - pickerWidth) / 2 : left,
-        top: isPhoneScreen ? (size.height - pickerHeight) / 2 : top,
-        child: IgnorePointer(
-          ignoring: hidden,
-          child: Opacity(
-            opacity: hidden ? 0 : 1,
-            child: Material(
-              borderRadius: BorderRadius.circular(8),
-              child: ColorPicker(
-                darkMode: widget.darkMode,
-                config: widget.config,
-                selectedColor: color,
-                swatches: widget.swatches,
-                onClose: () {
-                  pickerOverlay.remove();
-                  pickerOverlay = null;
-                },
-                onColorSelected: (c) {
-                  color = c ?? color;
-                  pickerOverlay.markNeedsBuild();
-                  widget.onColorChanged(c ?? color);
-                },
-                onSwatchesUpdate: widget.onSwatchesChanged,
-                onEyeDropper: () {
-                  hidden = true;
-                  try {
-                    EyeDrop.of(context).capture(context, (value) {
-                      hidden = false;
-                      _onEyePick(value);
-                    });
-                  } catch (err) {
-                    print('ERROR !!! _buildPickerOverlay $err');
-                  }
-                },
+      builder: (c) {
+        print('_ColorButtonState._buildPickerOverlay... '
+            '${MediaQuery.of(context).viewInsets.bottom}');
+        return Positioned(
+          left: isPhoneScreen ? (size.width - pickerWidth) / 2 : left,
+          top: isPhoneScreen
+              ? (keyboardOn ? 20 : (size.height - pickerHeight) / 2)
+              : top,
+          bottom: isPhoneScreen ? 20 + bottom : null,
+          child: IgnorePointer(
+            ignoring: hidden,
+            child: Opacity(
+              opacity: hidden ? 0 : 1,
+              child: Material(
+                borderRadius: BorderRadius.circular(8),
+                child: ColorPicker(
+                  darkMode: widget.darkMode,
+                  config: widget.config,
+                  selectedColor: color,
+                  swatches: widget.swatches,
+                  onClose: () {
+                    pickerOverlay.remove();
+                    pickerOverlay = null;
+                  },
+                  onColorSelected: (c) {
+                    color = c ?? color;
+                    pickerOverlay.markNeedsBuild();
+                    widget.onColorChanged(c ?? color);
+                  },
+                  onSwatchesUpdate: widget.onSwatchesChanged,
+                  onEyeDropper: () => _showEyeDropperOverlay(context),
+                  onKeyboard: _onKeyboardOn,
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
+  }
+
+  void _showEyeDropperOverlay(BuildContext context) {
+    hidden = true;
+    try {
+      EyeDrop.of(context).capture(context, (value) {
+        hidden = false;
+        _onEyePick(value);
+      });
+    } catch (err) {
+      print('ERROR !!! _buildPickerOverlay $err');
+    }
   }
 
   void _onEyePick(Color value) {
     color = value;
     widget.onColorChanged(value);
+    pickerOverlay?.markNeedsBuild();
+  }
+
+  void _onKeyboardOn() {
+    keyboardOn = true;
+    pickerOverlay?.markNeedsBuild();
+    setState(() {});
+  }
+
+  @override
+  void didChangeMetrics() {
+    final keyboardTopPixels =
+        window.physicalSize.height - window.viewInsets.bottom;
+
+    final newBottom = (window.physicalSize.height - keyboardTopPixels) /
+        window.devicePixelRatio;
+
+    setState(() => bottom = newBottom);
     pickerOverlay?.markNeedsBuild();
   }
 }

@@ -16,7 +16,6 @@ linter:
     always_require_non_null_named_parameters: true
     annotate_overrides: true
     avoid_empty_else: true
-    avoid_empty_statement: true
     avoid_init_to_null: true
     avoid_null_checks_in_equality_operators: true
     avoid_relative_lib_imports: true
@@ -26,6 +25,7 @@ linter:
     camel_case_extensions: true
     empty_catches: true
     empty_constructor_bodies: true
+    empty_statements: true
     library_names: true
     library_prefixes: true
     no_duplicate_case_values: true
@@ -57,4 +57,4 @@ linter:
     use_function_type_syntax_for_parameters: true
     use_rethrow_when_possible: true
     valid_regexps: true
-    unused_element : false
+    unused_element : true

@@ -20,15 +20,19 @@ class GridColorSelector extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Container(
-        constraints: BoxConstraints.expand(),
-        margin: EdgeInsets.only(left: 8, right: 8, bottom: 8),
-        child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(defaultRadius)),
-          child: GridView.count(
-            crossAxisCount: 12,
-            children: _buildColorsTiles(),
-            childAspectRatio: 1,
+  Widget build(BuildContext context) => AspectRatio(
+        aspectRatio: 1.1,
+        child: Container(
+          margin: EdgeInsets.only(left: 8, right: 8, bottom: 8),
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(defaultRadius)),
+            child: GridView.count(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              crossAxisCount: 12,
+              children: _buildColorsTiles(),
+              childAspectRatio: 1,
+            ),
           ),
         ),
       );

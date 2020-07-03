@@ -1,5 +1,6 @@
 library cyclop;
 
+export 'src/utils.dart';
 export 'src/widgets/color_picker.dart';
 export 'src/widgets/picker/color_selector.dart';
 export 'src/widgets/color_button.dart';

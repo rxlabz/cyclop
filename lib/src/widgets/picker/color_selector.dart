@@ -5,18 +5,28 @@ import 'hex_textfield.dart';
 
 class ColorSelector extends StatelessWidget {
   final Color color;
+
   final bool withAlpha;
+
   final double thumbWidth;
+
+  final FocusNode focus;
+
   final ValueChanged<Color> onColorChanged;
+
   final VoidCallback onEyePick;
+
+  final VoidCallback onFieldFocus;
 
   const ColorSelector({
     Key key,
     this.color,
+    @required this.onColorChanged,
+    this.onFieldFocus,
+    this.onEyePick,
     this.withAlpha = false,
     this.thumbWidth = 96,
-    this.onColorChanged,
-    this.onEyePick,
+    this.focus,
   }) : super(key: key);
 
   @override
@@ -27,8 +37,9 @@ class ColorSelector extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          Container(color: color, width: thumbWidth, height: 36),
+          _buildColorThumb(),
           HexColorField(
+            hexFocus: focus,
             color: color,
             withAlpha: withAlpha,
             onColorChanged: (value) {
@@ -40,5 +51,22 @@ class ColorSelector extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Container _buildColorThumb() {
+    return Container(
+        width: thumbWidth,
+        height: 36,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 3,
+              spreadRadius: 1,
+              color: Color(0x66101010),
+            )
+          ],
+        ));
   }
 }

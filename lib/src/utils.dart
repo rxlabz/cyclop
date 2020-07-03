@@ -10,9 +10,11 @@ bool get isPhoneScreen => !(screenSize.shortestSide >= 600);
 Size get screenSize => ui.window.physicalSize / ui.window.devicePixelRatio;
 
 extension Chroma on String {
+  /// converts string to [Color]
+  /// fill incomplete values with 0
+  /// ex: 'ff00'.toColor() => Color(0xffff0000)
   Color toColor({bool argb = false}) {
-    final colorString =
-        '0x${argb ? '' : 'ff'}$this'.padRight(argb ? 10 : 8, '0');
+    final colorString = '0x${argb ? '' : 'ff'}$this'.padRight(10, '0');
     return Color(int.tryParse(colorString) ?? 0);
   }
 }
@@ -88,9 +90,14 @@ Color ABGR2Color(int value) {
 }
 
 Future<img.Image> repaintBoundaryToImage(RenderRepaintBoundary renderer) async {
-  final rawImage = await renderer.toImage(pixelRatio: 1);
-  final byteData =
-      await rawImage.toByteData(format: ui.ImageByteFormat.rawRgba);
-  final pngBytes = byteData.buffer.asUint8List();
-  return img.Image.fromBytes(rawImage.width, rawImage.height, pngBytes);
+  try {
+    final rawImage = await renderer.toImage(pixelRatio: 1);
+    final byteData =
+        await rawImage.toByteData(format: ui.ImageByteFormat.rawRgba);
+    final pngBytes = byteData.buffer.asUint8List();
+    return img.Image.fromBytes(rawImage.width, rawImage.height, pngBytes);
+  } catch (err) {
+    print('repaintBoundaryToImage... $err');
+    return null;
+  }
 }

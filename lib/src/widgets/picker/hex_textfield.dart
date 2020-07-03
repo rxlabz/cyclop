@@ -8,6 +8,8 @@ class HexColorField extends StatefulWidget {
 
   final Color color;
 
+  final FocusNode hexFocus;
+
   final ValueChanged<Color> onColorChanged;
 
   const HexColorField({
@@ -15,6 +17,7 @@ class HexColorField extends StatefulWidget {
     @required this.withAlpha,
     @required this.color,
     @required this.onColorChanged,
+    @required this.hexFocus,
   }) : super(key: key);
 
   @override
@@ -30,10 +33,14 @@ class _HexColorFieldState extends State<HexColorField> {
 
   String prefix;
 
+  int valueLength = 8;
+
   @override
   void initState() {
     super.initState();
     prefix = '#${widget.withAlpha ? '' : 'ff'}';
+
+    valueLength = widget.withAlpha ? 8 : 6;
 
     String colorValue = _initColorValue();
     _controller = TextEditingController(text: colorValue);
@@ -45,12 +52,13 @@ class _HexColorFieldState extends State<HexColorField> {
     if (oldWidget.color != widget.color) {
       String colorValue = _initColorValue();
       _controller.text = colorValue;
+      widget.hexFocus.nextFocus();
     }
   }
 
   String _initColorValue() {
     color = widget.color;
-    var stringValue = color.value.toRadixString(16).padLeft(8, '0');
+    var stringValue = color.value.toRadixString(16).padRight(8, '0');
     if (!widget.withAlpha) stringValue = stringValue.replaceRange(0, 2, '');
     return stringValue;
   }
@@ -71,16 +79,21 @@ class _HexColorFieldState extends State<HexColorField> {
         width: _width,
         child: TextField(
           controller: _controller,
+          focusNode: widget.hexFocus,
           style: textTheme.bodyText1.copyWith(fontSize: 15),
           maxLines: 1,
+          autocorrect: false,
+          autofillHints: [],
           inputFormatters: [
-            // TODO wait for 1.20.1 in stable
             // ignore: deprecated_member_use
             WhitelistingTextInputFormatter(RegExp('[A-Fa-f0-9]')),
+            // TODO Flutter 1.20.1
             //FilteringTextInputFormatter.allow(RegExp('[A-Fa-f0-9]')),
           ],
-          maxLength: widget.withAlpha ? 8 : 6,
-          onSubmitted: (value) => widget.onColorChanged(value.toColor()),
+          maxLength: valueLength,
+          onSubmitted: (value) => widget.onColorChanged(
+            value.padRight(valueLength, '0').toColor(argb: widget.withAlpha),
+          ),
           decoration: InputDecoration(
             prefixText: prefix,
             counterText: '',
