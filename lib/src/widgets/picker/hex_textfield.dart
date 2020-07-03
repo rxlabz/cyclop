@@ -52,7 +52,8 @@ class _HexColorFieldState extends State<HexColorField> {
     if (oldWidget.color != widget.color) {
       String colorValue = _initColorValue();
       _controller.text = colorValue;
-      widget.hexFocus.nextFocus();
+
+      if (widget.hexFocus.hasFocus) widget.hexFocus.nextFocus();
     }
   }
 
