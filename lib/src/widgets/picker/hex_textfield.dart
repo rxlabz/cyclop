@@ -84,7 +84,9 @@ class _HexColorFieldState extends State<HexColorField> {
           style: textTheme.bodyText1.copyWith(fontSize: 15),
           maxLines: 1,
           autocorrect: false,
-          autofillHints: [],
+          enableInteractiveSelection: false,
+          enableSuggestions: false,
+          /*autofillHints: [],*/
           inputFormatters: [
             // ignore: deprecated_member_use
             WhitelistingTextInputFormatter(RegExp('[A-Fa-f0-9]')),
