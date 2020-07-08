@@ -1,4 +1,4 @@
-# Cyclop
+# Cyclop [![Pub Version](https://img.shields.io/pub/v/cyclop)](https://pub.dev/packages/cyclop)
 
 ![Cyclop logo](https://github.com/rxlabz/paco/raw/master/assets/cyclop_banner.png)
 
