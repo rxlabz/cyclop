@@ -15,10 +15,10 @@ class OpacitySlider extends StatelessWidget {
   final ValueChanged<double> onChange;
 
   const OpacitySlider({
-    Key key,
-    @required this.opacity,
-    @required this.selectedColor,
-    @required this.onChange,
+    required this.opacity,
+    required this.selectedColor,
+    required this.onChange,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -78,10 +78,10 @@ class OpacitySlider extends StatelessWidget {
   }
 }
 
-ui.Image _gridImage;
+ui.Image? _gridImage;
 
 Future<ui.Image> getGridImage() {
-  if (_gridImage != null) return Future.value(_gridImage);
+  if (_gridImage != null) return Future.value(_gridImage!);
   final completer = Completer<ui.Image>();
   AssetImage('packages/cyclop/assets/grid.png')
       .resolve(ImageConfiguration())
@@ -96,7 +96,7 @@ ThemeData _opacitySliderTheme(Color color) => ThemeData.light().copyWith(
       sliderTheme: SliderThemeData(
         trackHeight: 24,
         thumbColor: Colors.white,
-        trackShape: OpacitySliderTrack(color, gridImage: _gridImage),
+        trackShape: OpacitySliderTrack(color, gridImage: _gridImage!),
         thumbShape: OpacitySliderThumbShape(color),
       ),
     );

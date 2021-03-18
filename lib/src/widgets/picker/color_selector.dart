@@ -14,19 +14,19 @@ class ColorSelector extends StatelessWidget {
 
   final ValueChanged<Color> onColorChanged;
 
-  final VoidCallback onEyePick;
+  final VoidCallback? onEyePick;
 
-  final VoidCallback onFieldFocus;
+  final VoidCallback? onFieldFocus;
 
   const ColorSelector({
-    Key key,
-    this.color,
-    @required this.onColorChanged,
+    required this.color,
+    required this.onColorChanged,
+    required this.focus,
     this.onFieldFocus,
     this.onEyePick,
     this.withAlpha = false,
     this.thumbWidth = 96,
-    this.focus,
+    Key? key,
   }) : super(key: key);
 
   @override

@@ -1,6 +1,5 @@
 import 'dart:ui' as ui;
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
@@ -12,7 +11,7 @@ class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
 
   OpacitySliderTrack(
     this.selectedColor, {
-    @required this.gridImage,
+    required this.gridImage,
   }) : gridPaint = Paint()
           ..shader = ImageShader(
             gridImage,
@@ -25,47 +24,28 @@ class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
   void paint(
     PaintingContext context,
     Offset offset, {
-    @required RenderBox parentBox,
-    @required SliderThemeData sliderTheme,
-    @required Animation<double> enableAnimation,
-    @required TextDirection textDirection,
-    @required Offset thumbCenter,
+    required RenderBox parentBox,
+    required SliderThemeData sliderTheme,
+    required Animation<double> enableAnimation,
+    required TextDirection textDirection,
+    required Offset thumbCenter,
     bool isDiscrete = false,
     bool isEnabled = false,
     double additionalActiveTrackHeight = 2,
   }) {
-    assert(context != null);
-    assert(offset != null);
-    assert(parentBox != null);
-    assert(sliderTheme != null);
-    assert(sliderTheme.disabledActiveTrackColor != null);
-    assert(sliderTheme.disabledInactiveTrackColor != null);
-    assert(sliderTheme.activeTrackColor != null);
-    assert(sliderTheme.inactiveTrackColor != null);
-    assert(sliderTheme.thumbShape != null);
-    assert(enableAnimation != null);
-    assert(textDirection != null);
-    assert(thumbCenter != null);
-    // If the slider [SliderThemeData.trackHeight] is less than or equal to 0,
-    // then it makes no difference whether the track is painted or not,
-    // therefore the painting  can be a no-op.
-    if (sliderTheme.trackHeight <= 0) {
-      return;
-    }
-
-    final Rect trackRect = getPreferredRect(
+    final trackRect = getPreferredRect(
       parentBox: parentBox,
       offset: offset,
       sliderTheme: sliderTheme,
       isEnabled: isEnabled,
       isDiscrete: isDiscrete,
     );
-    final Radius trackRadius = Radius.circular(trackRect.height / 2);
-    final Radius activeTrackRadius = Radius.circular(trackRect.height / 2 + 1);
+    final trackRadius = Radius.circular(trackRect.height / 2);
+    final activeTrackRadius = Radius.circular(trackRect.height / 2 + 1);
 
-    final Paint activePaint = Paint()..color = Colors.transparent;
+    final activePaint = Paint()..color = Colors.transparent;
 
-    final Paint inactivePaint = Paint()
+    final inactivePaint = Paint()
       ..shader = ui.Gradient.linear(
           Offset.zero,
           Offset(trackRect.width, 0),

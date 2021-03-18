@@ -9,29 +9,25 @@ const _cellSize = 20;
 const _gridSize = 100.0;
 
 class EyeDropOverlay extends StatelessWidget {
-  final Offset cursorPosition;
+  final Offset? cursorPosition;
   final bool touchable;
 
-  final Color color;
+  //final Color color;
   final List<Color> colors;
 
-  final ValueChanged<Color> onTap;
-
   const EyeDropOverlay({
-    Key key,
+    required this.colors,
     this.cursorPosition,
-    this.color,
-    this.onTap,
-    this.colors,
     this.touchable = false,
+    Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return cursorPosition != null
         ? Positioned(
-            left: cursorPosition.dx - (_gridSize / 2),
-            top: cursorPosition.dy -
+            left: cursorPosition!.dx - (_gridSize / 2),
+            top: cursorPosition!.dy -
                 (_gridSize / 2) -
                 (touchable ? _gridSize / 2 : 0),
             width: _gridSize,
@@ -50,15 +46,15 @@ class EyeDropOverlay extends StatelessWidget {
           border: Border.all(
               width: 8, color: colors.isEmpty ? Colors.white : colors[12]),
         ),
+        width: _gridSize,
+        height: _gridSize,
+        constraints: BoxConstraints.loose(Size(_gridSize, _gridSize)),
         child: ClipOval(
           child: CustomPaint(
             size: Size(_gridSize, _gridSize),
             painter: _PixelGridPainter(colors),
           ),
         ),
-        width: _gridSize,
-        height: _gridSize,
-        constraints: BoxConstraints.loose(Size(_gridSize, _gridSize)),
       ),
     );
   }

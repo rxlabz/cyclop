@@ -10,11 +10,11 @@ class SwatchLibrary extends StatefulWidget {
   final ValueChanged<Color> onColorSelected;
 
   const SwatchLibrary({
-    Key key,
-    @required this.currentColor,
-    @required this.onColorSelected,
-    this.onSwatchesUpdate,
+    required this.currentColor,
+    required this.onColorSelected,
+    required this.onSwatchesUpdate,
     this.colors = const {},
+    Key? key,
   }) : super(key: key);
 
   bool get canAdd => !colors.contains(currentColor);
@@ -24,7 +24,7 @@ class SwatchLibrary extends StatefulWidget {
 }
 
 class _SwatchLibraryState extends State<SwatchLibrary> {
-  Set<Color> colors;
+  late Set<Color> colors;
 
   @override
   void initState() {

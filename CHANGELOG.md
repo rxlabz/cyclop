@@ -1,3 +1,7 @@
+# 0.3.0
+
+- NNBD
+
 # 0.2.3
 
 - Mobile: resize when keyboard toggles 

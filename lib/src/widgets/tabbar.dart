@@ -3,6 +3,8 @@ import 'package:quiver/iterables.dart';
 
 import '../theme.dart';
 
+const _kTabWidth = 86.0;
+
 class Tabs extends StatefulWidget {
   final int selectedIndex;
 
@@ -11,10 +13,10 @@ class Tabs extends StatefulWidget {
   final List<Widget> views;
 
   const Tabs({
-    @required this.labels,
-    @required this.views,
+    required this.labels,
+    required this.views,
     this.selectedIndex = 0,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -74,7 +76,7 @@ class _TabsState extends State<Tabs> {
               curve: Curves.fastOutSlowIn,
               alignment: markerPosition,
               child: Container(
-                width: 86,
+                width: _kTabWidth,
                 height: size.height,
                 decoration: BoxDecoration(
                   color: theme.cardColor,
@@ -86,7 +88,9 @@ class _TabsState extends State<Tabs> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
-              children: enumerate(widget.labels).map(_buildTab).toList(),
+              children: enumerate(widget.labels)
+                  .map((label) => _buildTab(label, height: size.height))
+                  .toList(),
             )
           ],
         ),
@@ -97,14 +101,14 @@ class _TabsState extends State<Tabs> {
   void _onSelectionChanged(int newIndex) =>
       setState(() => selectedIndex = newIndex);
 
-  Flexible _buildTab(IndexedValue<String> label) => Flexible(
-        flex: 1,
-        child: FlatButton(
-          child: Text(label.value),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          onPressed: () => _onSelectionChanged(label.index),
-        ),
-      );
+  Widget _buildTab(IndexedValue<String> label, {required double height}) {
+    return SizedBox(
+      width: _kTabWidth,
+      height: height,
+      child: TextButton(
+        onPressed: () => _onSelectionChanged(label.index),
+        child: Text(label.value),
+      ),
+    );
+  }
 }

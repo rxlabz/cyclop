@@ -13,11 +13,11 @@ class HexColorField extends StatefulWidget {
   final ValueChanged<Color> onColorChanged;
 
   const HexColorField({
-    Key key,
-    @required this.withAlpha,
-    @required this.color,
-    @required this.onColorChanged,
-    @required this.hexFocus,
+    required this.withAlpha,
+    required this.color,
+    required this.onColorChanged,
+    required this.hexFocus,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -27,11 +27,11 @@ class HexColorField extends StatefulWidget {
 class _HexColorFieldState extends State<HexColorField> {
   static const _width = 106.0;
 
-  Color color;
+  late Color color;
 
-  TextEditingController _controller;
+  late TextEditingController _controller;
 
-  String prefix;
+  late String prefix;
 
   int valueLength = 8;
 
@@ -42,7 +42,7 @@ class _HexColorFieldState extends State<HexColorField> {
 
     valueLength = widget.withAlpha ? 8 : 6;
 
-    String colorValue = _initColorValue();
+    final colorValue = _initColorValue();
     _controller = TextEditingController(text: colorValue);
   }
 
@@ -50,7 +50,7 @@ class _HexColorFieldState extends State<HexColorField> {
   void didUpdateWidget(HexColorField oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.color != widget.color) {
-      String colorValue = _initColorValue();
+      final colorValue = _initColorValue();
       _controller.text = colorValue;
 
       if (widget.hexFocus.hasFocus) widget.hexFocus.nextFocus();
@@ -81,17 +81,13 @@ class _HexColorFieldState extends State<HexColorField> {
         child: TextField(
           controller: _controller,
           focusNode: widget.hexFocus,
-          style: textTheme.bodyText1.copyWith(fontSize: 15),
+          style: textTheme.bodyText1?.copyWith(fontSize: 15),
           maxLines: 1,
           autocorrect: false,
           enableInteractiveSelection: false,
           enableSuggestions: false,
-          /*autofillHints: [],*/
           inputFormatters: [
-            // ignore: deprecated_member_use
-            WhitelistingTextInputFormatter(RegExp('[A-Fa-f0-9]')),
-            // TODO Flutter 1.20.1
-            //FilteringTextInputFormatter.allow(RegExp('[A-Fa-f0-9]')),
+            FilteringTextInputFormatter.allow(RegExp('[A-Fa-f0-9]')),
           ],
           maxLength: valueLength,
           onSubmitted: (value) => widget.onColorChanged(

@@ -2,15 +2,16 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'channel_slider.dart';
-import '../../../utils.dart';
 import '../../../theme.dart';
+import '../../../utils.dart';
+import 'channel_slider.dart';
 
 class HSLSliders extends StatefulWidget {
   final Color color;
   final ValueChanged<Color> onColorChanged;
 
-  const HSLSliders({Key key, this.color, this.onColorChanged})
+  const HSLSliders(
+      {required this.color, required this.onColorChanged, Key? key})
       : super(key: key);
 
   @override
@@ -18,14 +19,18 @@ class HSLSliders extends StatefulWidget {
 }
 
 class _HSLSlidersState extends State<HSLSliders> {
-  HSLColor hsl;
+  late HSLColor hsl;
+
+  late double alpha;
+
+  late double hue;
+
+  late double saturation;
+
+  late double lightness;
+
   Color get hslColor =>
       HSLColor.fromAHSL(alpha, hue, saturation, lightness).toColor();
-
-  double alpha;
-  double hue;
-  double saturation;
-  double lightness;
 
   @override
   void initState() {

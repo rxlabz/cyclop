@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'selectors/channels/hsl_selector.dart';
-import 'selectors/grid_color_selector.dart';
-import 'selectors/user_swatch_selector.dart';
 import '../theme.dart';
 import '../widgets/opacity/opacity_slider.dart';
 import '../widgets/tabbar.dart';
 import 'picker/color_selector.dart';
 import 'picker/title_bar.dart';
+import 'selectors/channels/hsl_selector.dart';
+import 'selectors/grid_color_selector.dart';
+import 'selectors/user_swatch_selector.dart';
 
 const pickerWidth = 316.0;
 
@@ -47,16 +47,16 @@ class ColorPicker extends StatefulWidget {
   final VoidCallback onKeyboard;
 
   const ColorPicker({
-    Key key,
-    @required this.onColorSelected,
-    @required this.selectedColor,
-    @required this.config,
-    @required this.onClose,
+    required this.onColorSelected,
+    required this.selectedColor,
+    required this.config,
+    required this.onClose,
+    required this.onSwatchesUpdate,
+    required this.onEyeDropper,
+    required this.onKeyboard,
     this.swatches = const {},
     this.darkMode = false,
-    this.onSwatchesUpdate,
-    this.onEyeDropper,
-    this.onKeyboard,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -64,7 +64,7 @@ class ColorPicker extends StatefulWidget {
 }
 
 class _ColorPickerState extends State<ColorPicker> {
-  FocusNode hexFieldFocus;
+  late FocusNode hexFieldFocus;
 
   @override
   void initState() {

@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import '../theme.dart';
-import 'color_picker.dart';
 import '../utils.dart';
+import 'color_picker.dart';
 import 'eyedrop/eye_dropper_layer.dart';
 
 const _buttonSize = 48.0;
@@ -16,7 +16,7 @@ const _buttonSize = 48.0;
 class ColorButton extends StatefulWidget {
   final Color color;
   final double size;
-  final BoxDecoration decoration;
+  final BoxDecoration? decoration;
   final BoxShape boxShape;
   final ColorPickerConfig config;
   final Set<Color> swatches;
@@ -28,27 +28,26 @@ class ColorButton extends StatefulWidget {
   final bool darkMode;
 
   const ColorButton({
-    Key key,
-    @required this.color,
-    @required this.onColorChanged,
+    required this.color,
+    required this.onColorChanged,
+    required this.onSwatchesChanged,
+    this.decoration,
     this.config = const ColorPickerConfig(),
     this.darkMode = false,
     this.size = _buttonSize,
-    this.decoration,
     this.boxShape = BoxShape.circle,
     this.swatches = const {},
-    this.onSwatchesChanged,
-  })  : assert(boxShape != null || decoration != null),
-        super(key: key);
+    Key? key,
+  }) : super(key: key);
 
   @override
   _ColorButtonState createState() => _ColorButtonState();
 }
 
 class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
-  OverlayEntry pickerOverlay;
+  OverlayEntry? pickerOverlay;
 
-  Color color;
+  late Color color;
 
   // hide the palette dureting eyedropping
   bool hidden = false;
@@ -57,13 +56,11 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
 
   double bottom = 30;
 
-  Rect rect;
-
   @override
   void initState() {
     super.initState();
     color = widget.color;
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
   }
 
   @override
@@ -74,7 +71,7 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 
@@ -105,7 +102,7 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
 
     pickerOverlay = _buildPickerOverlay(offset, rootContext);
 
-    Overlay.of(rootContext).insert(pickerOverlay);
+    Overlay.of(rootContext)?.insert(pickerOverlay!);
 
     return Future.value(widget.color);
   }
@@ -122,8 +119,8 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
     return OverlayEntry(
       maintainState: true,
       builder: (c) {
-        print('_ColorButtonState._buildPickerOverlay... '
-            '${MediaQuery.of(context).viewInsets.bottom}');
+        /*print('_ColorButtonState._buildPickerOverlay... '
+            '${MediaQuery.of(context).viewInsets.bottom}');*/
         return Positioned(
           left: isPhoneScreen ? (size.width - pickerWidth) / 2 : left,
           top: isPhoneScreen
@@ -142,13 +139,13 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
                   selectedColor: color,
                   swatches: widget.swatches,
                   onClose: () {
-                    pickerOverlay.remove();
+                    pickerOverlay?.remove();
                     pickerOverlay = null;
                   },
                   onColorSelected: (c) {
-                    color = c ?? color;
-                    pickerOverlay.markNeedsBuild();
-                    widget.onColorChanged(c ?? color);
+                    color = c;
+                    pickerOverlay?.markNeedsBuild();
+                    widget.onColorChanged(c);
                   },
                   onSwatchesUpdate: widget.onSwatchesChanged,
                   onEyeDropper: () => _showEyeDropperOverlay(context),
