@@ -72,7 +72,7 @@ Color getPixelColor(img.Image image, Offset offset) => (offset.dx >= 0 &&
         offset.dy >= 0 &&
         offset.dx < image.width &&
         offset.dy < image.height)
-    ? ABGR2Color(image.getPixel(offset.dx.toInt(), offset.dy.toInt()))
+    ? abgr2Color(image.getPixel(offset.dx.toInt(), offset.dy.toInt()))
     : Color(0x00000000);
 
 ui.Offset _offsetFromIndex(int index, int numColumns) => Offset(
@@ -80,7 +80,7 @@ ui.Offset _offsetFromIndex(int index, int numColumns) => Offset(
       ((index ~/ numColumns) % numColumns).toDouble(),
     );
 
-Color ABGR2Color(int value) {
+Color abgr2Color(int value) {
   final a = (value >> 24) & 0xFF;
   final b = (value >> 16) & 0xFF;
   final g = (value >> 8) & 0xFF;

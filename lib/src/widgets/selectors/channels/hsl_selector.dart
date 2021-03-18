@@ -23,7 +23,7 @@ class ChannelSliders extends StatefulWidget {
 }
 
 class _ChannelSlidersState extends State<ChannelSliders> {
-  bool HSLMode = true;
+  bool hslMode = true;
 
   Color get color => widget.selectedColor;
 
