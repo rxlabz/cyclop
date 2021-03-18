@@ -69,18 +69,6 @@ final _darkTextButtonStyle = ButtonStyle(
   overlayColor: MaterialStateProperty.all(Colors.black12),
 );
 
-const interactiveStates = <MaterialState>{
-  MaterialState.pressed,
-  MaterialState.hovered,
-  MaterialState.focused,
-};
-
-extension on Set<MaterialState> {
-  bool get isActive => any(interactiveStates.contains);
-
-  bool get isDisabled => contains(MaterialState.disabled);
-}
-
 const defaultDivider = Divider(
   color: Color(0xff999999),
   indent: 8,

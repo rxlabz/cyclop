@@ -10,7 +10,6 @@ analyzer:
     file_names: error
     parameter_assignments: error
     no_duplicate_case_values: error
-    unused_element: ignore
 
 linter:
   rules:
