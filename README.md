@@ -2,7 +2,7 @@
 
 ![Cyclop logo](https://github.com/rxlabz/paco/raw/master/assets/cyclop_banner.png)
 
-A flutter color palette with an eyedropper ( on mobile & desktop )
+A flutter colorpicker with an eyedropper tool. Works on mobile, desktop & web ( CanvasKit)
 
 ## [Demo](https://rxlabz.github.io/cyclop/)
 
@@ -28,7 +28,7 @@ Select a color from your Flutter mobile or desktop screen.
 
 ![Cyclop eye dropper](https://github.com/rxlabz/cyclop/raw/master/assets/paco_eyedropper.png) 
 
-To use the eyedropper ( Flutter mobile & desktop ) you need to wrap the app in the EyeDrop widget.
+To use the eyedropper you need to wrap the app in the EyeDrop widget.
 
 ```dart
 @override
