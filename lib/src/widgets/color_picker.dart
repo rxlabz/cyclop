@@ -5,6 +5,7 @@ import '../widgets/opacity/opacity_slider.dart';
 import '../widgets/tabbar.dart';
 import 'picker/color_selector.dart';
 import 'picker/title_bar.dart';
+import 'picker_config.dart' if (dart.library.js) 'picker_config_web.dart';
 import 'selectors/channels/hsl_selector.dart';
 import 'selectors/grid_color_selector.dart';
 import 'selectors/user_swatch_selector.dart';
@@ -12,20 +13,6 @@ import 'selectors/user_swatch_selector.dart';
 const pickerWidth = 316.0;
 
 const pickerHeight = 520.0;
-
-class ColorPickerConfig {
-  final bool enableOpacity;
-
-  final bool enableLibrary;
-
-  final bool enableEyePicker;
-
-  const ColorPickerConfig({
-    this.enableOpacity = true,
-    this.enableLibrary = true,
-    this.enableEyePicker = true,
-  });
-}
 
 class ColorPicker extends StatefulWidget {
   final Color selectedColor;
@@ -136,9 +123,6 @@ class _ColorPickerState extends State<ColorPicker> {
                     onEyePick: widget.config.enableEyePicker
                         ? widget.onEyeDropper
                         : null,
-                    onFieldFocus: () {
-                      print('FIELDFOCUS');
-                    },
                     focus: hexFieldFocus,
                   ),
                 ],

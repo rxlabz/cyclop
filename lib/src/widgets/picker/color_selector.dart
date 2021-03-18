@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 
 import 'hex_textfield.dart';
 
+/// toolbar with :
+/// - a color preview
+/// - a hex color field
+/// - an optional eyeDropper button
 class ColorSelector extends StatelessWidget {
   final Color color;
 
@@ -16,13 +20,10 @@ class ColorSelector extends StatelessWidget {
 
   final VoidCallback? onEyePick;
 
-  final VoidCallback? onFieldFocus;
-
   const ColorSelector({
     required this.color,
     required this.onColorChanged,
     required this.focus,
-    this.onFieldFocus,
     this.onEyePick,
     this.withAlpha = false,
     this.thumbWidth = 96,
@@ -46,15 +47,14 @@ class ColorSelector extends StatelessWidget {
               onColorChanged(value);
             },
           ),
-          if (!kIsWeb && onEyePick != null)
+          if (onEyePick != null) // null if eyeDrop is disabled
             IconButton(icon: Icon(Icons.colorize), onPressed: onEyePick),
         ],
       ),
     );
   }
 
-  Container _buildColorThumb() {
-    return Container(
+  Container _buildColorThumb() => Container(
         width: thumbWidth,
         height: 36,
         decoration: BoxDecoration(
@@ -67,6 +67,6 @@ class ColorSelector extends StatelessWidget {
               color: Color(0x66101010),
             )
           ],
-        ));
-  }
+        ),
+      );
 }

@@ -10,6 +10,7 @@ import '../theme.dart';
 import '../utils.dart';
 import 'color_picker.dart';
 import 'eyedrop/eye_dropper_layer.dart';
+import 'picker_config.dart' if (dart.library.js) 'picker_config_web.dart';
 
 const _buttonSize = 48.0;
 

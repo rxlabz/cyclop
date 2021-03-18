@@ -59,10 +59,10 @@ class _MainScreenState extends State<MainScreen> {
                 swatches: swatches,
                 size: 32,
                 config: ColorPickerConfig(
-                    enableOpacity: false, enableLibrary: false),
-                onColorChanged: (value) => setState(
-                  () => appbarColor = value,
+                  enableOpacity: false,
+                  enableLibrary: false,
                 ),
+                onColorChanged: (value) => setState(() => appbarColor = value),
                 onSwatchesChanged: (newSwatches) =>
                     setState(() => swatches = newSwatches),
               ),
@@ -80,7 +80,7 @@ class _MainScreenState extends State<MainScreen> {
                 style: textTheme.headline6?.copyWith(color: bodyTextColor),
               ),
               _buildButtons(),
-              if (!kIsWeb) Center(child: Image.asset('images/img.png')),
+              Center(child: Image.asset('images/img.png')),
             ],
           ),
         ),
@@ -123,11 +123,10 @@ class _MainScreenState extends State<MainScreen> {
                   setState(() => swatches = newSwatches),
             ),
           ),
-          if (!kIsWeb)
-            EyedropperButton(
-              icon: Icons.colorize,
-              onColor: (value) => setState(() => backgroundColor = value),
-            ),
+          EyedropperButton(
+            icon: Icons.colorize,
+            onColor: (value) => setState(() => backgroundColor = value),
+          ),
         ],
       ),
     );

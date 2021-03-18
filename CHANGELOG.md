@@ -1,3 +1,7 @@
+# 0.4.0
+
+- Enable the eyeDropper in browser with CanvasKit renderer
+
 # 0.3.0+2
 
 - NNBD

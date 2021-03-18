@@ -1,6 +1,6 @@
 name: cyclop
-description: Cyclop is a flutter color palette with an optional eyedropper tool on mobile and desktop.
-version: 0.3.0+2
+description: Experimental flutter colorpicker / eyedropper.
+version: 0.4.0
 homepage: https://github.com/rxlabz/cyclop
 
 environment:
