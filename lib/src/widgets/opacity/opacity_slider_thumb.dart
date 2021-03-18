@@ -6,7 +6,7 @@ class OpacitySliderThumbShape extends RoundSliderThumbShape {
   const OpacitySliderThumbShape(
     this.selectedColor, {
     double enabledThumbRadius = 10.0,
-    double disabledThumbRadius,
+    double disabledThumbRadius = 6,
     double elevation = 1.0,
     double pressedElevation = 3.0,
   }) : super(
@@ -24,21 +24,17 @@ class OpacitySliderThumbShape extends RoundSliderThumbShape {
   void paint(
     PaintingContext context,
     Offset center, {
-    Animation<double> activationAnimation,
-    @required Animation<double> enableAnimation,
-    bool isDiscrete,
-    TextPainter labelPainter,
-    RenderBox parentBox,
-    @required SliderThemeData sliderTheme,
-    TextDirection textDirection,
-    double value,
-    double textScaleFactor,
-    Size sizeWithOverflow,
+    required Animation<double> activationAnimation,
+    required Animation<double> enableAnimation,
+    required bool isDiscrete,
+    required TextPainter labelPainter,
+    required RenderBox parentBox,
+    required SliderThemeData sliderTheme,
+    required TextDirection textDirection,
+    required double value,
+    required double textScaleFactor,
+    required Size sizeWithOverflow,
   }) {
-    assert(context != null);
-    assert(center != null);
-    assert(enableAnimation != null);
-    assert(sliderTheme != null);
     assert(sliderTheme.disabledThumbColor != null);
     assert(sliderTheme.thumbColor != null);
     assert(!sizeWithOverflow.isEmpty);
@@ -72,7 +68,7 @@ class OpacitySliderThumbShape extends RoundSliderThumbShape {
       );
     canvas.drawShadow(path, Colors.black, 1.0 /*evaluatedElevation*/, true);
 
-    canvas.drawCircle(center, radius, Paint()..color = color);
+    canvas.drawCircle(center, radius, Paint()..color = color!);
     canvas.drawCircle(center, radius - 2, Paint()..color = selectedColor);
   }
 }

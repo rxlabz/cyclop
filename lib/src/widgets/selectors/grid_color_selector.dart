@@ -13,11 +13,11 @@ class GridColorSelector extends StatelessWidget {
 
   final ValueChanged<Color> onColorSelected;
 
-  final VoidCallback onEyePick;
-
-  const GridColorSelector(
-      {Key key, this.selectedColor, this.onColorSelected, this.onEyePick})
-      : super(key: key);
+  const GridColorSelector({
+    required this.selectedColor,
+    required this.onColorSelected,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) => AspectRatio(
@@ -30,8 +30,8 @@ class GridColorSelector extends StatelessWidget {
               padding: EdgeInsets.zero,
               shrinkWrap: true,
               crossAxisCount: 12,
-              children: _buildColorsTiles(),
               childAspectRatio: 1,
+              children: _buildColorsTiles(),
             ),
           ),
         ),

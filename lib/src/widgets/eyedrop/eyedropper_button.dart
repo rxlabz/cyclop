@@ -6,8 +6,11 @@ class EyedropperButton extends StatelessWidget {
   final IconData icon;
   final ValueChanged<Color> onColor;
 
-  const EyedropperButton({Key key, this.icon = Icons.colorize, this.onColor})
-      : super(key: key);
+  const EyedropperButton({
+    required this.onColor,
+    this.icon = Icons.colorize,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

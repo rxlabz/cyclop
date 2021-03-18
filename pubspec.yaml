@@ -1,20 +1,21 @@
 name: cyclop
 description: Cyclop is a flutter color palette with an optional eyedropper tool on mobile and desktop.
-version: 0.2.3+2
+version: 0.3.0
 homepage: https://github.com/rxlabz/cyclop
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  image: ^2.1.1
-  quiver: ^2.1.3
+  image: ^3.0.1
+  quiver: ^3.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  pedantic: ^1.11.0
 
 flutter:
   assets:

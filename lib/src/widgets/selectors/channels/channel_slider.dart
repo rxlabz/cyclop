@@ -18,13 +18,13 @@ class ChannelSlider extends StatelessWidget {
   final ValueLabelGetter labelGetter;
 
   const ChannelSlider({
-    Key key,
-    @required this.selectedColor,
-    @required this.colors,
-    @required this.channelValueGetter,
-    @required this.onChange,
-    @required this.label,
-    @required this.labelGetter,
+    required this.selectedColor,
+    required this.colors,
+    required this.channelValueGetter,
+    required this.onChange,
+    required this.label,
+    required this.labelGetter,
+    Key? key,
   }) : super(key: key);
 
   double get channelValue => channelValueGetter(selectedColor);
@@ -67,7 +67,7 @@ class ChannelSlider extends StatelessWidget {
                 ),
                 width: 60,
                 child: Text(
-                  labelGetter != null ? labelGetter(selectedColor) : '/',
+                  labelGetter(selectedColor),
                   textAlign: TextAlign.center,
                   style: textTheme.bodyText1,
                 ),
@@ -99,51 +99,40 @@ class ChannelSliderTrack extends SliderTrackShape with BaseSliderTrackShape {
   void paint(
     PaintingContext context,
     Offset offset, {
-    @required RenderBox parentBox,
-    @required SliderThemeData sliderTheme,
-    @required Animation<double> enableAnimation,
-    @required TextDirection textDirection,
-    @required Offset thumbCenter,
+    required RenderBox parentBox,
+    required SliderThemeData sliderTheme,
+    required Animation<double> enableAnimation,
+    required TextDirection textDirection,
+    required Offset thumbCenter,
     bool isDiscrete = false,
     bool isEnabled = false,
     double additionalActiveTrackHeight = 2,
   }) {
-    assert(context != null);
-    assert(offset != null);
-    assert(parentBox != null);
-    assert(sliderTheme != null);
     assert(sliderTheme.disabledActiveTrackColor != null);
     assert(sliderTheme.disabledInactiveTrackColor != null);
     assert(sliderTheme.activeTrackColor != null);
     assert(sliderTheme.inactiveTrackColor != null);
     assert(sliderTheme.thumbShape != null);
-    assert(enableAnimation != null);
-    assert(textDirection != null);
-    assert(thumbCenter != null);
-    // If the slider [SliderThemeData.trackHeight] is less than or equal to 0,
-    // then it makes no difference whether the track is painted or not,
-    // therefore the painting  can be a no-op.
-    if (sliderTheme.trackHeight <= 0) {
-      return;
-    }
 
-    final Rect trackRect = getPreferredRect(
+    final trackRect = getPreferredRect(
       parentBox: parentBox,
       offset: offset,
       sliderTheme: sliderTheme,
       isEnabled: isEnabled,
       isDiscrete: isDiscrete,
     );
-    final Radius trackRadius = Radius.circular(trackRect.height / 2);
-    final Radius activeTrackRadius = Radius.circular(trackRect.height / 2 + 1);
+    final trackRadius = Radius.circular(trackRect.height / 2);
+    final activeTrackRadius = Radius.circular(trackRect.height / 2 + 1);
 
-    final Paint activePaint = Paint()..color = Colors.transparent;
+    final activePaint = Paint()..color = Colors.transparent;
 
-    final Paint inactivePaint = Paint()
+    final inactivePaint = Paint()
       ..shader = ui.Gradient.linear(
-          Offset.zero, Offset(trackRect.width, 0), colors, _impliedStops()
-          /*colorStops,*/
-          );
+        Offset.zero,
+        Offset(trackRect.width, 0),
+        colors,
+        _impliedStops(),
+      );
 
     Paint leftTrackPaint;
     Paint rightTrackPaint;
@@ -189,7 +178,7 @@ class ChannelSliderTrack extends SliderTrackShape with BaseSliderTrackShape {
 
   List<double> _impliedStops() {
     assert(colors.length >= 2, 'colors list must have at least two colors');
-    final double separation = 1.0 / (colors.length - 1);
+    final separation = 1.0 / (colors.length - 1);
     return List<double>.generate(
       colors.length,
       (int index) => index * separation,

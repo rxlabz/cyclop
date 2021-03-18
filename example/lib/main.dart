@@ -45,7 +45,7 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         title: Text('Cyclop Demo',
-            style: textTheme.headline6.copyWith(color: appbarTextColor)),
+            style: textTheme.headline6?.copyWith(color: appbarTextColor)),
         backgroundColor: appbarColor,
         actions: [
           Padding(
@@ -77,7 +77,7 @@ class _MainScreenState extends State<MainScreen> {
             children: [
               Text(
                 'Select the background & appbar colors',
-                style: textTheme.headline6.copyWith(color: bodyTextColor),
+                style: textTheme.headline6?.copyWith(color: bodyTextColor),
               ),
               _buildButtons(),
               if (!kIsWeb) Center(child: Image.asset('images/img.png')),

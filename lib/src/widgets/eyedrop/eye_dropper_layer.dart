@@ -14,9 +14,9 @@ class _EyeDropperModel {
   /// based on PointerEvent.kind
   bool touchable = false;
 
-  OverlayEntry eyeOverlayEntry;
+  OverlayEntry? eyeOverlayEntry;
 
-  img.Image snapshot;
+  img.Image? snapshot;
 
   Offset cursorPosition = screenSize.center(Offset.zero);
 
@@ -26,7 +26,7 @@ class _EyeDropperModel {
 
   Color selectedColor = Colors.black;
 
-  ValueChanged<Color> onColorSelected;
+  ValueChanged<Color>? onColorSelected;
 
   _EyeDropperModel();
 }
@@ -34,7 +34,7 @@ class _EyeDropperModel {
 class EyeDrop extends InheritedWidget {
   static _EyeDropperModel data = _EyeDropperModel();
 
-  EyeDrop({Widget child, bool touchable})
+  EyeDrop({required Widget child})
       : super(
           child: RepaintBoundary(
             key: captureKey,
@@ -55,16 +55,23 @@ class EyeDrop extends InheritedWidget {
         );
 
   static EyeDrop of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<EyeDrop>();
+    final eyeDrop = context.dependOnInheritedWidgetOfExactType<EyeDrop>();
+    if (eyeDrop == null) {
+      throw Exception(
+          'No EyeDrop found. You must wrap your application within an EyeDrop widget.');
+    }
+    return eyeDrop;
   }
 
   static void _onPointerUp(Offset position) {
     _onHover(position, data.touchable);
-    if (data.onColorSelected != null)
-      data.onColorSelected(data.hoverColors[12]);
+    if (data.onColorSelected != null) {
+      data.onColorSelected!(data.hoverColors[12]);
+    }
+
     if (data.eyeOverlayEntry != null) {
       try {
-        data.eyeOverlayEntry.remove();
+        data.eyeOverlayEntry!.remove();
         data.eyeOverlayEntry = null;
         data.onColorSelected = null;
       } catch (err) {
@@ -74,22 +81,22 @@ class EyeDrop extends InheritedWidget {
   }
 
   static void _onHover(Offset offset, bool touchable) {
-    if (data.eyeOverlayEntry != null) data.eyeOverlayEntry.markNeedsBuild();
+    if (data.eyeOverlayEntry != null) data.eyeOverlayEntry!.markNeedsBuild();
 
     data.cursorPosition = offset;
 
-    data.touchable ??= touchable;
+    data.touchable = touchable;
 
     if (data.snapshot != null) {
-      data.hoverColor = getPixelColor(data.snapshot, offset);
-      data.hoverColors = getPixelColors(data.snapshot, offset);
+      data.hoverColor = getPixelColor(data.snapshot!, offset);
+      data.hoverColors = getPixelColors(data.snapshot!, offset);
     }
   }
 
   void capture(
       BuildContext context, ValueChanged<Color> onColorSelected) async {
     final renderer =
-        captureKey.currentContext.findRenderObject() as RenderRepaintBoundary;
+        captureKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
 
     if (renderer == null) return;
 
@@ -98,15 +105,16 @@ class EyeDrop extends InheritedWidget {
     data.snapshot = await repaintBoundaryToImage(renderer);
 
     if (data.snapshot == null) return;
+
+    /* FIXME(rxlabz) */
     data.eyeOverlayEntry = OverlayEntry(
       builder: (_) => EyeDropOverlay(
         touchable: data.touchable,
-        color: data.hoverColor,
         colors: data.hoverColors,
         cursorPosition: data.cursorPosition,
       ),
     );
-    Overlay.of(context).insert(data.eyeOverlayEntry);
+    Overlay.of(context)?.insert(data.eyeOverlayEntry!);
   }
 
   @override

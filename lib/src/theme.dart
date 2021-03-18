@@ -14,34 +14,72 @@ class Labels {
 const defaultRadius = 8.0;
 
 final lightTheme = ThemeData.light().copyWith(
-    scaffoldBackgroundColor: Color(0xfff0f0f0),
-    backgroundColor: Color(0xffdadada),
-    toggleableActiveColor: Colors.cyan,
-    inputDecorationTheme: ThemeData.light().inputDecorationTheme.copyWith(
-          isDense: true,
-          fillColor: Colors.white,
-          filled: true,
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-          border: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(defaultRadius)),
-        ),
-    dialogTheme: ThemeData.light().dialogTheme.copyWith(
-          backgroundColor: Color(0xfff6f6f6),
-        ),
-    iconTheme: ThemeData.light().iconTheme.copyWith(color: Colors.blue));
+  scaffoldBackgroundColor: Color(0xfff0f0f0),
+  backgroundColor: Color(0xffdadada),
+  toggleableActiveColor: Colors.cyan,
+  inputDecorationTheme: ThemeData.light().inputDecorationTheme.copyWith(
+        isDense: true,
+        fillColor: Colors.white,
+        filled: true,
+        contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+        border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(defaultRadius)),
+      ),
+  dialogTheme: ThemeData.light().dialogTheme.copyWith(
+        backgroundColor: Color(0xfff6f6f6),
+      ),
+  iconTheme: ThemeData.light().iconTheme.copyWith(color: Colors.blue),
+  textButtonTheme: TextButtonThemeData(style: _lightTextButtonStyle),
+);
 
 final darkTheme = ThemeData.dark().copyWith(
   backgroundColor: Colors.grey.shade700,
   toggleableActiveColor: Colors.cyan,
-  textSelectionColor: Colors.cyan.shade700,
+  textSelectionTheme: ThemeData.light()
+      .textSelectionTheme
+      .copyWith(selectionColor: Colors.cyan.shade700),
   dialogTheme: ThemeData.light().dialogTheme.copyWith(
         backgroundColor: Colors.grey.shade800,
       ),
   inputDecorationTheme:
       lightTheme.inputDecorationTheme.copyWith(fillColor: Colors.grey.shade800),
+  textButtonTheme: TextButtonThemeData(style: _darkTextButtonStyle),
 );
+
+final _lightTextButtonStyle = ButtonStyle(
+  shape: MaterialStateProperty.all(
+    RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+  ),
+  padding: MaterialStateProperty.all(
+    const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+  ),
+  foregroundColor: MaterialStateProperty.all(Colors.grey.shade700),
+  overlayColor: MaterialStateProperty.all(Colors.white30),
+);
+
+final _darkTextButtonStyle = ButtonStyle(
+  shape: MaterialStateProperty.all(
+    RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+  ),
+  padding: MaterialStateProperty.all(
+    const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+  ),
+  foregroundColor: MaterialStateProperty.all(Colors.white70),
+  overlayColor: MaterialStateProperty.all(Colors.black12),
+);
+
+const interactiveStates = <MaterialState>{
+  MaterialState.pressed,
+  MaterialState.hovered,
+  MaterialState.focused,
+};
+
+extension on Set<MaterialState> {
+  bool get isActive => any(interactiveStates.contains);
+
+  bool get isDisabled => contains(MaterialState.disabled);
+}
 
 const defaultDivider = Divider(
   color: Color(0xff999999),

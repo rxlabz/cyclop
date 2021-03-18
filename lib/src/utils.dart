@@ -48,7 +48,7 @@ extension Utils on Color {
       );
 }
 
-List<Color> getHueGradientColors({double saturation, int steps = 36}) =>
+List<Color> getHueGradientColors({double? saturation, int steps = 36}) =>
     List.generate(steps, (value) => value)
         .map<Color>((v) {
           final hsl = HSLColor.fromAHSL(1, v * (360 / steps), 0.67, 0.50);
@@ -73,7 +73,7 @@ Color getPixelColor(img.Image image, Offset offset) => (offset.dx >= 0 &&
         offset.dx < image.width &&
         offset.dy < image.height)
     ? ABGR2Color(image.getPixel(offset.dx.toInt(), offset.dy.toInt()))
-    : Color(0);
+    : Color(0x00000000);
 
 ui.Offset _offsetFromIndex(int index, int numColumns) => Offset(
       (index % numColumns).toDouble(),
@@ -89,12 +89,13 @@ Color ABGR2Color(int value) {
   return Color.fromARGB(a, r, g, b);
 }
 
-Future<img.Image> repaintBoundaryToImage(RenderRepaintBoundary renderer) async {
+Future<img.Image?> repaintBoundaryToImage(
+    RenderRepaintBoundary renderer) async {
   try {
     final rawImage = await renderer.toImage(pixelRatio: 1);
     final byteData =
         await rawImage.toByteData(format: ui.ImageByteFormat.rawRgba);
-    final pngBytes = byteData.buffer.asUint8List();
+    final pngBytes = byteData!.buffer.asUint8List();
     return img.Image.fromBytes(rawImage.width, rawImage.height, pngBytes);
   } catch (err) {
     print('repaintBoundaryToImage... $err');
