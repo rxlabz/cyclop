@@ -1,3 +1,7 @@
+# 0.4.1
+
+- ColorButton & ColorPicker : onSwatchesUpdate is now optional  
+
 # 0.4.0
 
 - Enable the eyeDropper in browser with CanvasKit renderer

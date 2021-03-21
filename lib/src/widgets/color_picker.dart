@@ -27,7 +27,7 @@ class ColorPicker extends StatefulWidget {
 
   final VoidCallback onEyeDropper;
 
-  final ValueChanged<Set<Color>> onSwatchesUpdate;
+  final ValueChanged<Set<Color>>? onSwatchesUpdate;
 
   final VoidCallback onClose;
 
@@ -38,9 +38,9 @@ class ColorPicker extends StatefulWidget {
     required this.selectedColor,
     required this.config,
     required this.onClose,
-    required this.onSwatchesUpdate,
     required this.onEyeDropper,
     required this.onKeyboard,
+    this.onSwatchesUpdate,
     this.swatches = const {},
     this.darkMode = false,
     Key? key,

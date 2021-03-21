@@ -110,6 +110,7 @@ class _MainScreenState extends State<MainScreen> {
               key: Key('c1'),
               size: 32,
               color: backgroundColor,
+              config: ColorPickerConfig(enableLibrary: false),
               swatches: swatches,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
@@ -119,8 +120,6 @@ class _MainScreenState extends State<MainScreen> {
               onColorChanged: (value) => setState(
                 () => backgroundColor = value,
               ),
-              onSwatchesChanged: (newSwatches) =>
-                  setState(() => swatches = newSwatches),
             ),
           ),
           EyedropperButton(

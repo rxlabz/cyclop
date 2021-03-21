@@ -6,13 +6,13 @@ const _maxSwatch = 50;
 class SwatchLibrary extends StatefulWidget {
   final Set<Color> colors;
   final Color currentColor;
-  final ValueChanged<Set<Color>> onSwatchesUpdate;
   final ValueChanged<Color> onColorSelected;
+  final ValueChanged<Set<Color>>? onSwatchesUpdate;
 
   const SwatchLibrary({
     required this.currentColor,
     required this.onColorSelected,
-    required this.onSwatchesUpdate,
+    this.onSwatchesUpdate,
     this.colors = const {},
     Key? key,
   }) : super(key: key);
@@ -57,10 +57,12 @@ class _SwatchLibraryState extends State<SwatchLibrary> {
 
   Widget _colorToSwatch(Color color) => GestureDetector(
         onTap: () => widget.onColorSelected(color),
-        onDoubleTap: () {
-          widget.onSwatchesUpdate(colors..remove(color));
-          setState(() {});
-        },
+        onDoubleTap: widget.onSwatchesUpdate == null
+            ? null
+            : () {
+                widget.onSwatchesUpdate!(colors..remove(color));
+                setState(() {});
+              },
         child: Tooltip(
           height: 52,
           showDuration: Duration(seconds: 0),
@@ -95,11 +97,11 @@ class _SwatchLibraryState extends State<SwatchLibrary> {
           color:
               widget.canAdd ? theme.toggleableActiveColor : theme.disabledColor,
           icon: Icon(Icons.add),
-          onPressed: widget.canAdd
+          onPressed: widget.canAdd && widget.onSwatchesUpdate != null
               ? () {
                   setState(() => colors.add(widget.currentColor));
                   final newSwatches = widget.colors..add(widget.currentColor);
-                  widget.onSwatchesUpdate(newSwatches);
+                  widget.onSwatchesUpdate!(newSwatches);
                 }
               : null,
         ),

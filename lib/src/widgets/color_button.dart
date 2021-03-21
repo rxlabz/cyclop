@@ -24,14 +24,14 @@ class ColorButton extends StatefulWidget {
 
   final ValueChanged<Color> onColorChanged;
 
-  final ValueChanged<Set<Color>> onSwatchesChanged;
+  final ValueChanged<Set<Color>>? onSwatchesChanged;
 
   final bool darkMode;
 
   const ColorButton({
     required this.color,
     required this.onColorChanged,
-    required this.onSwatchesChanged,
+    this.onSwatchesChanged,
     this.decoration,
     this.config = const ColorPickerConfig(),
     this.darkMode = false,
