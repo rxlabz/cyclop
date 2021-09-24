@@ -43,7 +43,6 @@ class EyeDrop extends InheritedWidget {
                 details.position,
                 details.kind == PointerDeviceKind.touch,
               ),
-              // ignore: deprecated_member_use
               onPointerHover: (details) => _onHover(
                 details.position,
                 details.kind == PointerDeviceKind.touch,
@@ -66,7 +65,7 @@ class EyeDrop extends InheritedWidget {
   static void _onPointerUp(Offset position) {
     _onHover(position, data.touchable);
     if (data.onColorSelected != null) {
-      data.onColorSelected!(data.hoverColors[12]);
+      data.onColorSelected!(data.hoverColors.center);
     }
 
     if (data.eyeOverlayEntry != null) {

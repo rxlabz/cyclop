@@ -48,6 +48,10 @@ extension Utils on Color {
       );
 }
 
+extension Helper on List<Color> {
+  Color get center => isEmpty ? Colors.black : this[length ~/ 2];
+}
+
 List<Color> getHueGradientColors({double? saturation, int steps = 36}) =>
     List.generate(steps, (value) => value)
         .map<Color>((v) {
@@ -58,7 +62,7 @@ List<Color> getHueGradientColors({double? saturation, int steps = 36}) =>
         .map((c) => saturation != null ? c.withSaturation(saturation) : c)
         .toList();
 
-const samplingGridSize = 5;
+const samplingGridSize = 9;
 
 List<Color> getPixelColors(img.Image image, Offset offset) => List.generate(
       samplingGridSize * samplingGridSize,
@@ -90,7 +94,8 @@ Color abgr2Color(int value) {
 }
 
 Future<img.Image?> repaintBoundaryToImage(
-    RenderRepaintBoundary renderer) async {
+  RenderRepaintBoundary renderer,
+) async {
   try {
     final rawImage = await renderer.toImage(pixelRatio: 1);
     final byteData =

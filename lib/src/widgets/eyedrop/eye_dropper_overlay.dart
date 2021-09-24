@@ -1,18 +1,18 @@
 import 'dart:ui' as ui;
 
+import '../../utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:quiver/iterables.dart';
 
-const _cellSize = 20;
+const _cellSize = 10;
 
-const _gridSize = 100.0;
+const _gridSize = 90.0;
 
 class EyeDropOverlay extends StatelessWidget {
   final Offset? cursorPosition;
   final bool touchable;
 
-  //final Color color;
   final List<Color> colors;
 
   const EyeDropOverlay({
@@ -44,7 +44,7 @@ class EyeDropOverlay extends StatelessWidget {
         foregroundDecoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(
-              width: 8, color: colors.isEmpty ? Colors.white : colors[12]),
+              width: 8, color: colors.isEmpty ? Colors.white : colors.center),
         ),
         width: _gridSize,
         height: _gridSize,
@@ -63,12 +63,12 @@ class EyeDropOverlay extends StatelessWidget {
 class _PixelGridPainter extends CustomPainter {
   final List<Color> colors;
 
-  static const gridSize = 5;
-  static const eyeRadius = 40.0;
+  static const gridSize = 9;
+  static const eyeRadius = 35.0;
 
   final blackStroke = Paint()
     ..color = Colors.black
-    ..strokeWidth = 5
+    ..strokeWidth = 10
     ..style = PaintingStyle.stroke;
 
   _PixelGridPainter(this.colors);
@@ -79,11 +79,17 @@ class _PixelGridPainter extends CustomPainter {
       ..color = Colors.white
       ..style = PaintingStyle.stroke;
 
+    final blackLine = Paint()
+      ..color = Colors.black
+      ..strokeWidth = 2
+      ..style = PaintingStyle.stroke;
+
     final selectedStroke = Paint()
       ..color = Colors.white
       ..strokeWidth = 3
       ..style = PaintingStyle.stroke;
 
+    // fill pixels color square
     for (final color in enumerate(colors)) {
       final fill = Paint()..color = color.value;
       final rect = Rect.fromLTWH(
@@ -93,11 +99,30 @@ class _PixelGridPainter extends CustomPainter {
         _cellSize.toDouble(),
       );
       canvas.drawRect(rect, fill);
-      canvas.drawRect(rect, color.index == 12 ? selectedStroke : stroke);
     }
 
+    // draw pixels borders after fills
+    for (final color in enumerate(colors)) {
+      final rect = Rect.fromLTWH(
+        (color.index % gridSize).toDouble() * _cellSize,
+        ((color.index ~/ gridSize) % gridSize).toDouble() * _cellSize,
+        _cellSize.toDouble(),
+        _cellSize.toDouble(),
+      );
+      canvas.drawRect(
+          rect, color.index == colors.length ~/ 2 ? selectedStroke : stroke);
+
+      if (color.index == colors.length ~/ 2) {
+        canvas.drawRect(rect.deflate(1), blackLine);
+      }
+    }
+
+    // black contrast ring
     canvas.drawCircle(
-        Offset((_gridSize) / 2, (_gridSize) / 2), eyeRadius, blackStroke);
+      Offset((_gridSize) / 2, (_gridSize) / 2),
+      eyeRadius,
+      blackStroke,
+    );
   }
 
   @override
