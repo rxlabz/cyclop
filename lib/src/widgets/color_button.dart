@@ -6,7 +6,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import '../theme.dart';
 import '../utils.dart';
 import 'color_picker.dart';
 import 'eyedrop/eye_dropper_layer.dart';
@@ -26,12 +25,15 @@ class ColorButton extends StatefulWidget {
 
   final ValueChanged<Set<Color>>? onSwatchesChanged;
 
+  final double elevation;
+
   final bool darkMode;
 
   const ColorButton({
     required this.color,
     required this.onColorChanged,
     this.onSwatchesChanged,
+    this.elevation = 3,
     this.decoration,
     this.config = const ColorPickerConfig(),
     this.darkMode = false,
@@ -50,7 +52,7 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
 
   late Color color;
 
-  // hide the palette dureting eyedropping
+  // hide the palette during eyedropping
   bool hidden = false;
 
   bool keyboardOn = false;
@@ -79,16 +81,21 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) => GestureDetector(
         onTapDown: (details) => _colorPick(context, details),
-        child: Container(
-          width: widget.size,
-          height: widget.size,
-          decoration: widget.decoration ??
-              BoxDecoration(
-                shape: widget.boxShape,
-                color: widget.color,
-                border: Border.all(width: 4, color: Colors.white),
-                boxShadow: darkShadowBox,
-              ),
+        child: Material(
+          elevation: widget.elevation,
+          shape: widget.boxShape == BoxShape.circle
+              ? CircleBorder()
+              : RoundedRectangleBorder(),
+          child: Container(
+            width: widget.size,
+            height: widget.size,
+            decoration: widget.decoration ??
+                BoxDecoration(
+                  shape: widget.boxShape,
+                  color: widget.color,
+                  border: Border.all(width: 4, color: Colors.white),
+                ),
+          ),
         ),
       );
 
@@ -110,24 +117,14 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
 
   OverlayEntry _buildPickerOverlay(Offset offset, BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final left = offset.dx + pickerWidth < size.width - 30
-        ? offset.dx + _buttonSize
-        : offset.dx - pickerWidth - _buttonSize;
-    final top = offset.dy - pickerHeight / 2 > 0
-        ? min(offset.dy - pickerHeight / 2, size.height - pickerHeight - 50)
-        : 50.0;
 
     return OverlayEntry(
       maintainState: true,
       builder: (c) {
-        /*print('_ColorButtonState._buildPickerOverlay... '
-            '${MediaQuery.of(context).viewInsets.bottom}');*/
-        return Positioned(
-          left: isPhoneScreen ? (size.width - pickerWidth) / 2 : left,
-          top: isPhoneScreen
-              ? (keyboardOn ? 20 : (size.height - pickerHeight) / 2)
-              : top,
-          bottom: isPhoneScreen ? 20 + bottom : null,
+        return _DraggablePicker(
+          offset: calculatePickerPosition(offset, size),
+          bottom: bottom,
+          keyboardOn: keyboardOn,
           child: IgnorePointer(
             ignoring: hidden,
             child: Opacity(
@@ -159,6 +156,13 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
       },
     );
   }
+
+  Offset calculatePickerPosition(Offset offset, Size size) =>
+      offset +
+      Offset(
+        _buttonSize,
+        min(-pickerHeight / 2, size.height - pickerHeight - 50),
+      );
 
   void _showEyeDropperOverlay(BuildContext context) {
     hidden = true;
@@ -195,4 +199,54 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
     setState(() => bottom = newBottom);
     pickerOverlay?.markNeedsBuild();
   }
+}
+
+class _DraggablePicker extends StatefulWidget {
+  final Offset offset;
+
+  final Widget child;
+
+  final double bottom;
+
+  final bool keyboardOn;
+
+  const _DraggablePicker({
+    Key? key,
+    required this.child,
+    required this.offset,
+    required this.bottom,
+    required this.keyboardOn,
+  }) : super(key: key);
+
+  @override
+  State<_DraggablePicker> createState() => _DraggablePickerState();
+}
+
+class _DraggablePickerState extends State<_DraggablePicker> {
+  late Offset offset;
+
+  @override
+  void initState() {
+    super.initState();
+    offset = widget.offset;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    return Positioned(
+      left: isPhoneScreen
+          ? (size.width - pickerWidth) / 2
+          : offset.dx.clamp(0.0, size.width - pickerWidth),
+      top: isPhoneScreen
+          ? (widget.keyboardOn ? 20 : (size.height - pickerHeight) / 2)
+          : offset.dy.clamp(0.0, size.height - pickerHeight),
+      bottom: isPhoneScreen ? 20 + widget.bottom : null,
+      child: GestureDetector(onPanUpdate: _onDrag, child: widget.child),
+    );
+  }
+
+  void _onDrag(DragUpdateDetails details) =>
+      setState(() => offset = offset + details.delta);
 }

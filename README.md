@@ -42,8 +42,9 @@ To use the eyedropper you need to wrap the app in the EyeDrop widget.
               key: Key('c1'),
               color: color1,
               config: ColorPickerConfig(enableEyePicker = true),
-              boxShape: BoxShape.rectangle, // default : circle
               size: 32,
+              elevation: 5,
+              boxShape: BoxShape.rectangle, // default : circle
               swatches: swatches,
               onColorChanged: (value) => setState(() => color1 = value),
             ),

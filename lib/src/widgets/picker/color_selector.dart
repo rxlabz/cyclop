@@ -54,19 +54,17 @@ class ColorSelector extends StatelessWidget {
     );
   }
 
-  Container _buildColorThumb() => Container(
-        width: thumbWidth,
-        height: 36,
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(8),
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 3,
-              spreadRadius: 1,
-              color: Color(0x66101010),
-            )
-          ],
+  Widget _buildColorThumb() => Material(
+        color: Colors.white,
+        elevation: 3,
+        borderRadius: BorderRadius.circular(8),
+        child: Container(
+          width: thumbWidth,
+          height: 36,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(8),
+          ),
         ),
       );
 }
