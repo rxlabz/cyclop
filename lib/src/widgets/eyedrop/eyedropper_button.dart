@@ -16,7 +16,7 @@ class EyedropperButton extends StatelessWidget {
   const EyedropperButton({
     required this.onColor,
     this.icon = Icons.colorize,
-    this.iconColor = Colors.blueGrey,
+    this.iconColor = Colors.black54,
     Key? key,
   }) : super(key: key);
 
