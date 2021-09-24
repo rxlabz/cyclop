@@ -42,26 +42,21 @@ class _HexColorFieldState extends State<HexColorField> {
 
     valueLength = widget.withAlpha ? 8 : 6;
 
-    final colorValue = _initColorValue();
-    _controller = TextEditingController(text: colorValue);
+    final colorHexValue =
+        widget.withAlpha ? widget.color.hexARGB : widget.color.hexRGB;
+    _controller = TextEditingController(text: colorHexValue);
   }
 
   @override
   void didUpdateWidget(HexColorField oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.color != widget.color) {
-      final colorValue = _initColorValue();
-      _controller.text = colorValue;
+      final colorHexValue =
+          widget.withAlpha ? widget.color.hexARGB : widget.color.hexRGB;
+      _controller.text = colorHexValue;
 
       if (widget.hexFocus.hasFocus) widget.hexFocus.nextFocus();
     }
-  }
-
-  String _initColorValue() {
-    color = widget.color;
-    var stringValue = color.value.toRadixString(16).padRight(8, '0');
-    if (!widget.withAlpha) stringValue = stringValue.replaceRange(0, 2, '');
-    return stringValue;
   }
 
   @override

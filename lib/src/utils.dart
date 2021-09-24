@@ -30,6 +30,11 @@ extension Utils on Color {
 
   Color withHue(double value) => hsl.withHue(value).toColor();
 
+  String get hexARGB => value.toRadixString(16).padLeft(8, '0');
+
+  String get hexRGB =>
+      value.toRadixString(16).padLeft(8, '0').replaceRange(0, 2, '');
+
   Color withSaturation(double value) =>
       HSLColor.fromAHSL(opacity, hue, value, lightness).toColor();
 
