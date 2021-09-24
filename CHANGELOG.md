@@ -1,3 +1,8 @@
+# 0.5.0
+
+- Draggable ColorPicker
+- better display of alpha colors in ColorButton & ColorPicker  
+- Fix : Hex value field with alpha = 0
 # 0.4.1
 
 - ColorButton & ColorPicker : onSwatchesUpdate is now optional  

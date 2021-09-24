@@ -1,9 +1,10 @@
 import 'dart:ui' as ui;
 
-import '../../utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:quiver/iterables.dart';
+
+import '../../utils.dart';
 
 const _cellSize = 10;
 

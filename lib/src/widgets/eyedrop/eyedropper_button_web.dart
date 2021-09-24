@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:js' as js;
+
+import 'package:flutter/material.dart';
 
 import 'eye_dropper_layer.dart';
 

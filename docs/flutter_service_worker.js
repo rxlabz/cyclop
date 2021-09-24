@@ -3,21 +3,23 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
-  "version.json": "aad657ddd9bceba90b1c1b6dc2b5a85b",
-"index.html": "714974eaf05c7adc431ba0bd05325627",
-"/": "714974eaf05c7adc431ba0bd05325627",
-"main.dart.js": "3a2c4dd3799e5f75001451d27bfad9d8",
+  "version.json": "3c1eced887dc9a0a8b116ec95b08e126",
+"index.html": "32fa37a93e0f0d2e4b8dca9dc5b73471",
+"/": "32fa37a93e0f0d2e4b8dca9dc5b73471",
+"main.dart.js": "03855594c2bdf667c017ddde12228a04",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
+"icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
+"icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
-"manifest.json": "15f73b7e8a8209c2206210b3ac8dea1b",
+"manifest.json": "0867c3e13649ac4d06fe34b7b3ddce08",
 "assets/images/img.png": "f3e4538d8889fe6dc7ddf7bed7ef4b21",
 "assets/AssetManifest.json": "859b78dc2445230d8c3184c4666720e2",
-"assets/NOTICES": "eca53f47da026c726a233923aaefd1cc",
+"assets/NOTICES": "c8d28c614df27b4567f1121df9aced35",
 "assets/FontManifest.json": "dc3d03800ccca4601324923c0b1d6d57",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "assets/packages/cyclop/assets/grid.png": "49c4f3bcb1b25364bb4c255edcaaf5b2",
-"assets/fonts/MaterialIcons-Regular.otf": "1288c9e28052e028aba623321f7826ac"
+"assets/fonts/MaterialIcons-Regular.otf": "4e6447691c9509f7acdbf8a931a85ca1"
 };
 
 // The application shell files that are downloaded before a service worker can
@@ -35,7 +37,7 @@ self.addEventListener("install", (event) => {
   return event.waitUntil(
     caches.open(TEMP).then((cache) => {
       return cache.addAll(
-        CORE.map((value) => new Request(value + '?revision=' + RESOURCES[value], {'cache': 'reload'})));
+        CORE.map((value) => new Request(value, {'cache': 'reload'})));
     })
   );
 });

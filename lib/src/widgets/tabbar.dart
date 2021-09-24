@@ -101,14 +101,13 @@ class _TabsState extends State<Tabs> {
   void _onSelectionChanged(int newIndex) =>
       setState(() => selectedIndex = newIndex);
 
-  Widget _buildTab(IndexedValue<String> label, {required double height}) {
-    return SizedBox(
-      width: _kTabWidth,
-      height: height,
-      child: TextButton(
-        onPressed: () => _onSelectionChanged(label.index),
-        child: Text(label.value),
-      ),
-    );
-  }
+  Widget _buildTab(IndexedValue<String> label, {required double height}) =>
+      SizedBox(
+        width: _kTabWidth,
+        height: height,
+        child: TextButton(
+          onPressed: () => _onSelectionChanged(label.index),
+          child: Text(label.value),
+        ),
+      );
 }
