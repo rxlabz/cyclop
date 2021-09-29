@@ -4,18 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:cyclop/cyclop.dart';
 
 void main() async {
-  runApp(App());
+  runApp(const App());
 }
 
 class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) => MaterialApp(
-        home: EyeDrop(child: MainScreen()),
+        home: EyeDrop(child: const MainScreen()),
         debugShowCheckedModeBanner: false,
       );
 }
 
 class MainScreen extends StatefulWidget {
+  const MainScreen({Key? key}) : super(key: key);
+
   @override
   _MainScreenState createState() => _MainScreenState();
 }
@@ -53,12 +57,12 @@ class _MainScreenState extends State<MainScreen> {
             child: Center(
               child: ColorButton(
                 darkMode: true,
-                key: Key('c2'),
+                key: const Key('c2'),
                 color: appbarColor,
                 boxShape: BoxShape.rectangle,
                 swatches: swatches,
                 size: 32,
-                config: ColorPickerConfig(
+                config: const ColorPickerConfig(
                   enableOpacity: false,
                   enableLibrary: false,
                 ),
@@ -95,7 +99,7 @@ class _MainScreenState extends State<MainScreen> {
         children: [
           Center(
             child: ColorButton(
-              key: Key('c1'),
+              key: const Key('c1'),
               color: backgroundColor,
               swatches: swatches,
               onColorChanged: (value) => setState(
@@ -107,10 +111,10 @@ class _MainScreenState extends State<MainScreen> {
           ),
           Center(
             child: ColorButton(
-              key: Key('c1'),
+              key: const Key('c1'),
               size: 32,
               color: backgroundColor,
-              config: ColorPickerConfig(enableLibrary: false),
+              config: const ColorPickerConfig(enableLibrary: false),
               swatches: swatches,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
