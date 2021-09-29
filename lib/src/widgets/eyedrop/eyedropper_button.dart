@@ -1,8 +1,10 @@
+import 'package:basics/int_basics.dart';
 import 'package:flutter/material.dart';
 
 import 'eye_dropper_layer.dart';
 
 /// an eyeDropper standalone button
+/// should be used with a context [EyeDrop] available
 class EyedropperButton extends StatelessWidget {
   /// customisable icon ( default : [Icons.colorize] )
   final IconData icon;
@@ -27,7 +29,12 @@ class EyedropperButton extends StatelessWidget {
         child: IconButton(
           icon: Icon(Icons.colorize),
           color: iconColor,
-          onPressed: () => _onEyeDropperRequest(context),
+          onPressed:
+              // cf. https://github.com/flutter/flutter/issues/22308
+              () => Future.delayed(
+            50.milliseconds,
+            () => _onEyeDropperRequest(context),
+          ),
         ),
       );
 
