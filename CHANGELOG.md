@@ -1,3 +1,8 @@
+# 0.5.1
+
+- Fix : EyedropperButton exception on first 
+- Fix : Mobile landscape layout
+
 # 0.5.0
 
 - Draggable ColorPicker
