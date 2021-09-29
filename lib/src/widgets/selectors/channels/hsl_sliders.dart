@@ -73,7 +73,7 @@ class _HSLSlidersState extends State<HSLSliders> {
                 .toColor(),
           ],
           channelValueGetter: (color) => saturation,
-          labelGetter: (color) => '${saturation.toStringAsFixed(3)}',
+          labelGetter: (color) => saturation.toStringAsFixed(3),
           onChange: (value) {
             saturation = max(0.001, value);
             _updateColor();
@@ -96,7 +96,7 @@ class _HSLSlidersState extends State<HSLSliders> {
                 .toColor(),
           ],
           channelValueGetter: (color) => lightness,
-          labelGetter: (color) => '${lightness.toStringAsFixed(3)}',
+          labelGetter: (color) => lightness.toStringAsFixed(3),
           onChange: (value) {
             lightness = value;
             _updateColor();

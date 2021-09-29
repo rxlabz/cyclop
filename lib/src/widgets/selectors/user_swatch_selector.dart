@@ -1,3 +1,4 @@
+import 'package:basics/int_basics.dart';
 import 'package:flutter/material.dart';
 import 'package:quiver/collection.dart';
 
@@ -65,7 +66,7 @@ class _SwatchLibraryState extends State<SwatchLibrary> {
               },
         child: Tooltip(
           height: 52,
-          showDuration: Duration(seconds: 0),
+          showDuration: 0.seconds,
           message: 'Tap to select /\nDouble Tap to remove',
           child: Container(
             margin: const EdgeInsets.all(4),
@@ -96,7 +97,7 @@ class _SwatchLibraryState extends State<SwatchLibrary> {
         child: IconButton(
           color:
               widget.canAdd ? theme.toggleableActiveColor : theme.disabledColor,
-          icon: Icon(Icons.add),
+          icon: const Icon(Icons.add),
           onPressed: widget.canAdd && widget.onSwatchesUpdate != null
               ? () {
                   setState(() => colors.add(widget.currentColor));

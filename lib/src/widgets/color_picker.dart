@@ -14,6 +14,8 @@ const pickerWidth = 316.0;
 
 const pickerHeight = 520.0;
 
+const pickerSize = Size(pickerWidth, pickerHeight);
+
 /// ColorPicker Widget
 /// 2 or 3 tabs :
 /// - material swatches
@@ -86,7 +88,7 @@ class _ColorPickerState extends State<ColorPicker> {
         builder: (context) {
           final theme = Theme.of(context);
           return Container(
-            constraints: BoxConstraints.loose(Size(pickerWidth, pickerHeight)),
+            constraints: BoxConstraints.loose(pickerSize),
             decoration: BoxDecoration(
               color: theme.scaffoldBackgroundColor,
               borderRadius: BorderRadius.circular(defaultRadius),

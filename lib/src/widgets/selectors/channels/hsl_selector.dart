@@ -29,7 +29,7 @@ class _ChannelSlidersState extends State<ChannelSliders> {
 
   @override
   Widget build(BuildContext context) => Tabs(
-        labels: ['HSL', 'RGB'],
+        labels: const ['HSL', 'RGB'],
         views: [
           HSLSliders(color: color, onColorChanged: widget.onChange),
           _buildRGBSliders(),

@@ -29,9 +29,9 @@ class EyedropperButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         decoration:
-            BoxDecoration(color: Colors.white24, shape: BoxShape.circle),
+            const BoxDecoration(color: Colors.white24, shape: BoxShape.circle),
         child: IconButton(
-          icon: Icon(Icons.colorize),
+          icon: const Icon(Icons.colorize),
           color: iconColor,
           tooltip: 'test',
           onPressed:

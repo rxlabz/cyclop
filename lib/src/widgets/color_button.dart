@@ -85,8 +85,8 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
         child: Material(
           elevation: widget.elevation,
           shape: widget.boxShape == BoxShape.circle
-              ? CircleBorder()
-              : RoundedRectangleBorder(),
+              ? const CircleBorder()
+              : const RoundedRectangleBorder(),
           child: Container(
             width: widget.size,
             height: widget.size,
@@ -118,16 +118,16 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
 
   OverlayEntry _buildPickerOverlay(Offset offset, BuildContext context) {
     final mq = MediaQuery.of(context);
+    final onLandscape =
+        mq.size.shortestSide < 600 && mq.orientation == Orientation.landscape;
+    final pickerPosition =
+        onLandscape ? offset : calculatePickerPosition(offset, mq.size);
 
     return OverlayEntry(
       maintainState: true,
       builder: (c) {
-        final onLandscape = mq.size.shortestSide < 600 &&
-            mq.orientation == Orientation.landscape;
-        final pickerPosition =
-            calculatePickerPosition(offset, mq.size, onLandscape: onLandscape);
         return _DraggablePicker(
-          offset: pickerPosition,
+          initialOffset: pickerPosition,
           bottom: bottom,
           keyboardOn: keyboardOn,
           child: IgnorePointer(
@@ -162,18 +162,12 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
     );
   }
 
-  Offset calculatePickerPosition(
-    Offset offset,
-    Size size, {
-    required bool onLandscape,
-  }) =>
-      onLandscape
-          ? offset
-          : offset +
-              Offset(
-                _buttonSize,
-                min(-pickerHeight / 2, size.height - pickerHeight - 50),
-              );
+  Offset calculatePickerPosition(Offset offset, Size size) =>
+      offset +
+      Offset(
+        _buttonSize,
+        min(-pickerHeight / 2, size.height - pickerHeight - 50),
+      );
 
   void _showEyeDropperOverlay(BuildContext context) {
     hidden = true;
@@ -213,7 +207,7 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
 }
 
 class _DraggablePicker extends StatefulWidget {
-  final Offset offset;
+  final Offset initialOffset;
 
   final Widget child;
 
@@ -224,7 +218,7 @@ class _DraggablePicker extends StatefulWidget {
   const _DraggablePicker({
     Key? key,
     required this.child,
-    required this.offset,
+    required this.initialOffset,
     required this.bottom,
     required this.keyboardOn,
   }) : super(key: key);
@@ -239,7 +233,7 @@ class _DraggablePickerState extends State<_DraggablePicker> {
   @override
   void initState() {
     super.initState();
-    offset = widget.offset;
+    offset = widget.initialOffset;
   }
 
   @override

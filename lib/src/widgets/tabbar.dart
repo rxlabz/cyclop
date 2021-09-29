@@ -1,3 +1,4 @@
+import 'package:basics/int_basics.dart';
 import 'package:flutter/material.dart';
 import 'package:quiver/iterables.dart';
 
@@ -63,7 +64,7 @@ class _TabsState extends State<Tabs> {
   Container _buildTabs(ThemeData theme, Size size) {
     return Container(
       margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-      constraints: BoxConstraints.expand(height: 42),
+      constraints: const BoxConstraints.expand(height: 42),
       decoration: BoxDecoration(
         borderRadius: defaultBorderRadius,
         color: theme.backgroundColor,
@@ -73,7 +74,7 @@ class _TabsState extends State<Tabs> {
         child: Stack(
           children: [
             AnimatedAlign(
-              duration: Duration(milliseconds: 200),
+              duration: 200.milliseconds,
               curve: Curves.fastOutSlowIn,
               alignment: markerPosition,
               child: Container(

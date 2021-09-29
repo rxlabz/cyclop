@@ -29,7 +29,7 @@ class OpacitySlider extends StatelessWidget {
     return FutureBuilder<ui.Image>(
       future: getGridImage(),
       builder: (context, snapshot) {
-        if (!snapshot.hasData) return SizedBox();
+        if (!snapshot.hasData) return const SizedBox.shrink();
         return Padding(
           padding: const EdgeInsets.only(top: 4.0),
           child: Column(
@@ -55,8 +55,8 @@ class OpacitySlider extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 8),
-                    padding: EdgeInsets.all(8),
+                    margin: const EdgeInsets.symmetric(horizontal: 8),
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: theme.inputDecorationTheme.fillColor,
                       borderRadius: defaultBorderRadius,
@@ -83,8 +83,8 @@ ui.Image? _gridImage;
 Future<ui.Image> getGridImage() {
   if (_gridImage != null) return Future.value(_gridImage!);
   final completer = Completer<ui.Image>();
-  AssetImage('packages/cyclop/assets/grid.png')
-      .resolve(ImageConfiguration())
+  const AssetImage('packages/cyclop/assets/grid.png')
+      .resolve(const ImageConfiguration())
       .addListener(ImageStreamListener((ImageInfo info, bool _) {
     _gridImage = info.image;
     completer.complete(_gridImage);

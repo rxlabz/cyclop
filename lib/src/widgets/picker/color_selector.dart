@@ -49,7 +49,7 @@ class ColorSelector extends StatelessWidget {
             },
           ),
           if (onEyePick != null) // null if eyeDrop is disabled
-            IconButton(icon: Icon(Icons.colorize), onPressed: onEyePick),
+            IconButton(icon: const Icon(Icons.colorize), onPressed: onEyePick),
         ],
       ),
     );

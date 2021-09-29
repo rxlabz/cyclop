@@ -16,8 +16,8 @@ const defaultRadius = 8.0;
 const defaultBorderRadius = BorderRadius.all(Radius.circular(defaultRadius));
 
 final lightTheme = ThemeData.light().copyWith(
-  scaffoldBackgroundColor: Color(0xfff0f0f0),
-  backgroundColor: Color(0xffdadada),
+  scaffoldBackgroundColor: const Color(0xfff0f0f0),
+  backgroundColor: const Color(0xffdadada),
   toggleableActiveColor: Colors.cyan,
   inputDecorationTheme: ThemeData.light().inputDecorationTheme.copyWith(
         isDense: true,
@@ -29,7 +29,7 @@ final lightTheme = ThemeData.light().copyWith(
             borderRadius: BorderRadius.circular(defaultRadius)),
       ),
   dialogTheme: ThemeData.light().dialogTheme.copyWith(
-        backgroundColor: Color(0xfff6f6f6),
+        backgroundColor: const Color(0xfff6f6f6),
       ),
   iconTheme: ThemeData.light().iconTheme.copyWith(color: Colors.blue),
   textButtonTheme: TextButtonThemeData(style: _lightTextButtonStyle),
@@ -51,7 +51,7 @@ final darkTheme = ThemeData.dark().copyWith(
 
 final _lightTextButtonStyle = ButtonStyle(
   shape: MaterialStateProperty.all(
-    RoundedRectangleBorder(borderRadius: defaultBorderRadius),
+    const RoundedRectangleBorder(borderRadius: defaultBorderRadius),
   ),
   padding: MaterialStateProperty.all(
     const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
@@ -62,7 +62,7 @@ final _lightTextButtonStyle = ButtonStyle(
 
 final _darkTextButtonStyle = ButtonStyle(
   shape: MaterialStateProperty.all(
-    RoundedRectangleBorder(borderRadius: defaultBorderRadius),
+    const RoundedRectangleBorder(borderRadius: defaultBorderRadius),
   ),
   padding: MaterialStateProperty.all(
     const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
@@ -82,14 +82,14 @@ const shadowColor = Color(0x44333333);
 
 const darkShadowColor = Color(0x99333333);
 
-final defaultShadowBox = [
+const defaultShadowBox = [
   BoxShadow(blurRadius: 3, spreadRadius: 1, color: shadowColor)
 ];
 
-final darkShadowBox = [
+const darkShadowBox = [
   BoxShadow(blurRadius: 3, spreadRadius: 1, color: darkShadowColor)
 ];
 
-final largeDarkShadowBox = [
+const largeDarkShadowBox = [
   BoxShadow(blurRadius: 10, spreadRadius: 5, color: shadowColor)
 ];

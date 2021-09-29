@@ -62,7 +62,7 @@ class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
         break;
     }
 
-    final thumbRadius = 14;
+    const thumbRadius = 14;
 
     final shapeRect = RRect.fromLTRBAndCorners(
       trackRect.left - thumbRadius,

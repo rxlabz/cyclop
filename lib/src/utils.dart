@@ -97,7 +97,7 @@ Color getPixelColor(img.Image image, Offset offset) => (offset.dx >= 0 &&
         offset.dx < image.width &&
         offset.dy < image.height)
     ? abgr2Color(image.getPixel(offset.dx.toInt(), offset.dy.toInt()))
-    : Color(0x00000000);
+    : const Color(0x00000000);
 
 ui.Offset _offsetFromIndex(int index, int numColumns) => Offset(
       (index % numColumns).toDouble(),
@@ -123,7 +123,6 @@ Future<img.Image?> repaintBoundaryToImage(
     final pngBytes = byteData!.buffer.asUint8List();
     return img.Image.fromBytes(rawImage.width, rawImage.height, pngBytes);
   } catch (err) {
-    print('repaintBoundaryToImage... $err');
     return null;
   }
 }

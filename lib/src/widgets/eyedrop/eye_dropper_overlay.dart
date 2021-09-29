@@ -35,7 +35,7 @@ class EyeDropOverlay extends StatelessWidget {
             height: _gridSize,
             child: _buildZoom(),
           )
-        : SizedBox();
+        : const SizedBox.shrink();
   }
 
   Widget _buildZoom() {
@@ -49,10 +49,10 @@ class EyeDropOverlay extends StatelessWidget {
         ),
         width: _gridSize,
         height: _gridSize,
-        constraints: BoxConstraints.loose(Size(_gridSize, _gridSize)),
+        constraints: BoxConstraints.loose(const Size.square(_gridSize)),
         child: ClipOval(
           child: CustomPaint(
-            size: Size(_gridSize, _gridSize),
+            size: const Size.square(_gridSize),
             painter: _PixelGridPainter(colors),
           ),
         ),
@@ -121,7 +121,7 @@ class _PixelGridPainter extends CustomPainter {
 
     // black contrast ring
     canvas.drawCircle(
-      Offset((_gridSize) / 2, (_gridSize) / 2),
+      const Offset((_gridSize) / 2, (_gridSize) / 2),
       eyeRadius,
       blackStroke,
     );

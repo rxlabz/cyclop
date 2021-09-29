@@ -69,8 +69,8 @@ class ChannelSlider extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 8),
-                padding: EdgeInsets.all(8),
+                margin: const EdgeInsets.symmetric(horizontal: 8),
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: theme.inputDecorationTheme.fillColor,
                   borderRadius: defaultBorderRadius,
@@ -148,7 +148,7 @@ class ChannelSliderTrack extends SliderTrackShape with BaseSliderTrackShape {
         break;
     }
 
-    final thumbRadius = 14;
+    const thumbRadius = 14;
 
     final shapeRect = RRect.fromLTRBAndCorners(
       trackRect.left - thumbRadius,

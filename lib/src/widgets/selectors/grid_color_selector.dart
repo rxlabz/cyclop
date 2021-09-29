@@ -23,9 +23,10 @@ class GridColorSelector extends StatelessWidget {
   Widget build(BuildContext context) => AspectRatio(
         aspectRatio: 1.1,
         child: Container(
-          margin: EdgeInsets.only(left: 8, right: 8, bottom: 8),
+          margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
           child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(defaultRadius)),
+            borderRadius:
+                const BorderRadius.all(Radius.circular(defaultRadius)),
             child: GridView.count(
               padding: EdgeInsets.zero,
               shrinkWrap: true,

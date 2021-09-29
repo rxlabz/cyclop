@@ -24,8 +24,8 @@ class MainTitle extends StatelessWidget {
             ),
           ),
           onClose != null
-              ? IconButton(icon: Icon(Icons.close), onPressed: onClose)
-              : SizedBox(height: 48)
+              ? IconButton(icon: const Icon(Icons.close), onPressed: onClose)
+              : const SizedBox(height: 48)
         ],
       ),
     );
