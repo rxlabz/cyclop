@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../theme.dart';
 import 'hex_textfield.dart';
 
 /// toolbar with :
@@ -57,13 +58,13 @@ class ColorSelector extends StatelessWidget {
   Widget _buildColorThumb() => Material(
         color: Colors.white,
         elevation: 3,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: defaultBorderRadius,
         child: Container(
           width: thumbWidth,
           height: 36,
           decoration: BoxDecoration(
             color: color,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: defaultBorderRadius,
           ),
         ),
       );

@@ -2,7 +2,17 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
+import '../../../theme.dart';
 import 'hsl_selector.dart';
+
+ThemeData _sliderTheme(Color color, List<Color> colors) =>
+    ThemeData.light().copyWith(
+      sliderTheme: SliderThemeData(
+        trackHeight: 24,
+        thumbColor: Colors.white,
+        trackShape: ChannelSliderTrack(color, colors),
+      ),
+    );
 
 class ChannelSlider extends StatelessWidget {
   final Color selectedColor;
@@ -63,7 +73,7 @@ class ChannelSlider extends StatelessWidget {
                 padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: theme.inputDecorationTheme.fillColor,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: defaultBorderRadius,
                 ),
                 width: 60,
                 child: Text(
@@ -79,15 +89,6 @@ class ChannelSlider extends StatelessWidget {
     );
   }
 }
-
-ThemeData _sliderTheme(Color color, List<Color> colors) =>
-    ThemeData.light().copyWith(
-      sliderTheme: SliderThemeData(
-        trackHeight: 24,
-        thumbColor: Colors.white,
-        trackShape: ChannelSliderTrack(color, colors),
-      ),
-    );
 
 class ChannelSliderTrack extends SliderTrackShape with BaseSliderTrackShape {
   final Color selectedColor;

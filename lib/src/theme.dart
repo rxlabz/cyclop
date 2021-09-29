@@ -13,6 +13,8 @@ class Labels {
 
 const defaultRadius = 8.0;
 
+const defaultBorderRadius = BorderRadius.all(Radius.circular(defaultRadius));
+
 final lightTheme = ThemeData.light().copyWith(
   scaffoldBackgroundColor: Color(0xfff0f0f0),
   backgroundColor: Color(0xffdadada),
@@ -49,7 +51,7 @@ final darkTheme = ThemeData.dark().copyWith(
 
 final _lightTextButtonStyle = ButtonStyle(
   shape: MaterialStateProperty.all(
-    RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+    RoundedRectangleBorder(borderRadius: defaultBorderRadius),
   ),
   padding: MaterialStateProperty.all(
     const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
@@ -60,7 +62,7 @@ final _lightTextButtonStyle = ButtonStyle(
 
 final _darkTextButtonStyle = ButtonStyle(
   shape: MaterialStateProperty.all(
-    RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+    RoundedRectangleBorder(borderRadius: defaultBorderRadius),
   ),
   padding: MaterialStateProperty.all(
     const EdgeInsets.symmetric(horizontal: 6, vertical: 8),

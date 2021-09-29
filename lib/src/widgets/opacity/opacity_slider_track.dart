@@ -5,14 +5,10 @@ import 'package:flutter/material.dart';
 class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
   final Color selectedColor;
 
-  final ui.Image gridImage;
-
   final Paint gridPaint;
 
-  OpacitySliderTrack(
-    this.selectedColor, {
-    required this.gridImage,
-  }) : gridPaint = Paint()
+  OpacitySliderTrack(this.selectedColor, {required ui.Image gridImage})
+      : gridPaint = Paint()
           ..shader = ImageShader(
             gridImage,
             TileMode.repeated,
@@ -47,10 +43,11 @@ class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
 
     final inactivePaint = Paint()
       ..shader = ui.Gradient.linear(
-          Offset.zero,
-          Offset(trackRect.width, 0),
-          [selectedColor.withOpacity(0), selectedColor.withOpacity(1)],
-          [0.05, 0.95]);
+        Offset.zero,
+        Offset(trackRect.width, 0),
+        [selectedColor.withOpacity(0), selectedColor.withOpacity(1)],
+        [0.05, 0.95],
+      );
 
     Paint leftTrackPaint;
     Paint rightTrackPaint;

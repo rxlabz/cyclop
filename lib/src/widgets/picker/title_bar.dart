@@ -29,29 +29,5 @@ class MainTitle extends StatelessWidget {
         ],
       ),
     );
-
-/* TODO(rx) : make it draggable
- GestureDetector(
-      onPanStart: (details) => print('PAN'),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(
-                Labels.mainTitle,
-                style: textTheme.subtitle2,
-              ),
-            ),
-            onClose != null
-                ? IconButton(icon: Icon(Icons.close), onPressed: onClose)
-                : SizedBox(height: 48)
-          ],
-        ),
-      ),
-    );*/
   }
 }

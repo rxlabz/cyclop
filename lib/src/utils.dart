@@ -5,9 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image/image.dart' as img;
 
-bool get isPhoneScreen => !(screenSize.shortestSide >= 600);
+//bool get isPhoneScreen => !(screenSize.shortestSide >= 600);
 
 Size get screenSize => ui.window.physicalSize / ui.window.devicePixelRatio;
+
+extension Screen on MediaQueryData {
+  bool get isPhone => size.shortestSide < 600;
+}
 
 extension Chroma on String {
   /// converts string to [Color]
@@ -19,6 +23,7 @@ extension Chroma on String {
   }
 }
 
+/// shortcuts to manipulate [Color]
 extension Utils on Color {
   HSLColor get hsl => HSLColor.fromColor(this);
 
@@ -30,8 +35,10 @@ extension Utils on Color {
 
   Color withHue(double value) => hsl.withHue(value).toColor();
 
+  /// ff001232
   String get hexARGB => value.toRadixString(16).padLeft(8, '0');
 
+  /// 001232ac
   String get hexRGB =>
       value.toRadixString(16).padLeft(8, '0').replaceRange(0, 2, '');
 
@@ -40,6 +47,8 @@ extension Utils on Color {
 
   Color withLightness(double value) => hsl.withLightness(value).toColor();
 
+  /// generate the gradient of a color with
+  /// lightness from 0 to 1 in [stepCount] steps
   List<Color> getShades(int stepCount, {bool skipFirst = true}) =>
       List.generate(
         stepCount,
@@ -54,6 +63,7 @@ extension Utils on Color {
 }
 
 extension Helper on List<Color> {
+  /// return the central item of a color list or black if the list is empty
   Color get center => isEmpty ? Colors.black : this[length ~/ 2];
 }
 
@@ -69,8 +79,13 @@ List<Color> getHueGradientColors({double? saturation, int steps = 36}) =>
 
 const samplingGridSize = 9;
 
-List<Color> getPixelColors(img.Image image, Offset offset) => List.generate(
-      samplingGridSize * samplingGridSize,
+List<Color> getPixelColors(
+  img.Image image,
+  Offset offset, {
+  int size = samplingGridSize,
+}) =>
+    List.generate(
+      size * size,
       (index) => getPixelColor(
         image,
         offset + _offsetFromIndex(index, samplingGridSize),

@@ -105,7 +105,6 @@ class EyeDrop extends InheritedWidget {
 
     if (data.snapshot == null) return;
 
-    /* FIXME(rxlabz) */
     data.eyeOverlayEntry = OverlayEntry(
       builder: (_) => EyeDropOverlay(
         touchable: data.touchable,

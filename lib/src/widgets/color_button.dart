@@ -6,6 +6,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+import '../theme.dart';
 import '../utils.dart';
 import 'color_picker.dart';
 import 'eyedrop/eye_dropper_layer.dart';
@@ -116,13 +117,17 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
   }
 
   OverlayEntry _buildPickerOverlay(Offset offset, BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final mq = MediaQuery.of(context);
 
     return OverlayEntry(
       maintainState: true,
       builder: (c) {
+        final onLandscape = mq.size.shortestSide < 600 &&
+            mq.orientation == Orientation.landscape;
+        final pickerPosition =
+            calculatePickerPosition(offset, mq.size, onLandscape: onLandscape);
         return _DraggablePicker(
-          offset: calculatePickerPosition(offset, size),
+          offset: pickerPosition,
           bottom: bottom,
           keyboardOn: keyboardOn,
           child: IgnorePointer(
@@ -130,7 +135,7 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
             child: Opacity(
               opacity: hidden ? 0 : 1,
               child: Material(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: defaultBorderRadius,
                 child: ColorPicker(
                   darkMode: widget.darkMode,
                   config: widget.config,
@@ -157,12 +162,18 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
     );
   }
 
-  Offset calculatePickerPosition(Offset offset, Size size) =>
-      offset +
-      Offset(
-        _buttonSize,
-        min(-pickerHeight / 2, size.height - pickerHeight - 50),
-      );
+  Offset calculatePickerPosition(
+    Offset offset,
+    Size size, {
+    required bool onLandscape,
+  }) =>
+      onLandscape
+          ? offset
+          : offset +
+              Offset(
+                _buttonSize,
+                min(-pickerHeight / 2, size.height - pickerHeight - 50),
+              );
 
   void _showEyeDropperOverlay(BuildContext context) {
     hidden = true;
@@ -233,16 +244,22 @@ class _DraggablePickerState extends State<_DraggablePicker> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final mq = MediaQuery.of(context);
+    final size = mq.size;
+
+    final onLandscape =
+        mq.size.shortestSide < 600 && mq.orientation == Orientation.landscape;
 
     return Positioned(
-      left: isPhoneScreen
+      left: mq.isPhone
           ? (size.width - pickerWidth) / 2
           : offset.dx.clamp(0.0, size.width - pickerWidth),
-      top: isPhoneScreen
-          ? (widget.keyboardOn ? 20 : (size.height - pickerHeight) / 2)
+      top: mq.isPhone
+          ? onLandscape
+              ? 0
+              : (widget.keyboardOn ? 20 : (size.height - pickerHeight) / 2)
           : offset.dy.clamp(0.0, size.height - pickerHeight),
-      bottom: isPhoneScreen ? 20 + widget.bottom : null,
+      bottom: mq.isPhone ? 20 + widget.bottom : null,
       child: GestureDetector(onPanUpdate: _onDrag, child: widget.child),
     );
   }

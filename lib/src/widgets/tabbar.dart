@@ -5,6 +5,7 @@ import '../theme.dart';
 
 const _kTabWidth = 86.0;
 
+/// custom Tabbar component
 class Tabs extends StatefulWidget {
   final int selectedIndex;
 
@@ -64,7 +65,7 @@ class _TabsState extends State<Tabs> {
       margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
       constraints: BoxConstraints.expand(height: 42),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: defaultBorderRadius,
         color: theme.backgroundColor,
       ),
       child: Padding(
@@ -80,7 +81,7 @@ class _TabsState extends State<Tabs> {
                 height: size.height,
                 decoration: BoxDecoration(
                   color: theme.cardColor,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: defaultBorderRadius,
                   boxShadow: defaultShadowBox,
                 ),
               ),

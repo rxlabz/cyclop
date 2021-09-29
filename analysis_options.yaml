@@ -1,5 +1,3 @@
-include: package:pedantic/analysis_options.yaml
-
 analyzer:
   exclude: [build/**]
   strong-mode:
@@ -31,7 +29,6 @@ linter:
     library_prefixes: true
     no_duplicate_case_values: true
     null_closures: true
-    #omit_local_variable_types: false
     prefer_adjacent_string_concatenation: true
     prefer_collection_literals: true
     prefer_conditional_assignment: true

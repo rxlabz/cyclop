@@ -59,7 +59,7 @@ class OpacitySlider extends StatelessWidget {
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: theme.inputDecorationTheme.fillColor,
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: defaultBorderRadius,
                     ),
                     width: 60,
                     child: Text(

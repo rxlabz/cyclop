@@ -61,6 +61,7 @@ class EyeDropOverlay extends StatelessWidget {
   }
 }
 
+/// paint a hovered pixel/colors preview
 class _PixelGridPainter extends CustomPainter {
   final List<Color> colors;
 

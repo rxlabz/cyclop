@@ -14,21 +14,34 @@ const pickerWidth = 316.0;
 
 const pickerHeight = 520.0;
 
+/// ColorPicker Widget
+/// 2 or 3 tabs :
+/// - material swatches
+/// - HSL and RGB sliders
+/// - custom swatches
+///
+/// Customisable with a [ColorPickerConfig]
 class ColorPicker extends StatefulWidget {
   final Color selectedColor;
 
+  /// custom swatches library
   final Set<Color> swatches;
 
   final bool darkMode;
 
+  /// colorPicker configuration
   final ColorPickerConfig config;
 
+  /// color selection callback
   final ValueChanged<Color> onColorSelected;
 
+  /// open [EyeDrop] callback
   final VoidCallback onEyeDropper;
 
+  /// custom swatches update callabck
   final ValueChanged<Set<Color>>? onSwatchesUpdate;
 
+  /// close colorPicker callback
   final VoidCallback onClose;
 
   final VoidCallback onKeyboard;
@@ -57,6 +70,12 @@ class _ColorPickerState extends State<ColorPicker> {
   void initState() {
     super.initState();
     hexFieldFocus = FocusNode()..addListener(widget.onKeyboard);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    hexFieldFocus.removeListener(widget.onKeyboard);
   }
 
   @override
