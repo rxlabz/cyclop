@@ -1,6 +1,10 @@
+# 0.5.2
+
+- Update the colorpicker selectedColor "internally" to simplify the usage without a ColorButton
+
 # 0.5.1
 
-- Fix : EyedropperButton exception on first 
+- Fix : EyedropperButton exception on first click
 - Fix : Mobile landscape layout
 
 # 0.5.0

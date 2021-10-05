@@ -102,9 +102,8 @@ class _MainScreenState extends State<MainScreen> {
               key: const Key('c1'),
               color: backgroundColor,
               swatches: swatches,
-              onColorChanged: (value) => setState(
-                () => backgroundColor = value,
-              ),
+              onColorChanged: (value) =>
+                  setState(() => backgroundColor = value),
               onSwatchesChanged: (newSwatches) =>
                   setState(() => swatches = newSwatches),
             ),
@@ -129,6 +128,31 @@ class _MainScreenState extends State<MainScreen> {
           EyedropperButton(
             icon: Icons.colorize,
             onColor: (value) => setState(() => backgroundColor = value),
+          ),
+          Center(
+            child: ElevatedButton(
+              child: const Text('Open ColorPicker'),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Dialog(
+                      child: ColorPicker(
+                        selectedColor: backgroundColor,
+                        onColorSelected: (value) =>
+                            setState(() => backgroundColor = value),
+                        config: const ColorPickerConfig(
+                          enableLibrary: false,
+                          enableEyePicker: false,
+                        ),
+                        onClose: Navigator.of(context).pop,
+                        onEyeDropper: () {},
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
           ),
         ],
       ),

@@ -38,7 +38,7 @@ class ColorPicker extends StatefulWidget {
   final ValueChanged<Color> onColorSelected;
 
   /// open [EyeDrop] callback
-  final VoidCallback onEyeDropper;
+  final VoidCallback? onEyeDropper;
 
   /// custom swatches update callabck
   final ValueChanged<Set<Color>>? onSwatchesUpdate;
@@ -46,15 +46,15 @@ class ColorPicker extends StatefulWidget {
   /// close colorPicker callback
   final VoidCallback onClose;
 
-  final VoidCallback onKeyboard;
+  final VoidCallback? onKeyboard;
 
   const ColorPicker({
     required this.onColorSelected,
     required this.selectedColor,
     required this.config,
     required this.onClose,
-    required this.onEyeDropper,
-    required this.onKeyboard,
+    this.onEyeDropper,
+    this.onKeyboard,
     this.onSwatchesUpdate,
     this.swatches = const {},
     this.darkMode = false,
@@ -68,16 +68,39 @@ class ColorPicker extends StatefulWidget {
 class _ColorPickerState extends State<ColorPicker> {
   late FocusNode hexFieldFocus;
 
+  late Color selectedColor;
+
   @override
   void initState() {
     super.initState();
-    hexFieldFocus = FocusNode()..addListener(widget.onKeyboard);
+    hexFieldFocus = FocusNode();
+    if (widget.onKeyboard != null) {
+      hexFieldFocus.addListener(widget.onKeyboard!);
+    }
+
+    selectedColor = widget.selectedColor;
   }
 
   @override
   void dispose() {
     super.dispose();
-    hexFieldFocus.removeListener(widget.onKeyboard);
+    if (widget.onKeyboard != null) {
+      hexFieldFocus.removeListener(widget.onKeyboard!);
+    }
+    hexFieldFocus.dispose();
+  }
+
+  @override
+  void didUpdateWidget(covariant ColorPicker oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.selectedColor != widget.selectedColor) {
+      selectedColor = widget.selectedColor;
+    }
+  }
+
+  void onColorChanged(Color newColor) {
+    widget.onColorSelected(newColor);
+    setState(() => selectedColor = newColor);
   }
 
   @override
@@ -110,19 +133,19 @@ class _ColorPickerState extends State<ColorPicker> {
                       ],
                       views: [
                         GridColorSelector(
-                          selectedColor: widget.selectedColor,
-                          onColorSelected: widget.onColorSelected,
+                          selectedColor: selectedColor,
+                          onColorSelected: onColorChanged,
                         ),
                         ChannelSliders(
-                          selectedColor: widget.selectedColor,
-                          onChange: widget.onColorSelected,
+                          selectedColor: selectedColor,
+                          onChange: onColorChanged,
                         ),
                         if (widget.config.enableLibrary)
                           SwatchLibrary(
                             colors: widget.swatches,
-                            currentColor: widget.selectedColor,
+                            currentColor: selectedColor,
                             onSwatchesUpdate: widget.onSwatchesUpdate,
-                            onColorSelected: widget.onColorSelected,
+                            onColorSelected: onColorChanged,
                           ),
                       ],
                     ),
@@ -130,14 +153,14 @@ class _ColorPickerState extends State<ColorPicker> {
                   if (widget.config.enableOpacity)
                     RepaintBoundary(
                       child: OpacitySlider(
-                        selectedColor: widget.selectedColor,
-                        opacity: widget.selectedColor.opacity,
+                        selectedColor: selectedColor,
+                        opacity: selectedColor.opacity,
                         onChange: _onOpacityChange,
                       ),
                     ),
                   defaultDivider,
                   ColorSelector(
-                    color: widget.selectedColor,
+                    color: selectedColor,
                     withAlpha: widget.config.enableOpacity,
                     thumbWidth: 96,
                     onColorChanged: widget.onColorSelected,
