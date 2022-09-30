@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cyclop/cyclop.dart';
 
@@ -30,6 +28,8 @@ class _MainScreenState extends State<MainScreen> {
   Color backgroundColor = Colors.grey.shade200;
 
   Set<Color> swatches = Colors.primaries.map((e) => Color(e.value)).toSet();
+
+  final ValueNotifier<Color?> hoveredColor = ValueNotifier<Color?>(null);
 
   @override
   Widget build(BuildContext context) {
@@ -125,9 +125,22 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
           ),
-          EyedropperButton(
-            icon: Icons.colorize,
-            onColor: (value) => setState(() => backgroundColor = value),
+          Row(
+            children: [
+              EyedropperButton(
+                icon: Icons.colorize,
+                onColor: (value) => setState(() => backgroundColor = value),
+                onColorChanged: (value) => hoveredColor.value = value,
+              ),
+              ValueListenableBuilder<Color?>(
+                valueListenable: hoveredColor,
+                builder: (context, value, _) => Container(
+                  color: value ?? Colors.transparent,
+                  width: 24,
+                  height: 24,
+                ),
+              )
+            ],
           ),
           Center(
             child: ElevatedButton(

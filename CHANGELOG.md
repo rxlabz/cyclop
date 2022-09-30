@@ -1,6 +1,6 @@
-# 0.5.2
+# 0.6.0
 
-- Update the colorpicker selectedColor "internally" to simplify the usage without a ColorButton
+- add a `onColorChanged` callback to send the hovered color during eyedropping. Thx [@talisk](https://github.com/talisk)
 
 # 0.5.1
 
