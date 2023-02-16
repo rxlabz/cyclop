@@ -1,3 +1,7 @@
+# 0.6.1
+
+- Migrate to Flutter 3.7 slider API : Thx [@alonohana627](https://github.com/alonohana627)
+
 # 0.6.0
 
 - add a `onColorChanged` callback to send the hovered color during eyedropping. Thx [@talisk](https://github.com/talisk)
