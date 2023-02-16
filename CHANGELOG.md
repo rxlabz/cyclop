@@ -1,5 +1,6 @@
 # 0.6.1
 
+- Update the deprecated theme properties
 - Migrate to Flutter 3.7 slider API : Thx [@alonohana627](https://github.com/alonohana627)
 
 # 0.6.0
