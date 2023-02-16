@@ -96,7 +96,7 @@ class _SwatchLibraryState extends State<SwatchLibrary> {
       child: Center(
         child: IconButton(
           color:
-              widget.canAdd ? theme.toggleableActiveColor : theme.disabledColor,
+              widget.canAdd ? theme.colorScheme.primary : theme.disabledColor,
           icon: const Icon(Icons.add),
           onPressed: widget.canAdd && widget.onSwatchesUpdate != null
               ? () {

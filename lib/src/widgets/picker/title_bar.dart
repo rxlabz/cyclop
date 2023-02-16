@@ -20,7 +20,7 @@ class MainTitle extends StatelessWidget {
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(
               Labels.mainTitle,
-              style: textTheme.subtitle2,
+              style: textTheme.titleSmall,
             ),
           ),
           onClose != null

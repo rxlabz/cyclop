@@ -67,7 +67,7 @@ class _TabsState extends State<Tabs> {
       constraints: const BoxConstraints.expand(height: 42),
       decoration: BoxDecoration(
         borderRadius: defaultBorderRadius,
-        color: theme.backgroundColor,
+        color: theme.colorScheme.background,
       ),
       child: Padding(
         padding: const EdgeInsets.all(4.0),

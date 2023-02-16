@@ -108,7 +108,7 @@ class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
 
     pickerOverlay = _buildPickerOverlay(offset, rootContext);
 
-    Overlay.of(rootContext)?.insert(pickerOverlay!);
+    Overlay.of(rootContext).insert(pickerOverlay!);
 
     return Future.value(widget.color);
   }

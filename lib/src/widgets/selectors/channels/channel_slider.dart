@@ -51,7 +51,7 @@ class ChannelSlider extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
-            child: Text(label, style: textTheme.subtitle2),
+            child: Text(label, style: textTheme.titleSmall),
           ),
           Row(
             mainAxisSize: MainAxisSize.max,
@@ -79,7 +79,7 @@ class ChannelSlider extends StatelessWidget {
                 child: Text(
                   labelGetter(selectedColor),
                   textAlign: TextAlign.center,
-                  style: textTheme.bodyText1,
+                  style: textTheme.bodyLarge,
                 ),
               )
             ],
