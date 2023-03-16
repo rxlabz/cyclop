@@ -4,10 +4,10 @@ const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
   "version.json": "7f8dc62c1f4d5bd242487095a468ef87",
-"index.html": "11c260dbdecfa685c1e12b44f2418f63",
-"/": "11c260dbdecfa685c1e12b44f2418f63",
-"main.dart.js": "15f976ed6558187844ff75062f11f4d2",
-"flutter.js": "f85e6fb278b0fd20c349186fb46ae36d",
+"index.html": "a2ed96a732b275fa697000073ed34275",
+"/": "a2ed96a732b275fa697000073ed34275",
+"main.dart.js": "d03d5feba31c33c3010da5e16d87affd",
+"flutter.js": "a85fcf6324d3c4d3ae3be1ae4931e9c5",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
@@ -16,15 +16,14 @@ const RESOURCES = {
 "manifest.json": "0867c3e13649ac4d06fe34b7b3ddce08",
 "assets/images/img.png": "f3e4538d8889fe6dc7ddf7bed7ef4b21",
 "assets/AssetManifest.json": "bac064266f6ba5c4b3a95f2dcbb90310",
-"assets/NOTICES": "413025b01118d79f405c26b4cc14a79c",
+"assets/NOTICES": "4190f671a053b0acbb2782c2752e2d01",
 "assets/FontManifest.json": "7b2a36307916a9721811788013e65289",
 "assets/packages/cyclop/assets/grid.png": "49c4f3bcb1b25364bb4c255edcaaf5b2",
-"assets/shaders/ink_sparkle.frag": "ae5e88b930e7d62ad207e9caf5d19d34",
-"assets/fonts/MaterialIcons-Regular.otf": "95db9098c58fd6db106f1116bae85a0b",
-"canvaskit/canvaskit.js": "2bc454a691c631b07a9307ac4ca47797",
-"canvaskit/profiling/canvaskit.js": "38164e5a72bdad0faa4ce740c9b8e564",
-"canvaskit/profiling/canvaskit.wasm": "95a45378b69e77af5ed2bc72b2209b94",
-"canvaskit/canvaskit.wasm": "bf50631470eb967688cca13ee181af62"
+"assets/fonts/MaterialIcons-Regular.otf": "e7069dfd19b331be16bed984668fe080",
+"canvaskit/canvaskit.js": "97937cb4c2c2073c968525a3e08c86a3",
+"canvaskit/profiling/canvaskit.js": "c21852696bc1cc82e8894d851c01921a",
+"canvaskit/profiling/canvaskit.wasm": "371bc4e204443b0d5e774d64a046eb99",
+"canvaskit/canvaskit.wasm": "3de12d898ec208a5f31362cc00f09b9e"
 };
 
 // The application shell files that are downloaded before a service worker can
