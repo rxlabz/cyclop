@@ -9,7 +9,7 @@ import 'eye_dropper_overlay.dart';
 
 final captureKey = GlobalKey();
 
-class _EyeDropperModel {
+class EyeDropperModel {
   /// based on PointerEvent.kind
   bool touchable = false;
 
@@ -29,11 +29,11 @@ class _EyeDropperModel {
 
   ValueChanged<Color>? onColorChanged;
 
-  _EyeDropperModel();
+  EyeDropperModel();
 }
 
 class EyeDrop extends InheritedWidget {
-  static _EyeDropperModel data = _EyeDropperModel();
+  static EyeDropperModel data = EyeDropperModel();
 
   EyeDrop({required Widget child, Key? key})
       : super(
@@ -99,8 +99,11 @@ class EyeDrop extends InheritedWidget {
     }
   }
 
-  void capture(BuildContext context, ValueChanged<Color> onColorSelected,
-      ValueChanged<Color>? onColorChanged) async {
+  void capture(
+    BuildContext context,
+    ValueChanged<Color> onColorSelected,
+    ValueChanged<Color>? onColorChanged,
+  ) async {
     final renderer =
         captureKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
 
@@ -120,7 +123,10 @@ class EyeDrop extends InheritedWidget {
         cursorPosition: data.cursorPosition,
       ),
     );
-    Overlay.of(context).insert(data.eyeOverlayEntry!);
+
+    if( context.mounted) {
+      Overlay.of(context).insert(data.eyeOverlayEntry!);
+    }
   }
 
   @override

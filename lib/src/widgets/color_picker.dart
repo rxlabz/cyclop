@@ -62,10 +62,10 @@ class ColorPicker extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ColorPickerState createState() => _ColorPickerState();
+  ColorPickerState createState() => ColorPickerState();
 }
 
-class _ColorPickerState extends State<ColorPicker> {
+class ColorPickerState extends State<ColorPicker> {
   late FocusNode hexFieldFocus;
 
   late Color selectedColor;

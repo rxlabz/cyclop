@@ -19,10 +19,10 @@ class ChannelSliders extends StatefulWidget {
       : super(key: key);
 
   @override
-  _ChannelSlidersState createState() => _ChannelSlidersState();
+  ChannelSlidersState createState() => ChannelSlidersState();
 }
 
-class _ChannelSlidersState extends State<ChannelSliders> {
+class ChannelSlidersState extends State<ChannelSliders> {
   bool hslMode = true;
 
   Color get color => widget.selectedColor;

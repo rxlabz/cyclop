@@ -42,10 +42,10 @@ class ColorButton extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ColorButtonState createState() => _ColorButtonState();
+  ColorButtonState createState() => ColorButtonState();
 }
 
-class _ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
+class ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
   OverlayEntry? pickerOverlay;
 
   late Color color;

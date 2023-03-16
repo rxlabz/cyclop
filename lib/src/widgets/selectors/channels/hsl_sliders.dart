@@ -15,10 +15,10 @@ class HSLSliders extends StatefulWidget {
       : super(key: key);
 
   @override
-  _HSLSlidersState createState() => _HSLSlidersState();
+  HSLSlidersState createState() => HSLSlidersState();
 }
 
-class _HSLSlidersState extends State<HSLSliders> {
+class HSLSlidersState extends State<HSLSliders> {
   late HSLColor hsl;
 
   late double alpha;

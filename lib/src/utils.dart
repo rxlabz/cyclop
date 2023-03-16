@@ -95,13 +95,22 @@ Color getPixelColor(img.Image image, Offset offset) => (offset.dx >= 0 &&
         offset.dy >= 0 &&
         offset.dx < image.width &&
         offset.dy < image.height)
-    ? abgr2Color(image.getPixel(offset.dx.toInt(), offset.dy.toInt()))
+    ? pixel2Color(image.getPixel(offset.dx.toInt(), offset.dy.toInt()))
     : const Color(0x00000000);
 
 ui.Offset _offsetFromIndex(int index, int numColumns) => Offset(
       (index % numColumns).toDouble(),
       ((index ~/ numColumns) % numColumns).toDouble(),
     );
+
+/*Color toColorFlutter(img.Color c)
+{
+  return Color(c.)
+}*/
+
+Color pixel2Color(img.Pixel p) {
+  return Color.fromARGB(p.a.toInt(), p.r.toInt(), p.g.toInt(), p.b.toInt());
+}
 
 Color abgr2Color(int value) {
   final a = (value >> 24) & 0xFF;
@@ -118,9 +127,16 @@ Future<img.Image?> repaintBoundaryToImage(
   try {
     final rawImage = await renderer.toImage(pixelRatio: 1);
     final byteData =
-        await rawImage.toByteData(format: ui.ImageByteFormat.rawRgba);
-    final pngBytes = byteData!.buffer.asUint8List();
-    return img.Image.fromBytes(rawImage.width, rawImage.height, pngBytes);
+        await rawImage.toByteData(format: ui.ImageByteFormat.rawUnmodified);
+    final pngBytes = byteData!.buffer;
+
+    return img.Image.fromBytes(
+      width: rawImage.width,
+      height: rawImage.height,
+      bytes: pngBytes,
+      order: img.ChannelOrder.rgba
+    );
+
   } catch (err) {
     return null;
   }

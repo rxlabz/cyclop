@@ -21,10 +21,10 @@ class HexColorField extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _HexColorFieldState createState() => _HexColorFieldState();
+  HexColorFieldState createState() => HexColorFieldState();
 }
 
-class _HexColorFieldState extends State<HexColorField> {
+class HexColorFieldState extends State<HexColorField> {
   static const _width = 106.0;
 
   late Color color;

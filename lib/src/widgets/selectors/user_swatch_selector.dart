@@ -21,10 +21,10 @@ class SwatchLibrary extends StatefulWidget {
   bool get canAdd => !colors.contains(currentColor);
 
   @override
-  _SwatchLibraryState createState() => _SwatchLibraryState();
+  SwatchLibraryState createState() => SwatchLibraryState();
 }
 
-class _SwatchLibraryState extends State<SwatchLibrary> {
+class SwatchLibraryState extends State<SwatchLibrary> {
   late Set<Color> colors;
 
   @override

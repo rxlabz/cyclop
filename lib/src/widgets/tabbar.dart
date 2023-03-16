@@ -22,10 +22,10 @@ class Tabs extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _TabsState createState() => _TabsState();
+  TabsState createState() => TabsState();
 }
 
-class _TabsState extends State<Tabs> {
+class TabsState extends State<Tabs> {
   int selectedIndex = 0;
 
   Alignment get markerPosition {
