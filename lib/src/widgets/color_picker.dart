@@ -127,8 +127,8 @@ class ColorPickerState extends State<ColorPicker> {
                     fit: FlexFit.loose,
                     child: Tabs(
                       labels: [
-                        'Material',
-                        'Sliders',
+                        'マテリアル',
+                        'スライダー',
                         if (widget.config.enableLibrary) 'Library'
                       ],
                       views: [

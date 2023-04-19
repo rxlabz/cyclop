@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class Labels {
-  static const String mainTitle = 'Colors';
-  static const String opacity = 'Opacity';
-  static const String red = 'Red';
-  static const String green = 'Green';
-  static const String blue = 'Blue';
-  static const String hue = 'Hue';
-  static const String saturation = 'Saturation';
-  static const String light = 'Lightness';
+  static const String mainTitle = 'カラーピッカー';
+  static const String opacity = '透明度';
+  static const String red = '赤';
+  static const String green = '緑';
+  static const String blue = '青';
+  static const String hue = '色相';
+  static const String saturation = '彩度';
+  static const String light = '輝度';
 }
 
 const defaultRadius = 8.0;
