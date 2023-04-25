@@ -31,6 +31,8 @@ class MainScreenState extends State<MainScreen> {
 
   final ValueNotifier<Color?> hoveredColor = ValueNotifier<Color?>(null);
 
+  final controller = ColorButtonController();
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -83,6 +85,9 @@ class MainScreenState extends State<MainScreen> {
                 'Select the background & appbar colors',
                 style: textTheme.titleLarge?.copyWith(color: bodyTextColor),
               ),
+              ElevatedButton(onPressed: (){
+                controller.removeOverlay();
+              }, child: Text('Close')),
               _buildButtons(),
               Center(child: Image.asset('images/img.png')),
             ],
@@ -115,6 +120,7 @@ class MainScreenState extends State<MainScreen> {
               color: backgroundColor,
               config: const ColorPickerConfig(enableLibrary: false),
               swatches: swatches,
+              controller: controller,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
                 color: backgroundColor,

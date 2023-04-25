@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../theme.dart';
-import 'hex_textfield.dart';
 
 /// toolbar with :
 /// - a color preview
@@ -39,14 +38,6 @@ class ColorSelector extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           _buildColorThumb(),
-          HexColorField(
-            hexFocus: focus,
-            color: color,
-            withAlpha: withAlpha,
-            onColorChanged: (value) {
-              onColorChanged(value);
-            },
-          ),
           if (onEyePick != null) // null if eyeDrop is disabled
             IconButton(icon: const Icon(Icons.colorize), onPressed: onEyePick),
         ],

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../theme.dart';
 import '../utils.dart';
+import 'color_button_controller.dart';
 import 'color_picker.dart';
 import 'eyedrop/eye_dropper_layer.dart';
 import 'picker_config.dart' if (dart.library.js) 'picker_config_web.dart';
@@ -26,6 +27,7 @@ class ColorButton extends StatefulWidget {
   final double elevation;
 
   final bool darkMode;
+  final ColorButtonController? controller;
 
   const ColorButton({
     required this.color,
@@ -38,7 +40,7 @@ class ColorButton extends StatefulWidget {
     this.size = _buttonSize,
     this.boxShape = BoxShape.circle,
     this.swatches = const {},
-    Key? key,
+    Key? key, this.controller,
   }) : super(key: key);
 
   @override
@@ -60,6 +62,7 @@ class ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    widget.controller?.colorButtonState = this;
     color = widget.color;
     WidgetsBinding.instance.addObserver(this);
   }
@@ -96,6 +99,11 @@ class ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
           ),
         ),
       );
+
+  void removeOverlay() {
+    pickerOverlay?.remove();
+    pickerOverlay = null;
+  }
 
   void _colorPick(BuildContext context, TapDownDetails details) async {
     final selectedColor =
