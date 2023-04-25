@@ -37,7 +37,7 @@ class OpacitySlider extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
-                child: Text(Labels.opacity, style: textTheme.titleLarge),
+                child: Text(Labels.opacity, style: textTheme.titleSmall),
               ),
               Row(
                 mainAxisSize: MainAxisSize.max,

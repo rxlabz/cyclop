@@ -87,7 +87,7 @@ class MainScreenState extends State<MainScreen> {
               ),
               ElevatedButton(onPressed: (){
                 controller.removeOverlay();
-              }, child: Text('Close')),
+              }, child: const Text('Close')),
               _buildButtons(),
               Center(child: Image.asset('images/img.png')),
             ],

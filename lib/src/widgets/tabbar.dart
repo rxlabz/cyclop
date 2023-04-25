@@ -71,30 +71,33 @@ class TabsState extends State<Tabs> {
       ),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
-        child: Stack(
-          children: [
-            AnimatedAlign(
-              duration: 200.milliseconds,
-              curve: Curves.fastOutSlowIn,
-              alignment: markerPosition,
-              child: Container(
-                width: _kTabWidth,
-                height: size.height,
-                decoration: BoxDecoration(
-                  color: theme.cardColor,
-                  borderRadius: defaultBorderRadius,
-                  boxShadow: defaultShadowBox,
+        child: LayoutBuilder(
+          builder: (context, constrains) {
+            return Stack(
+              children: [
+                AnimatedAlign(
+                  duration: 200.milliseconds,
+                  curve: Curves.fastOutSlowIn,
+                  alignment: markerPosition,
+                  child: Container(
+                    width: constrains.maxWidth/widget.labels.length,
+                    height: size.height,
+                    decoration: BoxDecoration(
+                      color: theme.cardColor,
+                      borderRadius: defaultBorderRadius,
+                      boxShadow: defaultShadowBox,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: enumerate(widget.labels)
-                  .map((label) => _buildTab(label, height: size.height))
-                  .toList(),
-            )
-          ],
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: enumerate(widget.labels)
+                      .map((label) => Expanded(child: _buildTab(label, height: size.height)))
+                      .toList(),
+                )
+              ],
+            );
+          }
         ),
       ),
     );
