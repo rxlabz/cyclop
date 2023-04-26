@@ -108,7 +108,9 @@ class HSLSlidersState extends State<HSLSliders> {
 
   void _updateColor() {
     widget.onColorChanged(
-      HSLColor.fromAHSL(alpha, hue, saturation, lightness).toColor(),
+      HSLColor.fromAHSL(alpha, hue, saturation, lightness)
+          .toColor()
+          .withOpacity(widget.color.opacity),
     );
     setState(() {});
   }

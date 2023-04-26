@@ -47,7 +47,7 @@ class GridColorSelector extends StatelessWidget {
       ];
 
   GestureDetector _buildCell(Color color) => GestureDetector(
-        onTap: () => onColorSelected(color),
+        onTap: () => onColorSelected(color.withOpacity(selectedColor.opacity)),
         child: Container(
           color: Colors.white,
           padding: EdgeInsets.all(isSelected(color) ? _cellBorderWidth : 0),
