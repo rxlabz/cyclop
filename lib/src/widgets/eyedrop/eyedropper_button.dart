@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 
 import 'eye_dropper_layer.dart';
 
+const _decoration =
+    BoxDecoration(color: Colors.white24, shape: BoxShape.circle);
+
 /// an eyeDropper standalone button
 /// should be used with a context [EyeDrop] available
 class EyedropperButton extends StatelessWidget {
@@ -28,10 +31,9 @@ class EyedropperButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        decoration:
-            const BoxDecoration(color: Colors.white24, shape: BoxShape.circle),
+        decoration: _decoration,
         child: IconButton(
-          icon: const Icon(Icons.colorize),
+          icon: Icon(icon),
           color: iconColor,
           onPressed:
               // cf. https://github.com/flutter/flutter/issues/22308

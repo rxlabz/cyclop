@@ -6,8 +6,6 @@ import 'package:image/image.dart' as img;
 
 //bool get isPhoneScreen => !(screenSize.shortestSide >= 600);
 
-Size get screenSize => ui.window.physicalSize / ui.window.devicePixelRatio;
-
 extension Screen on MediaQueryData {
   bool get isPhone => size.shortestSide < 600;
 }
@@ -127,17 +125,21 @@ Future<img.Image?> repaintBoundaryToImage(
   try {
     final rawImage = await renderer.toImage(pixelRatio: 1);
     final byteData =
-        await rawImage.toByteData(format: ui.ImageByteFormat.rawUnmodified);
-    final pngBytes = byteData!.buffer;
+        await rawImage.toByteData(format: ui.ImageByteFormat.rawStraightRgba);
+
+    if (byteData == null) throw Exception('Null image byteData !');
+
+    final pngBytes = byteData.buffer;
 
     return img.Image.fromBytes(
       width: rawImage.width,
       height: rawImage.height,
       bytes: pngBytes,
-      order: img.ChannelOrder.rgba
+      order: img.ChannelOrder.rgba,
     );
+  } catch (err, stackTrace) {
+    debugPrint('repaintBoundaryToImage... $err $stackTrace');
 
-  } catch (err) {
-    return null;
+    rethrow;
   }
 }

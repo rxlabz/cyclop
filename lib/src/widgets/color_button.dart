@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -192,11 +191,12 @@ class ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
 
   @override
   void didChangeMetrics() {
-    final keyboardTopPixels =
-        window.physicalSize.height - window.viewInsets.bottom;
+    final view = View.of(context);
+    final size = view.display.size;
+    final keyboardTopPixels = size.height - view.viewInsets.bottom;
 
-    final newBottom = (window.physicalSize.height - keyboardTopPixels) /
-        window.devicePixelRatio;
+    final newBottom =
+        (view.physicalSize.height - keyboardTopPixels) / view.devicePixelRatio;
 
     setState(() => bottom = newBottom);
     pickerOverlay?.markNeedsBuild();

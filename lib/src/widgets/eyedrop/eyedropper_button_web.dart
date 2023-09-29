@@ -36,7 +36,7 @@ class EyedropperButton extends StatelessWidget {
         decoration:
             const BoxDecoration(color: Colors.white24, shape: BoxShape.circle),
         child: IconButton(
-          icon: const Icon(Icons.colorize),
+          icon: Icon(icon),
           color: iconColor,
           tooltip: 'test',
           onPressed:
@@ -46,6 +46,7 @@ class EyedropperButton extends StatelessWidget {
 
   void _onEyeDropperRequest(BuildContext context) {
     try {
+      debugPrint('EyedropperButton._onEyeDropperRequest... ');
       EyeDrop.of(context).capture(context, onColor, onColorChanged);
     } catch (err) {
       throw Exception('EyeDrop capture error : $err');

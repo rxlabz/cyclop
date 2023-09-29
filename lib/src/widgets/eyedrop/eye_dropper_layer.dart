@@ -17,7 +17,7 @@ class EyeDropperModel {
 
   img.Image? snapshot;
 
-  Offset cursorPosition = screenSize.center(Offset.zero);
+  Offset? cursorPosition;
 
   Color hoverColor = Colors.black;
 
@@ -124,7 +124,7 @@ class EyeDrop extends InheritedWidget {
       ),
     );
 
-    if( context.mounted) {
+    if (context.mounted) {
       Overlay.of(context).insert(data.eyeOverlayEntry!);
     }
   }

@@ -2,8 +2,6 @@ include: package:flutter_lints/flutter.yaml
 
 analyzer:
   exclude: [build/**]
-  strong-mode:
-    implicit-casts: false
   errors:
     missing_required_param: error
     empty_catches: error
@@ -35,7 +33,6 @@ linter:
     prefer_collection_literals: true
     prefer_conditional_assignment: true
     prefer_contains: true
-    prefer_equal_for_default_values: true
     prefer_final_fields: true
     prefer_for_elements_to_map_fromIterable: true
     prefer_generic_function_type_aliases: true

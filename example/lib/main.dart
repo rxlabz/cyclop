@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cyclop/cyclop.dart';
 
-void main() async {
-  runApp(const App());
-}
+void main() async => runApp(const App());
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -11,6 +9,13 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
         home: EyeDrop(child: const MainScreen()),
+        theme: ThemeData.from(
+          colorScheme: ColorScheme.fromSwatch(
+            primarySwatch: Colors.blueGrey,
+            accentColor: Colors.teal,
+          ),
+          useMaterial3: true,
+        ),
         debugShowCheckedModeBanner: false,
       );
 }
@@ -83,91 +88,87 @@ class MainScreenState extends State<MainScreen> {
                 'Select the background & appbar colors',
                 style: textTheme.titleLarge?.copyWith(color: bodyTextColor),
               ),
-              _buildButtons(),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Center(
+                      child: ColorButton(
+                        key: const Key('c1'),
+                        color: backgroundColor,
+                        swatches: swatches,
+                        onColorChanged: (value) =>
+                            setState(() => backgroundColor = value),
+                        onSwatchesChanged: (newSwatches) =>
+                            setState(() => swatches = newSwatches),
+                      ),
+                    ),
+                    Center(
+                      child: ColorButton(
+                        key: const Key('c1'),
+                        size: 32,
+                        color: backgroundColor,
+                        config: const ColorPickerConfig(enableLibrary: false),
+                        swatches: swatches,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: backgroundColor,
+                          border: Border.all(width: 4, color: Colors.black),
+                        ),
+                        onColorChanged: (value) => setState(
+                          () => backgroundColor = value,
+                        ),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        EyedropperButton(
+                          onColor: (value) =>
+                              setState(() => backgroundColor = value),
+                          onColorChanged: (value) => hoveredColor.value = value,
+                        ),
+                        ValueListenableBuilder<Color?>(
+                          valueListenable: hoveredColor,
+                          builder: (context, value, _) => Container(
+                            color: value ?? Colors.transparent,
+                            width: 24,
+                            height: 24,
+                          ),
+                        )
+                      ],
+                    ),
+                    Center(
+                      child: ElevatedButton(
+                        child: const Text('Open ColorPicker'),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return Dialog(
+                                child: ColorPicker(
+                                  selectedColor: backgroundColor,
+                                  onColorSelected: (value) =>
+                                      setState(() => backgroundColor = value),
+                                  config: const ColorPickerConfig(
+                                    enableLibrary: false,
+                                    enableEyePicker: false,
+                                  ),
+                                  onClose: Navigator.of(context).pop,
+                                  onEyeDropper: () {},
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Center(child: Image.asset('images/img.png')),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Expanded _buildButtons() {
-    return Expanded(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Center(
-            child: ColorButton(
-              key: const Key('c1'),
-              color: backgroundColor,
-              swatches: swatches,
-              onColorChanged: (value) =>
-                  setState(() => backgroundColor = value),
-              onSwatchesChanged: (newSwatches) =>
-                  setState(() => swatches = newSwatches),
-            ),
-          ),
-          Center(
-            child: ColorButton(
-              key: const Key('c1'),
-              size: 32,
-              color: backgroundColor,
-              config: const ColorPickerConfig(enableLibrary: false),
-              swatches: swatches,
-              decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                color: backgroundColor,
-                border: Border.all(width: 4, color: Colors.black),
-              ),
-              onColorChanged: (value) => setState(
-                () => backgroundColor = value,
-              ),
-            ),
-          ),
-          Row(
-            children: [
-              EyedropperButton(
-                icon: Icons.colorize,
-                onColor: (value) => setState(() => backgroundColor = value),
-                onColorChanged: (value) => hoveredColor.value = value,
-              ),
-              ValueListenableBuilder<Color?>(
-                valueListenable: hoveredColor,
-                builder: (context, value, _) => Container(
-                  color: value ?? Colors.transparent,
-                  width: 24,
-                  height: 24,
-                ),
-              )
-            ],
-          ),
-          Center(
-            child: ElevatedButton(
-              child: const Text('Open ColorPicker'),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return Dialog(
-                      child: ColorPicker(
-                        selectedColor: backgroundColor,
-                        onColorSelected: (value) =>
-                            setState(() => backgroundColor = value),
-                        config: const ColorPickerConfig(
-                          enableLibrary: false,
-                          enableEyePicker: false,
-                        ),
-                        onClose: Navigator.of(context).pop,
-                        onEyeDropper: () {},
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-        ],
       ),
     );
   }
