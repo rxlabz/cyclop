@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import '../../../theme.dart';
@@ -43,6 +41,21 @@ class HSLSlidersState extends State<HSLSliders> {
   }
 
   @override
+  void didUpdateWidget(covariant HSLSliders oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.color != widget.color && widget.color != hslColor) {
+      final newHsl = widget.color.hsl;
+      alpha = newHsl.alpha;
+      saturation = newHsl.saturation;
+      lightness = newHsl.lightness;
+      if (saturation > 0 && lightness > 0 && lightness < 1) {
+        hue = newHsl.hue;
+      }
+      hsl = HSLColor.fromAHSL(alpha, hue, saturation, lightness);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -50,10 +63,10 @@ class HSLSlidersState extends State<HSLSliders> {
           label: Labels.hue,
           selectedColor: hslColor,
           colors: getHueGradientColors(/*saturation: saturation*/),
-          channelValueGetter: (color) => max(1, hue) / 360,
+          channelValueGetter: (color) => hue / 360,
           labelGetter: (color) => '${hue.toInt()}',
           onChange: (value) {
-            hue = value * 359;
+            hue = value * 360;
             _updateColor();
           },
         ),
@@ -75,7 +88,7 @@ class HSLSlidersState extends State<HSLSliders> {
           channelValueGetter: (color) => saturation,
           labelGetter: (color) => saturation.toStringAsFixed(3),
           onChange: (value) {
-            saturation = max(0.001, value);
+            saturation = value;
             _updateColor();
           },
         ),
@@ -88,7 +101,11 @@ class HSLSlidersState extends State<HSLSliders> {
                 .withLightness(0)
                 .withHue(hue)
                 .toColor(),
-            hsl.withSaturation(saturation).withHue(hue).toColor(),
+            hsl
+                .withSaturation(saturation)
+                .withLightness(0.5)
+                .withHue(hue)
+                .toColor(),
             hsl
                 .withSaturation(saturation)
                 .withLightness(1)
@@ -107,9 +124,8 @@ class HSLSlidersState extends State<HSLSliders> {
   }
 
   void _updateColor() {
-    widget.onColorChanged(
-      HSLColor.fromAHSL(alpha, hue, saturation, lightness).toColor(),
-    );
+    hsl = HSLColor.fromAHSL(alpha, hue, saturation, lightness);
+    widget.onColorChanged(hsl.toColor());
     setState(() {});
   }
 }
