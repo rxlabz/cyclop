@@ -5,7 +5,7 @@ import '../widgets/opacity/opacity_slider.dart';
 import '../widgets/tabbar.dart';
 import 'picker/color_selector.dart';
 import 'picker/title_bar.dart';
-import 'picker_config.dart' if (dart.library.js) 'picker_config_web.dart';
+import 'picker_config.dart';
 import 'selectors/channels/hsl_selector.dart';
 import 'selectors/grid_color_selector.dart';
 import 'selectors/user_swatch_selector.dart';
