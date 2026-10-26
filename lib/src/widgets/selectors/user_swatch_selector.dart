@@ -18,14 +18,14 @@ class SwatchLibrary extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
-  bool get canAdd => !colors.contains(currentColor);
-
   @override
   SwatchLibraryState createState() => SwatchLibraryState();
 }
 
 class SwatchLibraryState extends State<SwatchLibrary> {
   late Set<Color> colors;
+
+  bool get canAdd => !colors.contains(widget.currentColor);
 
   @override
   void initState() {
@@ -37,7 +37,6 @@ class SwatchLibraryState extends State<SwatchLibrary> {
   void didUpdateWidget(SwatchLibrary oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (!setsEqual(oldWidget.colors, widget.colors)) {
-      colors = widget.colors;
       colors = widget.colors.take(_maxSwatch).toSet();
     }
   }
@@ -61,8 +60,8 @@ class SwatchLibraryState extends State<SwatchLibrary> {
         onDoubleTap: widget.onSwatchesUpdate == null
             ? null
             : () {
-                widget.onSwatchesUpdate!(colors..remove(color));
-                setState(() {});
+                setState(() => colors.remove(color));
+                widget.onSwatchesUpdate!(Set<Color>.from(colors));
               },
         child: Tooltip(
           height: 52,
@@ -95,14 +94,12 @@ class SwatchLibraryState extends State<SwatchLibrary> {
       ),
       child: Center(
         child: IconButton(
-          color:
-              widget.canAdd ? theme.colorScheme.primary : theme.disabledColor,
+          color: canAdd ? theme.colorScheme.primary : theme.disabledColor,
           icon: const Icon(Icons.add),
-          onPressed: widget.canAdd && widget.onSwatchesUpdate != null
+          onPressed: canAdd && widget.onSwatchesUpdate != null
               ? () {
                   setState(() => colors.add(widget.currentColor));
-                  final newSwatches = widget.colors..add(widget.currentColor);
-                  widget.onSwatchesUpdate!(newSwatches);
+                  widget.onSwatchesUpdate!(Set<Color>.from(colors));
                 }
               : null,
         ),
