@@ -7,8 +7,6 @@ import 'package:image/image.dart' as img;
 import '../../utils.dart';
 import 'eye_dropper_overlay.dart';
 
-final captureKey = GlobalKey();
-
 class EyeDropperModel {
   /// based on PointerEvent.kind
   bool touchable = false;
@@ -32,71 +30,83 @@ class EyeDropperModel {
   EyeDropperModel();
 }
 
-class EyeDrop extends InheritedWidget {
-  static EyeDropperModel data = EyeDropperModel();
+class EyeDrop extends StatefulWidget {
+  final Widget child;
 
-  EyeDrop({required Widget child, Key? key})
-      : super(
-          key: key,
-          child: RepaintBoundary(
-            key: captureKey,
-            child: Listener(
-              onPointerMove: (details) => _onHover(
-                details.position,
-                details.kind == PointerDeviceKind.touch,
-              ),
-              onPointerHover: (details) => _onHover(
-                details.position,
-                details.kind == PointerDeviceKind.touch,
-              ),
-              onPointerUp: (details) => _onPointerUp(details.position),
-              child: child,
-            ),
-          ),
-        );
+  const EyeDrop({required this.child, Key? key}) : super(key: key);
 
-  static EyeDrop of(BuildContext context) {
-    final eyeDrop = context.dependOnInheritedWidgetOfExactType<EyeDrop>();
+  static EyeDropState of(BuildContext context) {
+    final eyeDrop = context.dependOnInheritedWidgetOfExactType<_EyeDropScope>();
     if (eyeDrop == null) {
       throw Exception(
-          'No EyeDrop found. You must wrap your application within an EyeDrop widget.');
+        'No EyeDrop found. You must wrap your application within an EyeDrop widget.',
+      );
     }
-    return eyeDrop;
+    return eyeDrop.state;
   }
 
-  static void _onPointerUp(Offset position) {
-    _onHover(position, data.touchable);
-    if (data.onColorSelected != null) {
-      data.onColorSelected!(data.hoverColors.center);
+  @override
+  State<EyeDrop> createState() => EyeDropState();
+}
+
+class EyeDropState extends State<EyeDrop> {
+  final GlobalKey _captureKey = GlobalKey();
+
+  final EyeDropperModel _data = EyeDropperModel();
+
+  bool get _isCapturing => _data.eyeOverlayEntry != null;
+
+  @override
+  void dispose() {
+    _resetCapture();
+    super.dispose();
+  }
+
+  void _onPointerUp(Offset position) {
+    if (!_isCapturing) return;
+
+    _onHover(position, _data.touchable);
+    final onColorSelected = _data.onColorSelected;
+    final selectedColor = _data.hoverColors.center;
+
+    _resetCapture();
+
+    if (onColorSelected != null) {
+      onColorSelected(selectedColor);
+    }
+  }
+
+  void _onHover(Offset offset, bool touchable) {
+    _data.cursorPosition = offset;
+    _data.touchable = touchable;
+
+    if (!_isCapturing) return;
+
+    if (_data.snapshot != null) {
+      _data.hoverColor = getPixelColor(_data.snapshot!, offset);
+      _data.hoverColors = getPixelColors(_data.snapshot!, offset);
     }
 
-    if (data.eyeOverlayEntry != null) {
+    _data.eyeOverlayEntry?.markNeedsBuild();
+
+    if (_data.onColorChanged != null) {
+      _data.onColorChanged!(_data.hoverColors.center);
+    }
+  }
+
+  void _resetCapture() {
+    if (_data.eyeOverlayEntry != null) {
       try {
-        data.eyeOverlayEntry!.remove();
-        data.eyeOverlayEntry = null;
-        data.onColorSelected = null;
-        data.onColorChanged = null;
+        _data.eyeOverlayEntry!.remove();
       } catch (err) {
-        debugPrint('ERROR !!! _onPointerUp $err');
+        debugPrint('ERROR !!! _resetCapture $err');
       }
+      _data.eyeOverlayEntry = null;
     }
-  }
-
-  static void _onHover(Offset offset, bool touchable) {
-    if (data.eyeOverlayEntry != null) data.eyeOverlayEntry!.markNeedsBuild();
-
-    data.cursorPosition = offset;
-
-    data.touchable = touchable;
-
-    if (data.snapshot != null) {
-      data.hoverColor = getPixelColor(data.snapshot!, offset);
-      data.hoverColors = getPixelColors(data.snapshot!, offset);
-    }
-
-    if (data.onColorChanged != null) {
-      data.onColorChanged!(data.hoverColors.center);
-    }
+    _data.snapshot = null;
+    _data.hoverColors = [];
+    _data.onColorSelected = null;
+    _data.onColorChanged = null;
   }
 
   void capture(
@@ -105,32 +115,73 @@ class EyeDrop extends InheritedWidget {
     ValueChanged<Color>? onColorChanged,
   ) async {
     final renderer =
-        captureKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+        _captureKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
 
     if (renderer == null) return;
 
-    data.onColorSelected = onColorSelected;
-    data.onColorChanged = onColorChanged;
+    _resetCapture();
 
-    data.snapshot = await repaintBoundaryToImage(renderer);
+    _data.onColorSelected = onColorSelected;
+    _data.onColorChanged = onColorChanged;
 
-    if (data.snapshot == null) return;
+    final snapshot = await repaintBoundaryToImage(renderer);
+    if (!mounted || snapshot == null) return;
 
-    data.eyeOverlayEntry = OverlayEntry(
+    _data.snapshot = snapshot;
+
+    if (_data.cursorPosition != null) {
+      _data.hoverColor = getPixelColor(snapshot, _data.cursorPosition!);
+      _data.hoverColors = getPixelColors(snapshot, _data.cursorPosition!);
+    }
+
+    _data.eyeOverlayEntry = OverlayEntry(
       builder: (_) => EyeDropOverlay(
-        touchable: data.touchable,
-        colors: data.hoverColors,
-        cursorPosition: data.cursorPosition,
+        touchable: _data.touchable,
+        colors: _data.hoverColors,
+        cursorPosition: _data.cursorPosition,
       ),
     );
 
     if (context.mounted) {
-      Overlay.of(context).insert(data.eyeOverlayEntry!);
+      Overlay.of(context).insert(_data.eyeOverlayEntry!);
     }
   }
 
   @override
-  bool updateShouldNotify(EyeDrop oldWidget) {
-    return true;
+  Widget build(BuildContext context) {
+    return _EyeDropScope(
+      state: this,
+      child: RepaintBoundary(
+        key: _captureKey,
+        child: Listener(
+          onPointerDown: (details) {
+            _data.cursorPosition = details.position;
+            _data.touchable = details.kind == PointerDeviceKind.touch;
+          },
+          onPointerMove: (details) => _onHover(
+            details.position,
+            details.kind == PointerDeviceKind.touch,
+          ),
+          onPointerHover: (details) => _onHover(
+            details.position,
+            details.kind == PointerDeviceKind.touch,
+          ),
+          onPointerUp: (details) => _onPointerUp(details.position),
+          child: widget.child,
+        ),
+      ),
+    );
   }
+}
+
+class _EyeDropScope extends InheritedWidget {
+  final EyeDropState state;
+
+  const _EyeDropScope({
+    required this.state,
+    required Widget child,
+  }) : super(child: child);
+
+  @override
+  bool updateShouldNotify(_EyeDropScope oldWidget) => state != oldWidget.state;
 }
