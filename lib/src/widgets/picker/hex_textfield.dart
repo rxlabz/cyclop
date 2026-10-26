@@ -38,19 +38,46 @@ class HexColorFieldState extends State<HexColorField> {
   @override
   void initState() {
     super.initState();
-    prefix = '#${widget.withAlpha ? '' : 'ff'}';
-
-    valueLength = widget.withAlpha ? 8 : 6;
+    _initFormat();
 
     final colorHexValue =
         widget.withAlpha ? widget.color.hexARGB : widget.color.hexRGB;
     _controller = TextEditingController(text: colorHexValue);
+    widget.hexFocus.addListener(_onFocusChange);
+  }
+
+  void _initFormat() {
+    prefix = '#${widget.withAlpha ? '' : 'ff'}';
+    valueLength = widget.withAlpha ? 8 : 6;
+  }
+
+  void _onFocusChange() {
+    if (!widget.hexFocus.hasFocus) {
+      _submitHex(_controller.text);
+    }
+  }
+
+  void _submitHex(String value) {
+    if (value.isEmpty) return;
+    final newColor =
+        value.padRight(valueLength, '0').toColor(argb: widget.withAlpha);
+    if (newColor != widget.color) {
+      widget.onColorChanged(newColor);
+    }
   }
 
   @override
   void didUpdateWidget(HexColorField oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.color != widget.color) {
+    if (oldWidget.hexFocus != widget.hexFocus) {
+      oldWidget.hexFocus.removeListener(_onFocusChange);
+      widget.hexFocus.addListener(_onFocusChange);
+    }
+    if (oldWidget.withAlpha != widget.withAlpha) {
+      _initFormat();
+    }
+    if (oldWidget.color != widget.color ||
+        oldWidget.withAlpha != widget.withAlpha) {
       final colorHexValue =
           widget.withAlpha ? widget.color.hexARGB : widget.color.hexRGB;
       _controller.text = colorHexValue;
@@ -61,6 +88,7 @@ class HexColorFieldState extends State<HexColorField> {
 
   @override
   void dispose() {
+    widget.hexFocus.removeListener(_onFocusChange);
     _controller.dispose();
     super.dispose();
   }
@@ -79,15 +107,12 @@ class HexColorFieldState extends State<HexColorField> {
           style: textTheme.bodyMedium,
           maxLines: 1,
           autocorrect: false,
-          enableInteractiveSelection: false,
           enableSuggestions: false,
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp('[A-Fa-f0-9]')),
           ],
           maxLength: valueLength,
-          onSubmitted: (value) => widget.onColorChanged(
-            value.padRight(valueLength, '0').toColor(argb: widget.withAlpha),
-          ),
+          onSubmitted: _submitHex,
           decoration: InputDecoration(
             prefixText: prefix,
             counterText: '',

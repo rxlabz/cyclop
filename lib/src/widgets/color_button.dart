@@ -95,27 +95,34 @@ class ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
   }
 
   @override
-  Widget build(BuildContext context) => GestureDetector(
-        onTapDown: (details) => _colorPick(context, details),
-        child: Material(
-          elevation: widget.elevation,
-          shape: widget.boxShape == BoxShape.circle
-              ? const CircleBorder()
-              : const RoundedRectangleBorder(),
-          child: Container(
-            width: widget.size,
-            height: widget.size,
-            decoration: widget.decoration ??
-                BoxDecoration(
-                  shape: widget.boxShape,
-                  color: widget.color,
-                  border: Border.all(width: 4, color: Colors.white),
-                ),
+  Widget build(BuildContext context) => TapRegion(
+        groupId: this,
+        child: GestureDetector(
+          onTapDown: (details) => _colorPick(context, details),
+          child: Material(
+            elevation: widget.elevation,
+            shape: widget.boxShape == BoxShape.circle
+                ? const CircleBorder()
+                : const RoundedRectangleBorder(),
+            child: Container(
+              width: widget.size,
+              height: widget.size,
+              decoration: widget.decoration ??
+                  BoxDecoration(
+                    shape: widget.boxShape,
+                    color: widget.color,
+                    border: Border.all(width: 4, color: Colors.white),
+                  ),
+            ),
           ),
         ),
       );
 
   void _colorPick(BuildContext context, TapDownDetails details) {
+    if (pickerOverlay != null) {
+      _removePickerOverlay();
+      return;
+    }
     showColorPicker(context, details.globalPosition);
   }
 
@@ -146,26 +153,32 @@ class ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
           initialOffset: pickerPosition,
           bottom: bottom,
           keyboardOn: keyboardOn,
-          child: IgnorePointer(
-            ignoring: hidden,
-            child: Opacity(
-              opacity: hidden ? 0 : 1,
-              child: Material(
-                borderRadius: defaultBorderRadius,
-                child: ColorPicker(
-                  darkMode: widget.darkMode,
-                  config: widget.config,
-                  selectedColor: color,
-                  swatches: widget.swatches,
-                  onClose: _removePickerOverlay,
-                  onColorSelected: (c) {
-                    color = c;
-                    pickerOverlay?.markNeedsBuild();
-                    widget.onColorChanged(c);
-                  },
-                  onSwatchesUpdate: widget.onSwatchesChanged,
-                  onEyeDropper: () => _showEyeDropperOverlay(context),
-                  onKeyboard: _onKeyboardChanged,
+          child: TapRegion(
+            groupId: this,
+            onTapOutside: (_) {
+              if (!hidden) _removePickerOverlay();
+            },
+            child: IgnorePointer(
+              ignoring: hidden,
+              child: Opacity(
+                opacity: hidden ? 0 : 1,
+                child: Material(
+                  borderRadius: defaultBorderRadius,
+                  child: ColorPicker(
+                    darkMode: widget.darkMode,
+                    config: widget.config,
+                    selectedColor: color,
+                    swatches: widget.swatches,
+                    onClose: _removePickerOverlay,
+                    onColorSelected: (c) {
+                      color = c;
+                      pickerOverlay?.markNeedsBuild();
+                      widget.onColorChanged(c);
+                    },
+                    onSwatchesUpdate: widget.onSwatchesChanged,
+                    onEyeDropper: () => _showEyeDropperOverlay(context),
+                    onKeyboard: _onKeyboardChanged,
+                  ),
                 ),
               ),
             ),
