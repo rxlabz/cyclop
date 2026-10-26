@@ -80,6 +80,7 @@ class ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
   }
 
   void _removePickerOverlay() {
+    keyboardOn = false;
     if (pickerOverlay != null) {
       if (pickerOverlay!.mounted) {
         pickerOverlay!.remove();
@@ -164,7 +165,7 @@ class ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
                   },
                   onSwatchesUpdate: widget.onSwatchesChanged,
                   onEyeDropper: () => _showEyeDropperOverlay(context),
-                  onKeyboard: _onKeyboardOn,
+                  onKeyboard: _onKeyboardChanged,
                 ),
               ),
             ),
@@ -200,10 +201,12 @@ class ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
     pickerOverlay?.markNeedsBuild();
   }
 
-  void _onKeyboardOn() {
-    keyboardOn = true;
-    pickerOverlay?.markNeedsBuild();
-    setState(() {});
+  void _onKeyboardChanged(bool visible) {
+    if (keyboardOn != visible) {
+      keyboardOn = visible;
+      pickerOverlay?.markNeedsBuild();
+      setState(() {});
+    }
   }
 
   @override

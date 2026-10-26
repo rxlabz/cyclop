@@ -46,7 +46,7 @@ class ColorPicker extends StatefulWidget {
   /// close colorPicker callback
   final VoidCallback onClose;
 
-  final VoidCallback? onKeyboard;
+  final ValueChanged<bool>? onKeyboard;
 
   const ColorPicker({
     required this.onColorSelected,
@@ -75,19 +75,14 @@ class ColorPickerState extends State<ColorPicker> {
     super.initState();
     hexFieldFocus = FocusNode();
     if (widget.onKeyboard != null) {
-      hexFieldFocus.addListener(widget.onKeyboard!);
+      hexFieldFocus.addListener(_onFocusChanged);
     }
 
     selectedColor = widget.selectedColor;
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    if (widget.onKeyboard != null) {
-      hexFieldFocus.removeListener(widget.onKeyboard!);
-    }
-    hexFieldFocus.dispose();
+  void _onFocusChanged() {
+    widget.onKeyboard?.call(hexFieldFocus.hasFocus);
   }
 
   @override
@@ -96,6 +91,23 @@ class ColorPickerState extends State<ColorPicker> {
     if (oldWidget.selectedColor != widget.selectedColor) {
       selectedColor = widget.selectedColor;
     }
+    if (oldWidget.onKeyboard != widget.onKeyboard) {
+      if (oldWidget.onKeyboard != null) {
+        hexFieldFocus.removeListener(_onFocusChanged);
+      }
+      if (widget.onKeyboard != null) {
+        hexFieldFocus.addListener(_onFocusChanged);
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    if (widget.onKeyboard != null) {
+      hexFieldFocus.removeListener(_onFocusChanged);
+    }
+    hexFieldFocus.dispose();
+    super.dispose();
   }
 
   void onColorChanged(Color newColor) {
