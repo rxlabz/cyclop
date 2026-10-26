@@ -80,14 +80,17 @@ List<Color> getPixelColors(
   img.Image image,
   Offset offset, {
   int size = samplingGridSize,
-}) =>
-    List.generate(
-      size * size,
-      (index) => getPixelColor(
-        image,
-        offset + _offsetFromIndex(index, samplingGridSize),
-      ),
-    );
+}) {
+  final halfSize = (size ~/ 2).toDouble();
+  final origin = offset - Offset(halfSize, halfSize);
+  return List.generate(
+    size * size,
+    (index) => getPixelColor(
+      image,
+      origin + _offsetFromIndex(index, size),
+    ),
+  );
+}
 
 Color getPixelColor(img.Image image, Offset offset) => (offset.dx >= 0 &&
         offset.dy >= 0 &&
