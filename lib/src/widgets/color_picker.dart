@@ -163,7 +163,7 @@ class ColorPickerState extends State<ColorPicker> {
                     color: selectedColor,
                     withAlpha: widget.config.enableOpacity,
                     thumbWidth: 96,
-                    onColorChanged: widget.onColorSelected,
+                    onColorChanged: onColorChanged,
                     onEyePick: widget.config.enableEyePicker
                         ? widget.onEyeDropper
                         : null,
@@ -179,5 +179,5 @@ class ColorPickerState extends State<ColorPicker> {
   }
 
   void _onOpacityChange(double value) =>
-      widget.onColorSelected(widget.selectedColor.withOpacity(value));
+      onColorChanged(selectedColor.withValues(alpha: value));
 }
