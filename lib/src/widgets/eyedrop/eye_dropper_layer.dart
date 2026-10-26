@@ -97,7 +97,10 @@ class EyeDropState extends State<EyeDrop> {
   void _resetCapture() {
     if (_data.eyeOverlayEntry != null) {
       try {
-        _data.eyeOverlayEntry!.remove();
+        if (_data.eyeOverlayEntry!.mounted) {
+          _data.eyeOverlayEntry!.remove();
+        }
+        _data.eyeOverlayEntry!.dispose();
       } catch (err) {
         debugPrint('ERROR !!! _resetCapture $err');
       }
@@ -125,7 +128,7 @@ class EyeDropState extends State<EyeDrop> {
     _data.onColorChanged = onColorChanged;
 
     final snapshot = await repaintBoundaryToImage(renderer);
-    if (!mounted || snapshot == null) return;
+    if (!mounted || !context.mounted || snapshot == null) return;
 
     _data.snapshot = snapshot;
 
@@ -142,9 +145,7 @@ class EyeDropState extends State<EyeDrop> {
       ),
     );
 
-    if (context.mounted) {
-      Overlay.of(context).insert(_data.eyeOverlayEntry!);
-    }
+    Overlay.of(context).insert(_data.eyeOverlayEntry!);
   }
 
   @override

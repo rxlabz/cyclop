@@ -72,7 +72,18 @@ class ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _removePickerOverlay();
     super.dispose();
+  }
+
+  void _removePickerOverlay() {
+    if (pickerOverlay != null) {
+      if (pickerOverlay!.mounted) {
+        pickerOverlay!.remove();
+      }
+      pickerOverlay!.dispose();
+      pickerOverlay = null;
+    }
   }
 
   @override
@@ -137,10 +148,7 @@ class ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
                   config: widget.config,
                   selectedColor: color,
                   swatches: widget.swatches,
-                  onClose: () {
-                    pickerOverlay?.remove();
-                    pickerOverlay = null;
-                  },
+                  onClose: _removePickerOverlay,
                   onColorSelected: (c) {
                     color = c;
                     pickerOverlay?.markNeedsBuild();
@@ -169,6 +177,7 @@ class ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
     hidden = true;
     try {
       EyeDrop.of(context).capture(context, (value) {
+        if (!mounted) return;
         hidden = false;
         _onEyePick(value);
       }, null);
