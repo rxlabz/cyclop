@@ -4,11 +4,11 @@ import 'package:cyclop/cyclop.dart';
 void main() async => runApp(const App());
 
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-        home: EyeDrop(child: const MainScreen()),
+        home: const EyeDrop(child: MainScreen()),
         theme: ThemeData.from(
           colorScheme: ColorScheme.fromSwatch(
             primarySwatch: Colors.blueGrey,
@@ -21,7 +21,7 @@ class App extends StatelessWidget {
 }
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  const MainScreen({super.key});
 
   @override
   MainScreenState createState() => MainScreenState();
@@ -32,7 +32,7 @@ class MainScreenState extends State<MainScreen> {
 
   Color backgroundColor = Colors.grey.shade200;
 
-  Set<Color> swatches = Colors.primaries.map((e) => Color(e.value)).toSet();
+  Set<Color> swatches = Colors.primaries.map((e) => Color(e.toARGB32())).toSet();
 
   final ValueNotifier<Color?> hoveredColor = ValueNotifier<Color?>(null);
 

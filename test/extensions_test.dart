@@ -1,7 +1,7 @@
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:image/image.dart' as img;
 
 import 'package:cyclop/cyclop.dart';
 
@@ -37,9 +37,15 @@ void main() {
 
   group('getPixelColors', () {
     test('centers sampling grid around target offset', () {
-      final image = img.Image(width: 15, height: 15);
-      image.setPixelRgba(7, 7, 255, 0, 0, 255);
+      final bytes = Uint8List(15 * 15 * 4);
+      // set pixel at (7, 7) to red (r: 255, g: 0, b: 0, a: 255)
+      final offset = (7 * 15 + 7) * 4;
+      bytes[offset] = 255;
+      bytes[offset + 1] = 0;
+      bytes[offset + 2] = 0;
+      bytes[offset + 3] = 255;
 
+      final image = ImageSnapshot(bytes: bytes, width: 15, height: 15);
       final colors = getPixelColors(image, const Offset(7, 7));
       expect(colors.length, 81);
       // Center element for 9x9 grid is index 40
@@ -47,9 +53,15 @@ void main() {
     });
 
     test('respects custom grid size parameter and centers appropriately', () {
-      final image = img.Image(width: 10, height: 10);
-      image.setPixelRgba(4, 4, 0, 255, 0, 255);
+      final bytes = Uint8List(10 * 10 * 4);
+      // set pixel at (4, 4) to green (r: 0, g: 255, b: 0, a: 255)
+      final offset = (4 * 10 + 4) * 4;
+      bytes[offset] = 0;
+      bytes[offset + 1] = 255;
+      bytes[offset + 2] = 0;
+      bytes[offset + 3] = 255;
 
+      final image = ImageSnapshot(bytes: bytes, width: 10, height: 10);
       final colors = getPixelColors(image, const Offset(4, 4), size: 3);
       expect(colors.length, 9);
       // Center element for 3x3 grid is index 4

@@ -41,7 +41,7 @@ To use the eyedropper you need to wrap the app in the EyeDrop widget.
             child: ColorButton(
               key: Key('c1'),
               color: color1,
-              config: ColorPickerConfig(enableEyePicker = true),
+              config: const ColorPickerConfig(enableEyePicker: true),
               size: 32,
               elevation: 5,
               boxShape: BoxShape.rectangle, // default : circle
@@ -66,10 +66,10 @@ To use the eyedropper you need to wrap the app in the EyeDrop widget.
 ColorButton(
   key: Key('c1'),
   color: color1,
-  config: ColorPickerConfig(
-    this.enableOpacity = true,
-    this.enableLibrary = false,
-    this.enableEyePicker = true,
+  config: const ColorPickerConfig(
+    enableOpacity: true,
+    enableLibrary: false,
+    enableEyePicker: true,
   ),
   boxShape: BoxShape.rectangle, // default : circle
   size: 32,
