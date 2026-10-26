@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -47,6 +48,8 @@ class ColorButton extends StatefulWidget {
 class ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
   OverlayEntry? pickerOverlay;
 
+  Completer<Color>? _pickerCompleter;
+
   late Color color;
 
   // hide the palette during eyedropping
@@ -84,6 +87,10 @@ class ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
       pickerOverlay!.dispose();
       pickerOverlay = null;
     }
+    if (_pickerCompleter != null && !_pickerCompleter!.isCompleted) {
+      _pickerCompleter!.complete(color);
+      _pickerCompleter = null;
+    }
   }
 
   @override
@@ -107,20 +114,21 @@ class ColorButtonState extends State<ColorButton> with WidgetsBindingObserver {
         ),
       );
 
-  void _colorPick(BuildContext context, TapDownDetails details) async {
-    final selectedColor =
-        await showColorPicker(context, details.globalPosition);
-    widget.onColorChanged(selectedColor);
+  void _colorPick(BuildContext context, TapDownDetails details) {
+    showColorPicker(context, details.globalPosition);
   }
 
   Future<Color> showColorPicker(BuildContext rootContext, Offset offset) async {
-    if (pickerOverlay != null) return Future.value(widget.color);
+    if (pickerOverlay != null) {
+      return _pickerCompleter?.future ?? Future.value(color);
+    }
 
+    _pickerCompleter = Completer<Color>();
     pickerOverlay = _buildPickerOverlay(offset, rootContext);
 
     Overlay.of(rootContext).insert(pickerOverlay!);
 
-    return Future.value(widget.color);
+    return _pickerCompleter!.future;
   }
 
   OverlayEntry _buildPickerOverlay(Offset offset, BuildContext context) {
