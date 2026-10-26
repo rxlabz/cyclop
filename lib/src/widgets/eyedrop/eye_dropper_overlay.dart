@@ -19,8 +19,8 @@ class EyeDropOverlay extends StatelessWidget {
     required this.colors,
     this.cursorPosition,
     this.touchable = false,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

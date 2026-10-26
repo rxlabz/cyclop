@@ -58,8 +58,8 @@ class ColorPicker extends StatefulWidget {
     this.onSwatchesUpdate,
     this.swatches = const {},
     this.darkMode = false,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   ColorPickerState createState() => ColorPickerState();
@@ -166,7 +166,7 @@ class ColorPickerState extends State<ColorPicker> {
                     RepaintBoundary(
                       child: OpacitySlider(
                         selectedColor: selectedColor,
-                        opacity: selectedColor.opacity,
+                        opacity: selectedColor.a,
                         onChange: _onOpacityChange,
                       ),
                     ),

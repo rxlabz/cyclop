@@ -17,8 +17,8 @@ class HexColorField extends StatefulWidget {
     required this.color,
     required this.onColorChanged,
     required this.hexFocus,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   HexColorFieldState createState() => HexColorFieldState();

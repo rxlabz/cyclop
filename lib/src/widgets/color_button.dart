@@ -38,8 +38,8 @@ class ColorButton extends StatefulWidget {
     this.size = _buttonSize,
     this.boxShape = BoxShape.circle,
     this.swatches = const {},
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   ColorButtonState createState() => ColorButtonState();
@@ -233,12 +233,11 @@ class _DraggablePicker extends StatefulWidget {
   final bool keyboardOn;
 
   const _DraggablePicker({
-    Key? key,
     required this.child,
     required this.initialOffset,
     required this.bottom,
     required this.keyboardOn,
-  }) : super(key: key);
+  });
 
   @override
   State<_DraggablePicker> createState() => _DraggablePickerState();

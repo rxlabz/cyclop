@@ -27,8 +27,8 @@ class ColorSelector extends StatelessWidget {
     this.onEyePick,
     this.withAlpha = false,
     this.thumbWidth = 96,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +60,7 @@ class _ColorThumb extends StatelessWidget {
   const _ColorThumb({
     required this.color,
     required this.width,
-    Key? key,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) => Material(

@@ -19,7 +19,8 @@ final lightTheme = ThemeData.light().copyWith(
   scaffoldBackgroundColor: const Color(0xfff0f0f0),
   colorScheme: ColorScheme.fromSwatch(
     primarySwatch: Colors.cyan,
-    backgroundColor: const Color(0xffdadada),
+  ).copyWith(
+    surfaceContainerHighest: const Color(0xffdadada),
   ),
   inputDecorationTheme: ThemeData.light().inputDecorationTheme.copyWith(
         isDense: true,
@@ -39,8 +40,10 @@ final lightTheme = ThemeData.light().copyWith(
 
 final darkTheme = ThemeData.dark().copyWith(
   colorScheme: ColorScheme.fromSwatch(
+    brightness: Brightness.dark,
     primarySwatch: Colors.cyan,
-    backgroundColor: Colors.grey.shade700,
+  ).copyWith(
+    surfaceContainerHighest: Colors.grey.shade700,
   ),
   textSelectionTheme: ThemeData.light()
       .textSelectionTheme
@@ -54,25 +57,25 @@ final darkTheme = ThemeData.dark().copyWith(
 );
 
 final _lightTextButtonStyle = ButtonStyle(
-  shape: MaterialStateProperty.all(
+  shape: WidgetStateProperty.all(
     const RoundedRectangleBorder(borderRadius: defaultBorderRadius),
   ),
-  padding: MaterialStateProperty.all(
+  padding: WidgetStateProperty.all(
     const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
   ),
-  foregroundColor: MaterialStateProperty.all(Colors.grey.shade700),
-  overlayColor: MaterialStateProperty.all(Colors.white30),
+  foregroundColor: WidgetStateProperty.all(Colors.grey.shade700),
+  overlayColor: WidgetStateProperty.all(Colors.white30),
 );
 
 final _darkTextButtonStyle = ButtonStyle(
-  shape: MaterialStateProperty.all(
+  shape: WidgetStateProperty.all(
     const RoundedRectangleBorder(borderRadius: defaultBorderRadius),
   ),
-  padding: MaterialStateProperty.all(
+  padding: WidgetStateProperty.all(
     const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
   ),
-  foregroundColor: MaterialStateProperty.all(Colors.white70),
-  overlayColor: MaterialStateProperty.all(Colors.black12),
+  foregroundColor: WidgetStateProperty.all(Colors.white70),
+  overlayColor: WidgetStateProperty.all(Colors.black12),
 );
 
 const defaultDivider = Divider(

@@ -8,9 +8,11 @@ class HSLSliders extends StatefulWidget {
   final Color color;
   final ValueChanged<Color> onColorChanged;
 
-  const HSLSliders(
-      {required this.color, required this.onColorChanged, Key? key})
-      : super(key: key);
+  const HSLSliders({
+    required this.color,
+    required this.onColorChanged,
+    super.key,
+  });
 
   @override
   HSLSlidersState createState() => HSLSlidersState();

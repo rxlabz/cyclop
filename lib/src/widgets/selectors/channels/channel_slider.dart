@@ -5,13 +5,11 @@ import 'package:flutter/material.dart';
 import '../../../theme.dart';
 import 'hsl_selector.dart';
 
-ThemeData _sliderTheme(Color color, List<Color> colors) =>
-    ThemeData.light().copyWith(
-      sliderTheme: SliderThemeData(
-        trackHeight: 24,
-        thumbColor: Colors.white,
-        trackShape: ChannelSliderTrack(color, colors),
-      ),
+SliderThemeData _sliderTheme(Color color, List<Color> colors) =>
+    SliderThemeData(
+      trackHeight: 24,
+      thumbColor: Colors.white,
+      trackShape: ChannelSliderTrack(color, colors),
     );
 
 class ChannelSlider extends StatelessWidget {
@@ -34,8 +32,8 @@ class ChannelSlider extends StatelessWidget {
     required this.onChange,
     required this.label,
     required this.labelGetter,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   double get channelValue => channelValueGetter(selectedColor);
 
@@ -57,7 +55,7 @@ class ChannelSlider extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
-                child: Theme(
+                child: SliderTheme(
                   data: _sliderTheme(selectedColor, colors),
                   child: Slider(
                     value: channelValue,

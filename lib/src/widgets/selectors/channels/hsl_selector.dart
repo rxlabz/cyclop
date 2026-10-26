@@ -14,9 +14,11 @@ class ChannelSliders extends StatefulWidget {
 
   final ValueChanged<Color> onChange;
 
-  const ChannelSliders(
-      {required this.selectedColor, required this.onChange, Key? key})
-      : super(key: key);
+  const ChannelSliders({
+    required this.selectedColor,
+    required this.onChange,
+    super.key,
+  });
 
   @override
   ChannelSlidersState createState() => ChannelSlidersState();
@@ -42,8 +44,8 @@ class ChannelSlidersState extends State<ChannelSliders> {
             label: Labels.red,
             selectedColor: color,
             colors: [color.withRed(0), color.withRed(255)],
-            channelValueGetter: (color) => color.red / 255,
-            labelGetter: (color) => '${color.red}',
+            channelValueGetter: (color) => color.r,
+            labelGetter: (color) => '${(color.r * 255).round().clamp(0, 255)}',
             onChange: (value) => widget.onChange(
               color.withRed((value * 255).toInt()),
             ),
@@ -52,8 +54,8 @@ class ChannelSlidersState extends State<ChannelSliders> {
             label: Labels.green,
             selectedColor: color,
             colors: [color.withGreen(0), color.withGreen(255)],
-            channelValueGetter: (color) => color.green / 255,
-            labelGetter: (color) => '${color.green}',
+            channelValueGetter: (color) => color.g,
+            labelGetter: (color) => '${(color.g * 255).round().clamp(0, 255)}',
             onChange: (value) => widget.onChange(
               color.withGreen((value * 255).toInt()),
             ),
@@ -62,8 +64,8 @@ class ChannelSlidersState extends State<ChannelSliders> {
             label: Labels.blue,
             selectedColor: color,
             colors: [color.withBlue(0), color.withBlue(255)],
-            channelValueGetter: (color) => color.blue / 255,
-            labelGetter: (color) => '${color.blue}',
+            channelValueGetter: (color) => color.b,
+            labelGetter: (color) => '${(color.b * 255).round().clamp(0, 255)}',
             onChange: (value) => widget.onChange(
               color.withBlue((value * 255).toInt()),
             ),

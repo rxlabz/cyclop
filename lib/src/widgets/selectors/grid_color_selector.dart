@@ -18,8 +18,8 @@ class GridColorSelector extends StatelessWidget {
   const GridColorSelector({
     required this.selectedColor,
     required this.onColorSelected,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) => AspectRatio(
@@ -58,5 +58,5 @@ class GridColorSelector extends StatelessWidget {
       );
 
   bool isSelected(Color color) =>
-      selectedColor.withOpacity(1).value == color.withOpacity(1).value;
+      selectedColor.withValues(alpha: 1).toARGB32() == color.withValues(alpha: 1).toARGB32();
 }

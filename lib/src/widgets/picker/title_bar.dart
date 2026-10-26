@@ -5,7 +5,7 @@ import '../../theme.dart';
 class MainTitle extends StatelessWidget {
   final VoidCallback? onClose;
 
-  const MainTitle({Key? key, this.onClose}) : super(key: key);
+  const MainTitle({super.key, this.onClose});
 
   @override
   Widget build(BuildContext context) {

@@ -32,7 +32,7 @@ class EyeDropperModel {
 class EyeDrop extends StatefulWidget {
   final Widget child;
 
-  const EyeDrop({required this.child, Key? key}) : super(key: key);
+  const EyeDrop({required this.child, super.key});
 
   static EyeDropState of(BuildContext context) {
     final eyeDrop = context.dependOnInheritedWidgetOfExactType<_EyeDropScope>();
@@ -179,8 +179,8 @@ class _EyeDropScope extends InheritedWidget {
 
   const _EyeDropScope({
     required this.state,
-    required Widget child,
-  }) : super(child: child);
+    required super.child,
+  });
 
   @override
   bool updateShouldNotify(_EyeDropScope oldWidget) => state != oldWidget.state;

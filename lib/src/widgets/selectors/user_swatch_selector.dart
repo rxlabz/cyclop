@@ -14,8 +14,8 @@ class SwatchLibrary extends StatefulWidget {
     required this.onColorSelected,
     this.onSwatchesUpdate,
     this.colors = const {},
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   SwatchLibraryState createState() => SwatchLibraryState();
@@ -64,8 +64,7 @@ class SwatchLibraryState extends State<SwatchLibrary> {
                 widget.onSwatchesUpdate!(Set<Color>.from(colors));
               },
         child: Tooltip(
-          height: 52,
-          showDuration: Duration.zero,
+          showDuration: Duration.zero, constraints: BoxConstraints(minHeight: 52),
           message: 'Tap to select /\nDouble Tap to remove',
           child: Container(
             margin: const EdgeInsets.all(4),

@@ -25,8 +25,8 @@ class EyedropperButton extends StatelessWidget {
     this.onColorChanged,
     this.icon = Icons.colorize,
     this.iconColor = Colors.black54,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) => Container(
@@ -38,7 +38,11 @@ class EyedropperButton extends StatelessWidget {
               // cf. https://github.com/flutter/flutter/issues/22308
               () => Future.delayed(
             const Duration(milliseconds: 50),
-            () => _onEyeDropperRequest(context),
+            () {
+              if (context.mounted) {
+                _onEyeDropperRequest(context);
+              }
+            },
           ),
         ),
       );

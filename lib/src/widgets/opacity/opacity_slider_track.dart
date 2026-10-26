@@ -42,7 +42,7 @@ class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
       ..shader = ui.Gradient.linear(
         Offset.zero,
         Offset(trackRect.width, 0),
-        [selectedColor.withOpacity(0), selectedColor.withOpacity(1)],
+        [selectedColor.withValues(alpha: 0), selectedColor.withValues(alpha: 1)],
         [0.05, 0.95],
       );
 

@@ -16,8 +16,8 @@ class Tabs extends StatefulWidget {
     required this.labels,
     required this.views,
     this.selectedIndex = 0,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   TabsState createState() => TabsState();
@@ -65,7 +65,7 @@ class TabsState extends State<Tabs> {
       constraints: const BoxConstraints.expand(height: 42),
       decoration: BoxDecoration(
         borderRadius: defaultBorderRadius,
-        color: theme.colorScheme.background,
+        color: theme.colorScheme.surfaceContainerHighest,
       ),
       child: Padding(
         padding: const EdgeInsets.all(4.0),

@@ -5,16 +5,11 @@ import 'package:flutter/material.dart';
 class OpacitySliderThumbShape extends RoundSliderThumbShape {
   const OpacitySliderThumbShape(
     this.selectedColor, {
-    double enabledThumbRadius = 10.0,
-    double disabledThumbRadius = 6,
+    super.enabledThumbRadius,
+    double super.disabledThumbRadius = 6,
     double elevation = 1.0,
     double pressedElevation = 3.0,
-  }) : super(
-          enabledThumbRadius: enabledThumbRadius,
-          disabledThumbRadius: disabledThumbRadius,
-          /*elevation: elevation,
-          pressedElevation: pressedElevation,*/
-        );
+  });
 
   final Color selectedColor;
 

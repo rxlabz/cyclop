@@ -6,11 +6,11 @@ import 'package:flutter/rendering.dart';
 
 //bool get isPhoneScreen => !(screenSize.shortestSide >= 600);
 
-extension Screen on MediaQueryData {
+extension CyclopScreen on MediaQueryData {
   bool get isPhone => size.shortestSide < 600;
 }
 
-extension Chroma on String {
+extension CyclopChroma on String {
   /// converts string to [Color]
   /// fill incomplete values with 0
   /// ex: 'ff00'.toColor() => Color(0xffff0000)
@@ -21,7 +21,7 @@ extension Chroma on String {
 }
 
 /// shortcuts to manipulate [Color]
-extension Utils on Color {
+extension CyclopColorUtils on Color {
   HSLColor get hsl => HSLColor.fromColor(this);
 
   double get hue => hsl.hue;
@@ -33,14 +33,14 @@ extension Utils on Color {
   Color withHue(double value) => hsl.withHue(value).toColor();
 
   /// ff001232
-  String get hexARGB => value.toRadixString(16).padLeft(8, '0');
+  String get hexARGB => toARGB32().toRadixString(16).padLeft(8, '0');
 
   /// 001232ac
   String get hexRGB =>
-      value.toRadixString(16).padLeft(8, '0').replaceRange(0, 2, '');
+      toARGB32().toRadixString(16).padLeft(8, '0').replaceRange(0, 2, '');
 
   Color withSaturation(double value) =>
-      HSLColor.fromAHSL(opacity, hue, value, lightness).toColor();
+      HSLColor.fromAHSL(a, hue, value, lightness).toColor();
 
   Color withLightness(double value) => hsl.withLightness(value).toColor();
 
@@ -59,7 +59,7 @@ extension Utils on Color {
       );
 }
 
-extension Helper on List<Color> {
+extension CyclopColorListUtils on List<Color> {
   /// return the central item of a color list or black if the list is empty
   Color get center => isEmpty ? Colors.black : this[length ~/ 2];
 }
@@ -69,7 +69,7 @@ List<Color> getHueGradientColors({double? saturation, int steps = 36}) =>
         .map<Color>((v) {
           final hsl = HSLColor.fromAHSL(1, v * (360 / steps), 0.67, 0.50);
           final rgb = hsl.toColor();
-          return rgb.withOpacity(1);
+          return rgb.withValues(alpha: 1);
         })
         .map((c) => saturation != null ? c.withSaturation(saturation) : c)
         .toList();

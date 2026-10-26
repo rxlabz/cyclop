@@ -15,8 +15,8 @@ class OpacitySlider extends StatelessWidget {
     required this.opacity,
     required this.selectedColor,
     required this.onChange,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class OpacitySlider extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
-                child: Theme(
+                child: SliderTheme(
                   data: _opacitySliderTheme(selectedColor),
                   child: Slider(
                     value: opacity,
@@ -70,11 +70,9 @@ class OpacitySlider extends StatelessWidget {
   }
 }
 
-ThemeData _opacitySliderTheme(Color color) => ThemeData.light().copyWith(
-      sliderTheme: SliderThemeData(
-        trackHeight: 24,
-        thumbColor: Colors.white,
-        trackShape: OpacitySliderTrack(color),
-        thumbShape: OpacitySliderThumbShape(color),
-      ),
+SliderThemeData _opacitySliderTheme(Color color) => SliderThemeData(
+      trackHeight: 24,
+      thumbColor: Colors.white,
+      trackShape: OpacitySliderTrack(color),
+      thumbShape: OpacitySliderThumbShape(color),
     );

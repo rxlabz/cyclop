@@ -1,4 +1,4 @@
-library cyclop;
+library;
 
 export 'src/utils.dart';
 export 'src/widgets/color_button.dart';
