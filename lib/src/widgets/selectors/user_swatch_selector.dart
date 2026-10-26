@@ -46,6 +46,7 @@ class SwatchLibraryState extends State<SwatchLibrary> {
 
     return GridView.count(
       shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 8,
       children: [
         ...colors.take(_maxSwatch).map(_colorToSwatch),

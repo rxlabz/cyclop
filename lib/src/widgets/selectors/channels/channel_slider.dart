@@ -79,7 +79,8 @@ class ChannelSlider extends StatelessWidget {
                 child: Text(
                   labelGetter(selectedColor),
                   textAlign: TextAlign.center,
-                  style: textTheme.bodyLarge,
+                  style: textTheme.bodyMedium,
+                  maxLines: 1,
                 ),
               )
             ],

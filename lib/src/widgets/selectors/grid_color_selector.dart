@@ -9,6 +9,8 @@ const _numColumns = 12;
 const _cellBorderWidth = 3.0;
 
 class GridColorSelector extends StatelessWidget {
+  static final List<Color> _gridColors = _buildColorGridValues();
+
   final Color selectedColor;
 
   final ValueChanged<Color> onColorSelected;
@@ -30,6 +32,7 @@ class GridColorSelector extends StatelessWidget {
             child: GridView.count(
               padding: EdgeInsets.zero,
               shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
               crossAxisCount: 12,
               childAspectRatio: 1,
               children: _buildColorsTiles(),
@@ -38,10 +41,9 @@ class GridColorSelector extends StatelessWidget {
         ),
       );
 
-  List<Widget> _buildColorsTiles() =>
-      _buildColorGridValues().map(_buildCell).toList();
+  List<Widget> _buildColorsTiles() => _gridColors.map(_buildCell).toList();
 
-  List<Color> _buildColorGridValues({int columns = _numColumns}) => [
+  static List<Color> _buildColorGridValues({int columns = _numColumns}) => [
         ...Colors.white.getShades(columns, skipFirst: false),
         for (final primary in Colors.primaries) ...primary.getShades(columns)
       ];

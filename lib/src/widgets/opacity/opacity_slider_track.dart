@@ -5,16 +5,12 @@ import 'package:flutter/material.dart';
 class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
   final Color selectedColor;
 
-  final Paint gridPaint;
+  static const _cellSize = 10.0;
 
-  OpacitySliderTrack(this.selectedColor, {required ui.Image gridImage})
-      : gridPaint = Paint()
-          ..shader = ImageShader(
-            gridImage,
-            TileMode.repeated,
-            TileMode.repeated,
-            Matrix4.identity().storage,
-          );
+  static final _whitePaint = Paint()..color = Colors.white;
+  static final _greyPaint = Paint()..color = const Color(0xffb4b4b4);
+
+  const OpacitySliderTrack(this.selectedColor);
 
   @override
   void paint(
@@ -89,8 +85,34 @@ class OpacitySliderTrack extends SliderTrackShape with BaseSliderTrackShape {
     );
 
     context.canvas.drawRRect(shapeRect, leftTrackPaint);
-    context.canvas.drawRRect(shapeRect, gridPaint);
-
+    _paintCheckerboard(context.canvas, shapeRect);
     context.canvas.drawRRect(shapeRect, rightTrackPaint);
+  }
+
+  void _paintCheckerboard(Canvas canvas, RRect shapeRect) {
+    final bounds = shapeRect.outerRect;
+    canvas.save();
+    canvas.clipRRect(shapeRect);
+    canvas.drawRect(bounds, _whitePaint);
+
+    final cols = (bounds.width / _cellSize).ceil();
+    final rows = (bounds.height / _cellSize).ceil();
+
+    for (var row = 0; row < rows; row++) {
+      for (var col = 0; col < cols; col++) {
+        if ((row + col).isOdd) {
+          canvas.drawRect(
+            Rect.fromLTWH(
+              bounds.left + col * _cellSize,
+              bounds.top + row * _cellSize,
+              _cellSize,
+              _cellSize,
+            ),
+            _greyPaint,
+          );
+        }
+      }
+    }
+    canvas.restore();
   }
 }

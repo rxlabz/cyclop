@@ -67,32 +67,34 @@ class _PixelGridPainter extends CustomPainter {
   static const gridSize = 9;
   static const eyeRadius = 35.0;
 
-  final blackStroke = Paint()
+  static final _blackStroke = Paint()
     ..color = Colors.black
     ..strokeWidth = 10
+    ..style = PaintingStyle.stroke;
+
+  static final _stroke = Paint()
+    ..color = Colors.white
+    ..style = PaintingStyle.stroke;
+
+  static final _blackLine = Paint()
+    ..color = Colors.black
+    ..strokeWidth = 2
+    ..style = PaintingStyle.stroke;
+
+  static final _selectedStroke = Paint()
+    ..color = Colors.white
+    ..strokeWidth = 3
     ..style = PaintingStyle.stroke;
 
   _PixelGridPainter(this.colors);
 
   @override
   void paint(ui.Canvas canvas, ui.Size size) {
-    final stroke = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.stroke;
-
-    final blackLine = Paint()
-      ..color = Colors.black
-      ..strokeWidth = 2
-      ..style = PaintingStyle.stroke;
-
-    final selectedStroke = Paint()
-      ..color = Colors.white
-      ..strokeWidth = 3
-      ..style = PaintingStyle.stroke;
+    final fill = Paint();
 
     // fill pixels color square
     for (final (index, color) in colors.indexed) {
-      final fill = Paint()..color = color;
+      fill.color = color;
       final rect = Rect.fromLTWH(
         (index % gridSize).toDouble() * _cellSize,
         ((index ~/ gridSize) % gridSize).toDouble() * _cellSize,
@@ -111,10 +113,12 @@ class _PixelGridPainter extends CustomPainter {
         _cellSize.toDouble(),
       );
       canvas.drawRect(
-          rect, index == colors.length ~/ 2 ? selectedStroke : stroke);
+        rect,
+        index == colors.length ~/ 2 ? _selectedStroke : _stroke,
+      );
 
       if (index == colors.length ~/ 2) {
-        canvas.drawRect(rect.deflate(1), blackLine);
+        canvas.drawRect(rect.deflate(1), _blackLine);
       }
     }
 
@@ -122,7 +126,7 @@ class _PixelGridPainter extends CustomPainter {
     canvas.drawCircle(
       const Offset((_gridSize) / 2, (_gridSize) / 2),
       eyeRadius,
-      blackStroke,
+      _blackStroke,
     );
   }
 

@@ -38,14 +38,12 @@ class ColorSelector extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          _buildColorThumb(),
+          _ColorThumb(color: color, width: thumbWidth),
           HexColorField(
             hexFocus: focus,
             color: color,
             withAlpha: withAlpha,
-            onColorChanged: (value) {
-              onColorChanged(value);
-            },
+            onColorChanged: onColorChanged,
           ),
           if (onEyePick != null) // null if eyeDrop is disabled
             IconButton(icon: const Icon(Icons.colorize), onPressed: onEyePick),
@@ -53,13 +51,25 @@ class ColorSelector extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildColorThumb() => Material(
+class _ColorThumb extends StatelessWidget {
+  final Color color;
+  final double width;
+
+  const _ColorThumb({
+    required this.color,
+    required this.width,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => Material(
         color: Colors.white,
         elevation: 3,
         borderRadius: defaultBorderRadius,
         child: Container(
-          width: thumbWidth,
+          width: width,
           height: 36,
           decoration: BoxDecoration(
             color: color,

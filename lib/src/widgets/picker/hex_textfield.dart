@@ -76,7 +76,7 @@ class HexColorFieldState extends State<HexColorField> {
         child: TextField(
           controller: _controller,
           focusNode: widget.hexFocus,
-          style: textTheme.bodyLarge?.copyWith(fontSize: 15),
+          style: textTheme.bodyMedium,
           maxLines: 1,
           autocorrect: false,
           enableInteractiveSelection: false,
