@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:image/image.dart' as img;
 
 import '../../utils.dart';
 import 'eye_dropper_overlay.dart';
@@ -13,7 +12,7 @@ class EyeDropperModel {
 
   OverlayEntry? eyeOverlayEntry;
 
-  img.Image? snapshot;
+  ImageSnapshot? snapshot;
 
   Offset? cursorPosition;
 

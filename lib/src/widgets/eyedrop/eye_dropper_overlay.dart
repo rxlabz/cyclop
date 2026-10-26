@@ -2,7 +2,6 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:quiver/iterables.dart';
 
 import '../../utils.dart';
 
@@ -92,11 +91,11 @@ class _PixelGridPainter extends CustomPainter {
       ..style = PaintingStyle.stroke;
 
     // fill pixels color square
-    for (final color in enumerate(colors)) {
-      final fill = Paint()..color = color.value;
+    for (final (index, color) in colors.indexed) {
+      final fill = Paint()..color = color;
       final rect = Rect.fromLTWH(
-        (color.index % gridSize).toDouble() * _cellSize,
-        ((color.index ~/ gridSize) % gridSize).toDouble() * _cellSize,
+        (index % gridSize).toDouble() * _cellSize,
+        ((index ~/ gridSize) % gridSize).toDouble() * _cellSize,
         _cellSize.toDouble(),
         _cellSize.toDouble(),
       );
@@ -104,17 +103,17 @@ class _PixelGridPainter extends CustomPainter {
     }
 
     // draw pixels borders after fills
-    for (final color in enumerate(colors)) {
+    for (final (index, _) in colors.indexed) {
       final rect = Rect.fromLTWH(
-        (color.index % gridSize).toDouble() * _cellSize,
-        ((color.index ~/ gridSize) % gridSize).toDouble() * _cellSize,
+        (index % gridSize).toDouble() * _cellSize,
+        ((index ~/ gridSize) % gridSize).toDouble() * _cellSize,
         _cellSize.toDouble(),
         _cellSize.toDouble(),
       );
       canvas.drawRect(
-          rect, color.index == colors.length ~/ 2 ? selectedStroke : stroke);
+          rect, index == colors.length ~/ 2 ? selectedStroke : stroke);
 
-      if (color.index == colors.length ~/ 2) {
+      if (index == colors.length ~/ 2) {
         canvas.drawRect(rect.deflate(1), blackLine);
       }
     }

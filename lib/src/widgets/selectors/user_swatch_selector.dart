@@ -1,6 +1,5 @@
-import 'package:basics/int_basics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:quiver/collection.dart';
 
 const _maxSwatch = 50;
 
@@ -36,7 +35,7 @@ class SwatchLibraryState extends State<SwatchLibrary> {
   @override
   void didUpdateWidget(SwatchLibrary oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (!setsEqual(oldWidget.colors, widget.colors)) {
+    if (!setEquals(oldWidget.colors, widget.colors)) {
       colors = widget.colors.take(_maxSwatch).toSet();
     }
   }
@@ -65,7 +64,7 @@ class SwatchLibraryState extends State<SwatchLibrary> {
               },
         child: Tooltip(
           height: 52,
-          showDuration: 0.seconds,
+          showDuration: Duration.zero,
           message: 'Tap to select /\nDouble Tap to remove',
           child: Container(
             margin: const EdgeInsets.all(4),

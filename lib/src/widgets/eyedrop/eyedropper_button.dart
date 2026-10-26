@@ -1,4 +1,3 @@
-import 'package:basics/int_basics.dart';
 import 'package:flutter/material.dart';
 
 import 'eye_dropper_layer.dart';
@@ -38,7 +37,7 @@ class EyedropperButton extends StatelessWidget {
           onPressed:
               // cf. https://github.com/flutter/flutter/issues/22308
               () => Future.delayed(
-            50.milliseconds,
+            const Duration(milliseconds: 50),
             () => _onEyeDropperRequest(context),
           ),
         ),

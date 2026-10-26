@@ -1,6 +1,4 @@
-import 'package:basics/int_basics.dart';
 import 'package:flutter/material.dart';
-import 'package:quiver/iterables.dart';
 
 import '../theme.dart';
 
@@ -74,7 +72,7 @@ class TabsState extends State<Tabs> {
         child: Stack(
           children: [
             AnimatedAlign(
-              duration: 200.milliseconds,
+              duration: const Duration(milliseconds: 200),
               curve: Curves.fastOutSlowIn,
               alignment: markerPosition,
               child: Container(
@@ -90,9 +88,10 @@ class TabsState extends State<Tabs> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
-              children: enumerate(widget.labels)
-                  .map((label) => _buildTab(label, height: size.height))
-                  .toList(),
+              children: [
+                for (final (index, label) in widget.labels.indexed)
+                  _buildTab(index, label, height: size.height),
+              ],
             )
           ],
         ),
@@ -103,13 +102,13 @@ class TabsState extends State<Tabs> {
   void _onSelectionChanged(int newIndex) =>
       setState(() => selectedIndex = newIndex);
 
-  Widget _buildTab(IndexedValue<String> label, {required double height}) =>
+  Widget _buildTab(int index, String label, {required double height}) =>
       SizedBox(
         width: _kTabWidth,
         height: height,
         child: TextButton(
-          onPressed: () => _onSelectionChanged(label.index),
-          child: Text(label.value),
+          onPressed: () => _onSelectionChanged(index),
+          child: Text(label),
         ),
       );
 }

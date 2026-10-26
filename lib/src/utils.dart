@@ -1,8 +1,8 @@
+import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:image/image.dart' as img;
 
 //bool get isPhoneScreen => !(screenSize.shortestSide >= 600);
 
@@ -76,8 +76,47 @@ List<Color> getHueGradientColors({double? saturation, int steps = 36}) =>
 
 const samplingGridSize = 9;
 
+class ImageSnapshot {
+  final Uint8List bytes;
+  final int width;
+  final int height;
+
+  const ImageSnapshot({
+    required this.bytes,
+    required this.width,
+    required this.height,
+  });
+
+  factory ImageSnapshot.fromByteData(
+    ByteData byteData, {
+    required int width,
+    required int height,
+  }) =>
+      ImageSnapshot(
+        bytes: byteData.buffer.asUint8List(
+          byteData.offsetInBytes,
+          byteData.lengthInBytes,
+        ),
+        width: width,
+        height: height,
+      );
+
+  Color getPixel(int x, int y) {
+    if (x < 0 || y < 0 || x >= width || y >= height) {
+      return const Color(0x00000000);
+    }
+    final offset = (y * width + x) * 4;
+    return Color.fromARGB(
+      bytes[offset + 3],
+      bytes[offset],
+      bytes[offset + 1],
+      bytes[offset + 2],
+    );
+  }
+}
+
 List<Color> getPixelColors(
-  img.Image image,
+  ImageSnapshot image,
   Offset offset, {
   int size = samplingGridSize,
 }) {
@@ -92,26 +131,13 @@ List<Color> getPixelColors(
   );
 }
 
-Color getPixelColor(img.Image image, Offset offset) => (offset.dx >= 0 &&
-        offset.dy >= 0 &&
-        offset.dx < image.width &&
-        offset.dy < image.height)
-    ? pixel2Color(image.getPixel(offset.dx.toInt(), offset.dy.toInt()))
-    : const Color(0x00000000);
+Color getPixelColor(ImageSnapshot image, Offset offset) =>
+    image.getPixel(offset.dx.toInt(), offset.dy.toInt());
 
 ui.Offset _offsetFromIndex(int index, int numColumns) => Offset(
       (index % numColumns).toDouble(),
       ((index ~/ numColumns) % numColumns).toDouble(),
     );
-
-/*Color toColorFlutter(img.Color c)
-{
-  return Color(c.)
-}*/
-
-Color pixel2Color(img.Pixel p) {
-  return Color.fromARGB(p.a.toInt(), p.r.toInt(), p.g.toInt(), p.b.toInt());
-}
 
 Color abgr2Color(int value) {
   final a = (value >> 24) & 0xFF;
@@ -122,7 +148,7 @@ Color abgr2Color(int value) {
   return Color.fromARGB(a, r, g, b);
 }
 
-Future<img.Image?> repaintBoundaryToImage(
+Future<ImageSnapshot?> repaintBoundaryToImage(
   RenderRepaintBoundary renderer,
 ) async {
   try {
@@ -132,13 +158,10 @@ Future<img.Image?> repaintBoundaryToImage(
 
     if (byteData == null) throw Exception('Null image byteData !');
 
-    final pngBytes = byteData.buffer;
-
-    return img.Image.fromBytes(
+    return ImageSnapshot.fromByteData(
+      byteData,
       width: rawImage.width,
       height: rawImage.height,
-      bytes: pngBytes,
-      order: img.ChannelOrder.rgba,
     );
   } catch (err, stackTrace) {
     debugPrint('repaintBoundaryToImage... $err $stackTrace');
